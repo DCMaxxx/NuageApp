@@ -1,0 +1,19 @@
+PODS:
+  - AFNetworking (1.3.2)
+  - DTBonjour (1.0.0)
+  - KeychainItemWrapper (1.2)
+  - MBProgressHUD (0.7)
+
+DEPENDENCIES:
+  - AFNetworking (~> 1)
+  - DTBonjour
+  - KeychainItemWrapper
+  - MBProgressHUD
+
+SPEC CHECKSUMS:
+  AFNetworking: 7f9bcd7c287a75476cd5c61e82fd3380e93e4c54
+  DTBonjour: b88769fc76c5557b2ce2111d8305cd56822d63d8
+  KeychainItemWrapper: b532e85de8792ea70dad237e7ead90993af763cf
+  MBProgressHUD: 1fd8591a2216d5dec6de24e09187bb03bcbe9946
+
+COCOAPODS: 0.23.0
