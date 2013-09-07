@@ -6,12 +6,14 @@
 //  Copyright (c) 2013 Maxime de Chalendar. All rights reserved.
 //
 
-//#import <DTBonjourDataConnection.h>
-//
-//@interface NABonjourClient : NSObject
-//
-//+ (NABonjourClient *)sharedInstance;
-//
-//@property (strong, nonatomic) DTBonjourDataConnection * currentConnection;
-//
-//@end
+#import <DTBonjourDataConnection.h>
+
+@interface NABonjourClient : NSObject
+
++ (NABonjourClient *)sharedInstance;
+
+- (BOOL)isReady;
+
+@property (strong, nonatomic) DTBonjourDataConnection * currentConnection;
+
+@end

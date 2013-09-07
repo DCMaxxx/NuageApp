@@ -126,8 +126,8 @@
 		9C1681C717D76F5D00CFEAE7 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		9C21164C17D9C82400F4C716 /* NAAudioVideoCellController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NAAudioVideoCellController.h; path = NuageApp/NAAudioVideoCellController.h; sourceTree = "<group>"; };
 		9C21164D17D9C82400F4C716 /* NAAudioVideoCellController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NAAudioVideoCellController.m; path = NuageApp/NAAudioVideoCellController.m; sourceTree = "<group>"; };
-		9C21164E17D9C82400F4C716 /* NABonjourClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NABonjourClient.h; path = NuageApp/NABonjourClient.h; sourceTree = "<group>"; };
-		9C21164F17D9C82400F4C716 /* NABonjourClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NABonjourClient.m; path = NuageApp/NABonjourClient.m; sourceTree = "<group>"; };
+		9C21164E17D9C82400F4C716 /* NABonjourClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NABonjourClient.h; sourceTree = "<group>"; };
+		9C21164F17D9C82400F4C716 /* NABonjourClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NABonjourClient.m; sourceTree = "<group>"; };
 		9C21165017D9C82400F4C716 /* NABookmarkDisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NABookmarkDisplayViewController.h; path = NuageApp/NABookmarkDisplayViewController.h; sourceTree = "<group>"; };
 		9C21165117D9C82400F4C716 /* NABookmarkDisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NABookmarkDisplayViewController.m; path = NuageApp/NABookmarkDisplayViewController.m; sourceTree = "<group>"; };
 		9C21165417D9C82400F4C716 /* NADocumentCellController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NADocumentCellController.h; path = NuageApp/NADocumentCellController.h; sourceTree = "<group>"; };
@@ -336,11 +336,18 @@
 			name = LoginViewController;
 			sourceTree = "<group>";
 		};
-		9C2CB89717CCB5E500561AA0 = {
+		9C1F47B617DAFE490000A4EF /* BonjourClient */ = {
 			isa = PBXGroup;
 			children = (
 				9C21164E17D9C82400F4C716 /* NABonjourClient.h */,
 				9C21164F17D9C82400F4C716 /* NABonjourClient.m */,
+			);
+			name = BonjourClient;
+			sourceTree = "<group>";
+		};
+		9C2CB89717CCB5E500561AA0 = {
+			isa = PBXGroup;
+			children = (
 				9C2CB8A917CCB5E500561AA0 /* NuageApp */,
 				9C2CB8AA17CCB5E500561AA0 /* Ressources */,
 				9CD3E7DD17CCB85500476785 /* CloudAppAPI */,
@@ -808,6 +815,7 @@
 		9C9E994517D4A9EE00D20A9B /* Other sources */ = {
 			isa = PBXGroup;
 			children = (
+				9C1F47B617DAFE490000A4EF /* BonjourClient */,
 				9C2CB8C917CCB60200561AA0 /* NuageApp */,
 				9C52C50F17CF392C0019C026 /* API Wrapper */,
 				9C97C0BA17D5A7FD001488D2 /* Handlers */,
@@ -1174,11 +1182,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NuageApp/NuageApp-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
 					"\"$(SRCROOT)/NuageApp/CloudAppAPI\"/**",
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/AFNetworking\"",
-					"\"${PODS_ROOT}/Headers/KeychainItemWrapper\"",
-					"\"${PODS_ROOT}/Headers/MBProgressHUD\"",
 				);
 				INFOPLIST_FILE = "NuageApp/NuageApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -1202,11 +1207,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NuageApp/NuageApp-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
 					"\"$(SRCROOT)/NuageApp/CloudAppAPI\"/**",
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/AFNetworking\"",
-					"\"${PODS_ROOT}/Headers/KeychainItemWrapper\"",
-					"\"${PODS_ROOT}/Headers/MBProgressHUD\"",
 				);
 				INFOPLIST_FILE = "NuageApp/NuageApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;

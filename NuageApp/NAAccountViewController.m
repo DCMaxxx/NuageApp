@@ -124,9 +124,9 @@
 /*----------------------------------------------------------------------------*/
 #pragma mark - CLAPIEngineDelegate
 /*----------------------------------------------------------------------------*/
-- (void)globalPrivacySettingUpdatedForAccount:(CLAccount *)updatedAccount connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
+- (void)accountUpdateDidSucceed:(CLAccount *)account connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
     [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
-    [_engine setCurrentAccount:updatedAccount];
+    [_engine setCurrentAccount:account];
 }
 
 - (void)requestDidFailWithError:(NSError *)error connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {

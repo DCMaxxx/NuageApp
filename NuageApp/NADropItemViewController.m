@@ -14,6 +14,7 @@
 #import "NADropItemPickerControllerDelegate.h"
 #import "NAAutoUploadViewController.h"
 #import "NSError+Network.h"
+#import "NABonjourClient.h"
 #import "NATextFieldCell.h"
 #import "NASwitchCell.h"
 #import "NAAPIEngine.h"
@@ -146,6 +147,11 @@
     [_progressHUD hide:YES];
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kCopyToClipboardKey])
         [[UIPasteboard generalPasteboard] setURL:[item URL]];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kCopyToMacClipboardKey]) {
+        NABonjourClient * client = [NABonjourClient sharedInstance];
+        if ([client isReady])
+            [[client currentConnection] sendObject:[[item URL] absoluteString] error:nil]; // here, don't care about error
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -154,6 +160,11 @@
     [_progressHUD hide:YES];
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kCopyToClipboardKey])
         [[UIPasteboard generalPasteboard] setURL:[item URL]];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kCopyToMacClipboardKey]) {
+        NABonjourClient * client = [NABonjourClient sharedInstance];
+        if ([client isReady])
+            [[client currentConnection] sendObject:[[item URL] absoluteString] error:nil]; // here, don't care about error
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

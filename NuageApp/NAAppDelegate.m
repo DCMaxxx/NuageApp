@@ -12,6 +12,7 @@
 
 #import "NAAutoUploadViewController.h"
 #import "NAMainViewController.h"
+#import "NABonjourClient.h"
 
 
 @implementation NAAppDelegate
@@ -19,6 +20,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+    [NABonjourClient sharedInstance];
     return YES;
 }
 

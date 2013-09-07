@@ -15,6 +15,7 @@
 #import "MBProgressHUD+Network.h"
 #import "NALoginViewController.h"
 #import "NSError+Network.h"
+#import "NABonjourClient.h"
 #import "NANeedsEngine.h"
 #import "UIImage+Data.h"
 #import "NAAPIEngine.h"
@@ -109,6 +110,11 @@
     [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kCopyToClipboardKey])
         [[UIPasteboard generalPasteboard] setURL:[item URL]];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kCopyToMacClipboardKey]) {
+        NABonjourClient * client = [NABonjourClient sharedInstance];
+        if ([client isReady])
+            [[client currentConnection] sendObject:[[item URL] absoluteString] error:nil]; // here, don't care about error
+    }
     NAAlertView * av = [[NAAlertView alloc] initWithTitle:@"Last picture uploaded"
                                                   message:@"Cool !"
                                                  delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];

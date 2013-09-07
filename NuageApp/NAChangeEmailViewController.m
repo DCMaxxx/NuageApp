@@ -38,6 +38,8 @@
 
     [[_emailCell textField] setPlaceholder:@"New email address"];
     [[_emailCell textField] setKeyboardType:UIKeyboardTypeEmailAddress];
+    [[_emailCell textField] setAutocapitalizationType:UITextAutocapitalizationTypeNone];
+    [[_emailCell textField] setAutocorrectionType:UITextAutocorrectionTypeNo];
     
     [[_passwordCell textField] setPlaceholder:@"Current password"];
     [[_passwordCell textField] setSecureTextEntry:YES];
