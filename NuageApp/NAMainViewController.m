@@ -9,9 +9,12 @@
 #import "NAMainViewController.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <iAd/ADBannerView.h>
 #import <AFNetworking.h>
 
+
 #import "NAAutoUploadViewController.h"
+#import "NANeedsRevealController.h"
 #import "MBProgressHUD+Network.h"
 #import "NALoginViewController.h"
 #import "NSError+Network.h"
@@ -24,11 +27,14 @@
 #define kUploadConfirmButtonIndex 1
 
 
-@interface NAMainViewController () <CLAPIEngineDelegate, UITabBarControllerDelegate, UIAlertViewDelegate>
+@interface NAMainViewController () <CLAPIEngineDelegate, UIAlertViewDelegate, ADBannerViewDelegate>
 
 @property (strong, nonatomic) NAAPIEngine * engine;
 
 @property (strong, nonatomic) UIViewController * nextViewController;
+@property (weak, nonatomic) IBOutlet ADBannerView *iAdView;
+
+@property (strong, nonatomic) MBProgressHUD * currentProgressHUD;
 
 @property (nonatomic) BOOL isShowingPopup;
 @property (nonatomic) BOOL needToShodUploadPopup;
@@ -41,52 +47,142 @@
 /*----------------------------------------------------------------------------*/
 @implementation NAMainViewController
 
-/*----------------------------------------------------------------------------*/
-#pragma mark - Init
-/*----------------------------------------------------------------------------*/
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
+        UIStoryboard * itemListStoryboard = [UIStoryboard storyboardWithName:@"ItemListStoryboard" bundle:nil];
+        UIStoryboard * trashListStoryboard = [UIStoryboard storyboardWithName:@"TrashListStoryboard" bundle:nil];
+        UIStoryboard * accountStoryboard = [UIStoryboard storyboardWithName:@"AccountStoryboard" bundle:nil];
+        _viewControllers = @[ [accountStoryboard instantiateInitialViewController],
+                              [itemListStoryboard instantiateInitialViewController],
+                              [trashListStoryboard instantiateInitialViewController]
+                             ];
         _engine = [[NAAPIEngine alloc] initWithDelegate:self];
         _needToShodUploadPopup = NO;
-        [self setDelegate:self];
     }
     return self;
 }
 
-
 /*----------------------------------------------------------------------------*/
 #pragma mark - UIViewController
 /*----------------------------------------------------------------------------*/
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [self tabBarController:self shouldSelectViewController:[self selectedViewController]];
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [_revealController setMinimumWidth:45.0f maximumWidth:310.0f forViewController:self];
+    for (UIViewController * vc in _viewControllers)
+        [self checkNeedsRevealController:vc];
+    [self prepareDisplayViewController:_viewControllers[0]];
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self prepareDisplayViewController:_viewControllers[indexPath.row]];
+}
 
-/*----------------------------------------------------------------------------*/
-#pragma mark - UITabBarControllerDelegate
-/*----------------------------------------------------------------------------*/
-- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+- (void)prepareDisplayViewController:(UIViewController *)viewController {
     if (![_engine loadUser])
         [self displayLoginView];
     else if (![_engine currentAccount]) {
-        [[self navigationItem] setTitle:[viewController title]];
         _nextViewController = viewController;
-        [MBProgressHUD showHUDAddedTo:[self view]
-                             withText:@"Login in..."
-                showActivityIndicator:YES
-                             animated:YES];
+        
+        _currentProgressHUD = [MBProgressHUD showHUDAddedTo:[[_revealController focusedController] view]
+                                                   withText:@"Login in..."
+                                      showActivityIndicator:YES
+                                                   animated:YES];
         [_engine setDelegate:self];
         [_engine getAccountInformationWithUserInfo:nil];
     } else {
-        [[self navigationItem] setTitle:[viewController title]];
-        if ([[viewController class] conformsToProtocol:@protocol(NANeedsEngine)])
-            [(id<NANeedsEngine>)viewController configureWithEngine:_engine];
-        return YES;
-    }
-    return NO;
+        [self displayViewController:viewController];
+    }    
 }
 
+- (void)displayViewController:(UIViewController *)viewController {
+    [self checkNeedsEngine:viewController];
+    [_revealController setFrontViewController:viewController];
+    [_revealController showViewController:_revealController.frontViewController];
+}
+
+- (void)checkNeedsEngine:(UIViewController *)viewController {
+    UIViewController * root = viewController;
+    if ([viewController isKindOfClass:[UINavigationController class]])
+        root = [(UINavigationController *)root viewControllers][0];
+    if ([[root class] conformsToProtocol:@protocol(NANeedsEngine)])
+        [(id<NANeedsEngine>)root configureWithEngine:_engine];
+}
+
+- (void)checkNeedsRevealController:(UIViewController *)viewController {
+    UIViewController * root = viewController;
+    if ([viewController isKindOfClass:[UINavigationController class]])
+        root = [(UINavigationController *)root viewControllers][0];
+    if ([[root class] conformsToProtocol:@protocol(NANeedsRevealController)])
+        [(id<NANeedsRevealController>)root configureWithRevealController:_revealController];
+}
+
+- (void)accountInformationRetrievalSucceeded:(CLAccount *)account connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
+    [MBProgressHUD hideHUDForView:[_currentProgressHUD superview] hideActivityIndicator:YES animated:YES];
+    [_engine setCurrentAccount:account];
+    if (_needToShodUploadPopup) {
+        _needToShodUploadPopup = NO;
+        [self displayUploadConfirmAlertView];
+    }
+    if (_nextViewController) {
+        [self displayViewController:_nextViewController];
+        _nextViewController = nil;
+    }
+}
+
+- (void)requestDidFailWithError:(NSError *)error connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
+    [MBProgressHUD hideHUDForView:[_currentProgressHUD superview] hideActivityIndicator:YES animated:YES];
+    NAAlertView * av;
+    if ([error code] == NSURLErrorUserCancelledAuthentication) { // Loggin in - Bad email or password
+        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVFailedLogin];
+        [av setMessage:@"Please update your password"];
+        [self displayLoginView];
+    } else if ([error isNetworkError]) { // Network-related error
+        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVConnection];
+    } else if ([error code] == 1) {
+        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVPremium];
+        [av setMessage:@"You've already uploaded ten drops today. You can switch to a premium account if you want more !"];
+    } else {
+        NSLog(@"Other error in NAMainViewController : %@", error);
+        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVGeneric];
+    }
+    [av show];
+}
+
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner {
+    NSLog(@"loading");
+    if ([_iAdView isHidden])
+        [_iAdView setHidden:NO];
+}
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
+    NSLog(@"unloading !");
+    [_iAdView setHidden:YES];
+}
+
+- (void)displayLoginView {
+    UIStoryboard * mainStoryboard = [UIStoryboard storyboardWithName:@"LoginStoryboard" bundle:nil];
+    UIViewController * loginVC = [mainStoryboard instantiateInitialViewController];
+    [self checkNeedsEngine:loginVC];
+    [[self revealController] presentViewController:loginVC animated:YES completion:nil];
+}
+
+
+- (void)displayUploadConfirmAlertView {
+    if (![_engine currentAccount]) {
+        _needToShodUploadPopup = YES;
+        _isShowingPopup = NO;
+    }
+    else if (!_isShowingPopup) {
+        UIAlertView * av = [[UIAlertView alloc] initWithTitle:@"Auto upload"
+                                                      message:@"Do you want to upload last taken picture ?"
+                                                     delegate:self
+                                            cancelButtonTitle:@"No"
+                                            otherButtonTitles:@"Yes", nil];
+        [av show];
+        _needToShodUploadPopup = NO;
+        _isShowingPopup = YES;
+    }
+}
 
 /*----------------------------------------------------------------------------*/
 #pragma mark - UIAletViewDelegate
@@ -120,70 +216,6 @@
                                                  delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [av show];
 }
-
-- (void)accountInformationRetrievalSucceeded:(CLAccount *)account connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
-    [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
-    [_engine setCurrentAccount:account];
-    if (_needToShodUploadPopup) {
-        _needToShodUploadPopup = NO;
-        [self displayUploadConfirmAlertView];
-    }
-    if (_nextViewController) {
-        if ([self tabBarController:self shouldSelectViewController:_nextViewController])
-            [self setSelectedViewController:_nextViewController];
-        _nextViewController = nil;
-    }
-}
-
-- (void)requestDidFailWithError:(NSError *)error connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
-    [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
-    NAAlertView * av;
-    if ([error code] == NSURLErrorUserCancelledAuthentication) { // Loggin in - Bad email or password
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVFailedLogin];
-        [av setMessage:@"Please update your password"];
-        [self displayLoginView];
-    } else if ([error isNetworkError]) { // Network-related error
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVConnection];
-    } else if ([error code] == 1) {
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVPremium];
-        [av setMessage:@"You've already uploaded ten drops today. You can switch to a premium account if you want more !"];
-    } else {
-        NSLog(@"Other error in NAMainViewController : %@", error);
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVGeneric];
-    }
-    [av show];
-}
-
-
-/*----------------------------------------------------------------------------*/
-#pragma mark - Changing view controller
-/*----------------------------------------------------------------------------*/
-- (void)displayLoginView {
-    UIStoryboard * mainStoryboard = [UIStoryboard storyboardWithName:@"LoginStoryboard" bundle:nil];
-    NALoginViewController * loginVC = [mainStoryboard instantiateInitialViewController];
-    [loginVC configureWithEngine:_engine];
-    UINavigationController * nc = [[UINavigationController alloc] initWithRootViewController:loginVC];
-    [[nc navigationBar] setBarStyle:UIBarStyleBlackOpaque];
-    [self presentViewController:nc animated:YES completion:nil];
-}
-
-- (void)displayUploadConfirmAlertView {
-    if (![_engine currentAccount]) {
-        _needToShodUploadPopup = YES;
-        _isShowingPopup = NO;
-    }
-    else if (!_isShowingPopup) {
-        UIAlertView * av = [[UIAlertView alloc] initWithTitle:@"Auto upload"
-                                                      message:@"Do you want to upload last taken picture ?"
-                                                     delegate:self
-                                            cancelButtonTitle:@"No"
-                                            otherButtonTitles:@"Yes", nil];
-        [av show];
-        _needToShodUploadPopup = NO;
-        _isShowingPopup = YES;
-    }
-}
-
 
 /*----------------------------------------------------------------------------*/
 #pragma mark - Misc private functions
@@ -220,7 +252,6 @@
                                      [av show];
                                  }];
 }
-
 
 
 @end

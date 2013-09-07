@@ -38,6 +38,8 @@
 
 @property (strong, nonatomic) NAAPIEngine * engine;
 
+@property (strong, nonatomic) PKRevealController * revealController;
+
 @property (nonatomic) BOOL displaysTrash;
 
 @property (strong, nonatomic) NSMutableArray * items;
@@ -142,7 +144,7 @@
                                            destructiveButtonTitle:nil
                                                 otherButtonTitles:@"Restore", nil];
         [as setTag:kRestoreItemActionSheetTag];
-        [as showFromTabBar:[[self tabBarController] tabBar]];
+        [as showInView:[self view]];
     }
 }
 
@@ -223,7 +225,7 @@
     if (![[generalPasteboard string] canBeConvertedToURL] && ![generalPasteboard URL] && ![generalPasteboard image])
         [as setButton:kClipboardContentButtonIndex toState:NO];
     [as setTag:kUploadItemActionSheetTag];
-    [as showFromTabBar:[[self tabBarController] tabBar]];
+    [as showInView:[self view]];
 }
 
 - (void)triggeredRefreshControl:(id)sender {
@@ -315,6 +317,20 @@
 
 
 /*----------------------------------------------------------------------------*/
+#pragma mark - NANeedsRevealController
+/*----------------------------------------------------------------------------*/
+- (void)configureWithRevealController:(PKRevealController *)controller {
+    _revealController = controller;
+    UIBarButtonItem * item = [[UIBarButtonItem alloc]
+                              initWithImage:[UIImage imageNamed:@"barbuttonitem.png"]
+                              style:UIBarButtonItemStylePlain
+                              target:self
+                              action:@selector(displayMenu)];
+    [[self navigationItem] setLeftBarButtonItem:item];
+}
+
+
+/*----------------------------------------------------------------------------*/
 #pragma mark - NAItemUpdate
 /*----------------------------------------------------------------------------*/
 - (void)item:(CLWebItem *)item wasUpdatedToItem:(CLWebItem *)updatedItem {
@@ -349,6 +365,13 @@
     [self presentViewController:nc animated:YES completion:nil];
 }
 
+- (void)displayMenu {
+    [[self revealController] showViewController:[[self revealController] leftViewController]
+                                       animated:YES
+                                     completion:nil];
+}
+
+
 
 /*----------------------------------------------------------------------------*/
 #pragma mark - Notification observation
@@ -360,7 +383,6 @@
     _isFetchingItems = NO;
     _selectedIndexPath = nil;
     [[self tableView] reloadData];
-    NSLog(@"Called");
 }
 
 

@@ -51,7 +51,7 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackOpaque" translatesAutoresizingMaskIntoConstraints="NO" id="Jap-Vz-Awm">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jap-Vz-Awm">
                                 <items>
                                     <barButtonItem systemItem="rewind" id="jA8-Dy-dFm">
                                         <connections>
@@ -139,6 +139,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NABookmarkDisplayViewController.h"/>
             <relationships>
                 <relationship kind="action" name="tappedNextButton:"/>
+                <relationship kind="action" name="tappedOpenInSafariButton:"/>
                 <relationship kind="action" name="tappedPreviousButton:"/>
                 <relationship kind="action" name="tappedRefreshButton:"/>
                 <relationship kind="outlet" name="nextButton" candidateClass="UIBarButtonItem"/>

@@ -8,6 +8,7 @@
 
 #import "NAAppDelegate.h"
 
+#import <PKRevealController.h>
 #import <AFNetworking.h>
 
 #import "NAAutoUploadViewController.h"
@@ -21,6 +22,12 @@
 {
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     [NABonjourClient sharedInstance];
+
+    UIStoryboard * rearStoryboard = [UIStoryboard storyboardWithName:@"RearStoryboard" bundle:nil];
+    NAMainViewController * rearVC = [rearStoryboard instantiateInitialViewController];
+    UIViewController * frontVC = [rearVC viewControllers][0];
+    PKRevealController * revealController = [PKRevealController revealControllerWithFrontViewController:frontVC leftViewController:rearVC options:nil];
+    [[self window] setRootViewController:revealController];
     return YES;
 }
 
@@ -44,13 +51,14 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    UINavigationController * mainController = (UINavigationController *)[[self window] rootViewController];
-    if ([[mainController visibleViewController] isKindOfClass:[NAMainViewController class]]) {
-        NAMainViewController * vc = (NAMainViewController *)[mainController visibleViewController];
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:kAutoUploadKey])
-            [vc displayUploadConfirmAlertView];
+    if ([[[self window] rootViewController] isKindOfClass:[PKRevealController class]]) {
+        PKRevealController * reavealController = (PKRevealController *)[[self window] rootViewController];
+        if ([[reavealController leftViewController] isKindOfClass:[NAMainViewController class]]) {
+            NAMainViewController * mainViewController = (NAMainViewController *)[reavealController leftViewController];
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:kAutoUploadKey])
+                [mainViewController displayUploadConfirmAlertView];
+        }
     }
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

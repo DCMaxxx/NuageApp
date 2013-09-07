@@ -23,12 +23,14 @@
 
 @interface NAAccountViewController () <CLAPIEngineDelegate, UIActionSheetDelegate>
 
+@property (strong, nonatomic) NAAPIEngine * engine;
+@property (strong, nonatomic) CLAccount * account;
+
+@property (strong, nonatomic) PKRevealController * revealController;
+
 @property (weak, nonatomic) IBOutlet UITableViewCell *emailCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *customDomainCell;
 @property (weak, nonatomic) IBOutlet NASwitchCell *privateUploadCell;
-
-@property (strong, nonatomic) NAAPIEngine * engine;
-@property (strong, nonatomic) CLAccount * account;
 
 @end
 
@@ -53,12 +55,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [_engine setDelegate:self];
-
-    UINavigationItem *item = [[[self navigationController] navigationBar] items][0];
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
-                                                                                 target:self action:@selector(didTapLogoutButton:)];
-    [item setRightBarButtonItem:rightButton];
+    [self configureWithEngine:_engine];
 }
 
 
@@ -93,8 +90,8 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == kLogoutActionSheetButtonIndex) {
         [_engine logout];
-        if ([[self tabBarController] isKindOfClass:[NAMainViewController class]]) {
-            NAMainViewController * mainController = (NAMainViewController *)[self tabBarController];
+        if ([[_revealController leftViewController] isKindOfClass:[NAMainViewController class]]) {
+            NAMainViewController * mainController = (NAMainViewController *)[_revealController leftViewController];
             [mainController displayLoginView];
         }
     }
@@ -111,13 +108,13 @@
     }
 }
 
-- (void)didTapLogoutButton:(id)sender {
+- (IBAction)didTapLogoutButton:(id)sender {
     UIActionSheet * as = [[UIActionSheet alloc] initWithTitle:@"Do you really want to log out ?"
                                                      delegate:self
                                             cancelButtonTitle:@"Cancel"
                                        destructiveButtonTitle:@"Log out"
                                             otherButtonTitles:nil];
-    [as showFromTabBar:[[self tabBarController] tabBar]];
+    [as showInView:[self view]];
 }
 
 
@@ -165,6 +162,20 @@
 
 
 /*----------------------------------------------------------------------------*/
+#pragma mark - NANeedsRevealController
+/*----------------------------------------------------------------------------*/
+- (void)configureWithRevealController:(PKRevealController *)controller {
+    _revealController = controller;
+    UIBarButtonItem * item = [[UIBarButtonItem alloc]
+                              initWithImage:[UIImage imageNamed:@"barbuttonitem.png"]
+                              style:UIBarButtonItemStylePlain
+                              target:self
+                              action:@selector(displayMenu)];
+    [[self navigationItem] setLeftBarButtonItem:item];
+}
+
+
+/*----------------------------------------------------------------------------*/
 #pragma mark - Changing view controller
 /*----------------------------------------------------------------------------*/
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
@@ -181,6 +192,12 @@
     UIViewController * nextViewController = [segue destinationViewController];
     if ([[nextViewController class] conformsToProtocol:@protocol(NANeedsEngine)])
         [(id<NANeedsEngine>)nextViewController configureWithEngine:_engine];
+}
+
+- (void)displayMenu {
+    [[self revealController] showViewController:[[self revealController] leftViewController]
+                                       animated:YES
+                                     completion:nil];
 }
 
 

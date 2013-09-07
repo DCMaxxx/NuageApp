@@ -78,26 +78,9 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-9" y="-54"/>
+            <point key="canvasLocation" x="209" y="150"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="NADropItemViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NADropItemViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="tappedPickItemCell:"/>
-                <relationship kind="outlet" name="itemPickerCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="nameCell" candidateClass="NATextFieldCell"/>
-                <relationship kind="outlet" name="privateUploadCell" candidateClass="NASwitchCell"/>
-            </relationships>
-        </class>
-        <class className="NASwitchCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NASwitchCell.h"/>
-        </class>
-        <class className="NATextFieldCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NATextFieldCell.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

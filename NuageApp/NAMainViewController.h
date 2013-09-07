@@ -6,7 +6,12 @@
 //  Copyright (c) 2013 Maxime de Chalendar. All rights reserved.
 //
 
-@interface NAMainViewController : UITabBarController
+#import <PKRevealController.h>
+
+@interface NAMainViewController : UITableViewController
+
+@property (strong, nonatomic) PKRevealController * revealController;
+@property (strong, nonatomic) NSArray * viewControllers;
 
 - (void)displayUploadConfirmAlertView;
 - (void)displayLoginView;
