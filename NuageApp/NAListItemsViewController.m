@@ -18,7 +18,6 @@
 #import "NADropPictureController.h"
 #import "MBProgressHUD+Network.h"
 #import "NAItemViewController.h"
-#import "NSError+Network.h"
 #import "NAIconHandler.h"
 #import "NSString+URL.h"
 #import "NAAlertView.h"
@@ -26,22 +25,17 @@
 
 #define kTrashTableViewTag              4242
 #define kNumberOfItemsPerPage           15
-#define kRestoreItemActionSheetTag      4243
-#define kRestoreItemButtonIndex         0
-#define kUploadItemActionSheetTag       4244
-#define kClipboardContentButtonIndex    0
-#define kLinkButtonIndex                1
-#define kImageButtonIndex               2
+#define kAlertViewButtonIndexRestore    0
+#define kAlertViewButtonIndexClipboard  0
+#define kAlertViewButtonIndexLink       1
+#define kAlertViewButtonIndexImage      2
 
 
 @interface NAListItemsViewController () <CLAPIEngineDelegate, UIActionSheetDelegate>
 
 @property (strong, nonatomic) NAAPIEngine * engine;
-
 @property (strong, nonatomic) PKRevealController * revealController;
-
 @property (nonatomic) BOOL displaysTrash;
-
 @property (strong, nonatomic) NSMutableArray * items;
 @property (strong, nonatomic) NSIndexPath * selectedIndexPath;
 @property (nonatomic) BOOL isFetchingItems;
@@ -63,10 +57,7 @@
         _items = [NSMutableArray array];
         _isFetchingItems = NO;
         _currentPage = 1;
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(userDidLogout:)
-                                                     name:@"NAUserLogout"
-                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogout:) name:@"NAUserLogout" object:nil];
     }
     return self;
 }
@@ -88,15 +79,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [_engine setDelegate:self];
-
-    UINavigationItem *item = [[[self navigationController] navigationBar] items][0];
-    UIBarButtonItem * button = nil;
-    if (!_displaysTrash) {
-        button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                                                               target:self
-                                                               action:@selector(uploadItem:)];
-    }
-    [item setRightBarButtonItem:button];
 }
 
 
@@ -138,12 +120,9 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (_displaysTrash) {
         _selectedIndexPath = indexPath;
-        UIActionSheet * as = [[UIActionSheet alloc] initWithTitle:@"Restore item ?"
-                                                         delegate:self
-                                                cancelButtonTitle:@"Cancel"
-                                           destructiveButtonTitle:nil
+        UIActionSheet * as = [[UIActionSheet alloc] initWithTitle:@"Restore item ?" delegate:self
+                                                cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil
                                                 otherButtonTitles:@"Restore", nil];
-        [as setTag:kRestoreItemActionSheetTag];
         [as showInView:[self view]];
     }
 }
@@ -177,16 +156,16 @@
 #pragma mark - UIActionSheetDelegate
 /*----------------------------------------------------------------------------*/
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if ([actionSheet tag] == kRestoreItemActionSheetTag) {
-        if (buttonIndex == kRestoreItemButtonIndex) {
+    if (_displaysTrash) {
+        if (buttonIndex == kAlertViewButtonIndexRestore) {
             CLWebItem * item = _items[_selectedIndexPath.row];
             [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
             [_engine restoreItem:item userInfo:nil];
         }
-    } else if ([actionSheet tag] == kUploadItemActionSheetTag) {
+    } else {
         id<NADropItemPickerController> picker = nil;
         id item = nil;
-        if (buttonIndex == kClipboardContentButtonIndex) {
+        if (buttonIndex == kAlertViewButtonIndexClipboard) {
             UIPasteboard * generalPasteboard = [UIPasteboard generalPasteboard];
             if ([generalPasteboard image]) {
                 picker = [[NADropPictureController alloc] init];
@@ -199,9 +178,9 @@
                 item = [NSURL URLWithString:[generalPasteboard string]];
             } else
                 return ;
-        } else if (buttonIndex == kLinkButtonIndex) {
+        } else if (buttonIndex == kAlertViewButtonIndexLink) {
             picker = [[NADropBookmarkController alloc] init];
-        } else if (buttonIndex == kImageButtonIndex)
+        } else if (buttonIndex == kAlertViewButtonIndexImage)
             picker = [[NADropPictureController alloc] init];
         else
             return ;
@@ -213,30 +192,27 @@
 /*----------------------------------------------------------------------------*/
 #pragma mark - User interactions
 /*----------------------------------------------------------------------------*/
-- (void)uploadItem:(id)sender {
-    UIActionSheet * as = [[UIActionSheet alloc] initWithTitle:@"What do you want to drop ?"
-                                                     delegate:self
-                                            cancelButtonTitle:@"Cancel"
-                                       destructiveButtonTitle:nil
-                                            otherButtonTitles:@"Clipboard content",
-                          @"Link",
-                          @"Image", nil];
+- (IBAction)uploadItem:(id)sender {
+    UIActionSheet * as = [[UIActionSheet alloc] initWithTitle:@"What do you want to drop ?" delegate:self
+                                            cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil
+                                            otherButtonTitles:@"Clipboard content", @"Link", @"Image", nil];
     UIPasteboard * generalPasteboard = [UIPasteboard generalPasteboard];
     if (![[generalPasteboard string] canBeConvertedToURL] && ![generalPasteboard URL] && ![generalPasteboard image])
-        [as setButton:kClipboardContentButtonIndex toState:NO];
-    [as setTag:kUploadItemActionSheetTag];
+        [as setButton:kAlertViewButtonIndexClipboard toState:NO];
     [as showInView:[self view]];
 }
 
 - (void)triggeredRefreshControl:(id)sender {
     [[self refreshControl] endRefreshing];
-    [_engine cancelAllConnections];
-    _currentPage = 1;
-    _items = [NSMutableArray array];
-    _isFetchingItems = NO;
-    _selectedIndexPath = nil;
-    [[self tableView] reloadData];
-    [self loadMoreItems];
+    if (!_isFetchingItems) {
+        [_engine cancelAllConnections];
+        _currentPage = 1;
+        _items = [NSMutableArray array];
+        _isFetchingItems = NO;
+        _selectedIndexPath = nil;
+        [[self tableView] reloadData];
+        [self loadMoreItems];
+    }
 }
 
 
@@ -247,16 +223,11 @@
     [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
     [[self tableView] setTableFooterView:nil];
 
-    NAAlertView * av;
-    if ([error isNetworkError]) {
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVConnection];
-    } else {
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVGeneric];
-        NSLog(@"Other error in NAListItemsViewController : %@", error);
-    }
-    [av show];
     _isFetchingItems = NO;
     _selectedIndexPath = nil;
+
+    NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:userInfo];
+    [av show];
 }
 
 - (void)itemListRetrievalSucceeded:(NSArray *)items connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
@@ -321,11 +292,8 @@
 /*----------------------------------------------------------------------------*/
 - (void)configureWithRevealController:(PKRevealController *)controller {
     _revealController = controller;
-    UIBarButtonItem * item = [[UIBarButtonItem alloc]
-                              initWithImage:[UIImage imageNamed:@"barbuttonitem.png"]
-                              style:UIBarButtonItemStylePlain
-                              target:self
-                              action:@selector(displayMenu)];
+    UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"barbuttonitem.png"] style:UIBarButtonItemStylePlain
+                              target:self action:@selector(displayMenu)];
     [[self navigationItem] setLeftBarButtonItem:item];
 }
 
@@ -356,7 +324,7 @@
 }
 
 - (void)displayDropItemViewControllerWithPicker:(id<NADropItemPickerController>)picker andItem:(id)item {
-    UIStoryboard * storyboard = [UIStoryboard storyboardWithName:@"UploadStoryboard" bundle:nil];
+    UIStoryboard * storyboard = [UIStoryboard storyboardWithName:@"ItemListStoryboard" bundle:nil];
     NADropItemViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"NADropItemViewController"];
     [vc setDropPickerController:picker];
     [vc configureWithEngine:_engine];
@@ -366,9 +334,7 @@
 }
 
 - (void)displayMenu {
-    [[self revealController] showViewController:[[self revealController] leftViewController]
-                                       animated:YES
-                                     completion:nil];
+    [[self revealController] showViewController:[[self revealController] leftViewController] animated:YES completion:nil];
 }
 
 
@@ -392,10 +358,7 @@
 - (void)loadMoreItems {
     if (!_isFetchingItems) {
         if (![_items count]) {
-            [MBProgressHUD showHUDAddedTo:[self view]
-                                 withText:@"Loading drops..."
-                    showActivityIndicator:YES
-                                 animated:YES];
+            [MBProgressHUD showHUDAddedTo:[self view] withText:@"Loading drops..." showActivityIndicator:YES animated:YES];
         } else {
             [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
             UIActivityIndicatorView * view = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];

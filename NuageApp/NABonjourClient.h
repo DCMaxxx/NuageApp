@@ -8,12 +8,14 @@
 
 #import <DTBonjourDataConnection.h>
 
+#import "NABonjourClientDelegate.h"
+
+
 @interface NABonjourClient : NSObject
 
-+ (NABonjourClient *)sharedInstance;
+@property (strong, nonatomic) id<NABonjourClientDelegate> delegate;
 
-- (BOOL)isReady;
-
-@property (strong, nonatomic) DTBonjourDataConnection * currentConnection;
+- (void)chooseServerWithIndex:(NSUInteger)idx;
+- (void)chooseServerWithName:(NSString *)name;
 
 @end

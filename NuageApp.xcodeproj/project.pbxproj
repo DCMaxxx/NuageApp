@@ -21,6 +21,7 @@
 		9C21167417D9C82400F4C716 /* NATextCellController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C21166417D9C82400F4C716 /* NATextCellController.m */; };
 		9C21167517D9C82400F4C716 /* NATextDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C21166617D9C82400F4C716 /* NATextDisplayViewController.m */; };
 		9C21167717D9C82400F4C716 /* NAWebCellController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C21166A17D9C82400F4C716 /* NAWebCellController.m */; };
+		9C2609F517DC46A700DD1143 /* AboutStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C2609F417DC46A700DD1143 /* AboutStoryboard.storyboard */; };
 		9C2CB8A417CCB5E500561AA0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C2CB8A317CCB5E500561AA0 /* UIKit.framework */; };
 		9C2CB8A617CCB5E500561AA0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C2CB8A517CCB5E500561AA0 /* Foundation.framework */; };
 		9C2CB8A817CCB5E500561AA0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C2CB8A717CCB5E500561AA0 /* CoreGraphics.framework */; };
@@ -30,9 +31,9 @@
 		9C2CB8B617CCB5E500561AA0 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C2CB8B517CCB5E500561AA0 /* Default.png */; };
 		9C2CB8B817CCB5E500561AA0 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C2CB8B717CCB5E500561AA0 /* Default@2x.png */; };
 		9C2CB8BA17CCB5E500561AA0 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C2CB8B917CCB5E500561AA0 /* Default-568h@2x.png */; };
-		9C2CB8BD17CCB5E500561AA0 /* RearStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C2CB8BB17CCB5E500561AA0 /* RearStoryboard.storyboard */; };
+		9C2CB8BD17CCB5E500561AA0 /* MenuStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C2CB8BB17CCB5E500561AA0 /* MenuStoryboard.storyboard */; };
 		9C3CA18917CCD2FA00ABEDF0 /* LoginStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C3CA18717CCD2FA00ABEDF0 /* LoginStoryboard.storyboard */; };
-		9C52C50D17CF2A5D0019C026 /* NAMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C52C50C17CF2A5D0019C026 /* NAMainViewController.m */; };
+		9C52C50D17CF2A5D0019C026 /* NAMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C52C50C17CF2A5D0019C026 /* NAMenuViewController.m */; };
 		9C52C51317CF3CD10019C026 /* NAAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C52C51217CF3CD10019C026 /* NAAccountViewController.m */; };
 		9C52C51617CF3CF20019C026 /* NASwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C52C51517CF3CF20019C026 /* NASwitchCell.m */; };
 		9C7C279F17D70ABE00CDE4E7 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C7C279E17D70ABE00CDE4E7 /* MediaPlayer.framework */; };
@@ -50,7 +51,6 @@
 		9C7C27BA17D7116C00CDE4E7 /* text-large.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C7C27B217D7116C00CDE4E7 /* text-large.png */; };
 		9C7C27BB17D7116C00CDE4E7 /* text-large@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C7C27B317D7116C00CDE4E7 /* text-large@2x.png */; };
 		9C7C27BE17D7513900CDE4E7 /* UIActionSheet+ButtonState.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C7C27BD17D7513900CDE4E7 /* UIActionSheet+ButtonState.m */; };
-		9C7C27C017D7557B00CDE4E7 /* UploadStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C7C27BF17D7557B00CDE4E7 /* UploadStoryboard.storyboard */; };
 		9C7C27C417D756DA00CDE4E7 /* NADropPictureController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C7C27C317D756DA00CDE4E7 /* NADropPictureController.m */; };
 		9C7C27C717D75AA900CDE4E7 /* upload-large.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C7C27C517D75AA800CDE4E7 /* upload-large.png */; };
 		9C7C27C817D75AA900CDE4E7 /* upload-large@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C7C27C617D75AA900CDE4E7 /* upload-large@2x.png */; };
@@ -65,18 +65,17 @@
 		9C85DCD917CCBE7600E6BAFC /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C85DCD817CCBE7600E6BAFC /* MobileCoreServices.framework */; };
 		9C87C3BB17D1D8B900322005 /* NATransparentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C87C3BA17D1D8B900322005 /* NATransparentCell.m */; };
 		9C87C3BF17D1DEE300322005 /* NAAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C87C3BE17D1DEE300322005 /* NAAlertView.m */; };
-		9C87C3C217D1F25400322005 /* NAAutoUploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C87C3C117D1F25400322005 /* NAAutoUploadViewController.m */; };
+		9C87C3C217D1F25400322005 /* NASettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C87C3C117D1F25400322005 /* NASettingsViewController.m */; };
 		9C8810FC17CF610C00C09C52 /* NAChangeEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C8810FB17CF610C00C09C52 /* NAChangeEmailViewController.m */; };
 		9C88110017CF614700C09C52 /* NATextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C8810FF17CF614700C09C52 /* NATextFieldCell.m */; };
 		9C88110317CF686900C09C52 /* NAChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C88110217CF686900C09C52 /* NAChangePasswordViewController.m */; };
 		9C901B6217D454D400887E1E /* NAListItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C901B6117D454D400887E1E /* NAListItemsViewController.m */; };
+		9C97584317DC525B00762B30 /* NACopyHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C97584217DC525B00762B30 /* NACopyHandler.m */; };
 		9C97C0B417D57DA1001488D2 /* MBProgressHUD+Network.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C97C0B317D57DA1001488D2 /* MBProgressHUD+Network.m */; };
-		9C97C0B917D5A6C2001488D2 /* NSError+Network.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C97C0B817D5A6C2001488D2 /* NSError+Network.m */; };
 		9C97C0BE17D5B072001488D2 /* NACopyToMacActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C97C0BD17D5B072001488D2 /* NACopyToMacActivity.m */; };
 		9C97C0C017D5B0B5001488D2 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C97C0BF17D5B0B5001488D2 /* Social.framework */; };
 		9C97C0EC17D5C2DE001488D2 /* trash-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C97C0EA17D5C2DE001488D2 /* trash-icon.png */; };
 		9C97C0ED17D5C2DE001488D2 /* trash-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C97C0EB17D5C2DE001488D2 /* trash-icon@2x.png */; };
-		9C97C0F017D60A4E001488D2 /* ItemsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C97C0EF17D60A4E001488D2 /* ItemsStoryboard.storyboard */; };
 		9C98AD5517D80FD6008E1A81 /* UIImage+Rotate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C98AD5417D80FD6008E1A81 /* UIImage+Rotate.m */; };
 		9C98AD5D17D835C8008E1A81 /* NADropItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C98AD5C17D835C8008E1A81 /* NADropItemViewController.m */; };
 		9C98AD6117D844F9008E1A81 /* NADropBookmarkController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C98AD6017D844F9008E1A81 /* NADropBookmarkController.m */; };
@@ -101,6 +100,7 @@
 		9C9E994317D49AB200D20A9B /* account-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C9E994117D49AB200D20A9B /* account-icon@2x.png */; };
 		9C9E994817D4AAF500D20A9B /* drops-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C9E994617D4AAF500D20A9B /* drops-icon.png */; };
 		9C9E994917D4AAF500D20A9B /* drops-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C9E994717D4AAF500D20A9B /* drops-icon@2x.png */; };
+		9CAEB4EF17DDED400054356C /* NAMacPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CAEB4EE17DDED400054356C /* NAMacPickerViewController.m */; };
 		9CD3E7FA17CCB85500476785 /* CLAPIDeserializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3E7E017CCB85500476785 /* CLAPIDeserializer.m */; };
 		9CD3E7FB17CCB85500476785 /* CLAPISerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3E7E217CCB85500476785 /* CLAPISerializer.m */; };
 		9CD3E7FC17CCB85500476785 /* NSMutableURLRequest+NPPOSTBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3E7E517CCB85500476785 /* NSMutableURLRequest+NPPOSTBody.m */; };
@@ -154,6 +154,7 @@
 		9C21166617D9C82400F4C716 /* NATextDisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NATextDisplayViewController.m; path = NuageApp/NATextDisplayViewController.m; sourceTree = "<group>"; };
 		9C21166917D9C82400F4C716 /* NAWebCellController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NAWebCellController.h; path = NuageApp/NAWebCellController.h; sourceTree = "<group>"; };
 		9C21166A17D9C82400F4C716 /* NAWebCellController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NAWebCellController.m; path = NuageApp/NAWebCellController.m; sourceTree = "<group>"; };
+		9C2609F417DC46A700DD1143 /* AboutStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AboutStoryboard.storyboard; sourceTree = "<group>"; };
 		9C2CB8A017CCB5E500561AA0 /* NuageApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NuageApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C2CB8A317CCB5E500561AA0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9C2CB8A517CCB5E500561AA0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -167,11 +168,11 @@
 		9C2CB8B517CCB5E500561AA0 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		9C2CB8B717CCB5E500561AA0 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		9C2CB8B917CCB5E500561AA0 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		9C2CB8BC17CCB5E500561AA0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/RearStoryboard.storyboard; sourceTree = "<group>"; };
+		9C2CB8BC17CCB5E500561AA0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MenuStoryboard.storyboard; sourceTree = "<group>"; };
 		9C3CA18817CCD2FA00ABEDF0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/LoginStoryboard.storyboard; sourceTree = "<group>"; };
 		9C46794D17D3BF73001B0FB8 /* NANeedsEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NANeedsEngine.h; sourceTree = "<group>"; };
-		9C52C50B17CF2A5D0019C026 /* NAMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAMainViewController.h; sourceTree = "<group>"; };
-		9C52C50C17CF2A5D0019C026 /* NAMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAMainViewController.m; sourceTree = "<group>"; };
+		9C52C50B17CF2A5D0019C026 /* NAMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAMenuViewController.h; sourceTree = "<group>"; };
+		9C52C50C17CF2A5D0019C026 /* NAMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAMenuViewController.m; sourceTree = "<group>"; };
 		9C52C51117CF3CD10019C026 /* NAAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAAccountViewController.h; sourceTree = "<group>"; };
 		9C52C51217CF3CD10019C026 /* NAAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAAccountViewController.m; sourceTree = "<group>"; };
 		9C52C51417CF3CF20019C026 /* NASwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NASwitchCell.h; sourceTree = "<group>"; };
@@ -192,7 +193,6 @@
 		9C7C27B317D7116C00CDE4E7 /* text-large@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "text-large@2x.png"; path = "icons/text-large@2x.png"; sourceTree = "<group>"; };
 		9C7C27BC17D7513900CDE4E7 /* UIActionSheet+ButtonState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+ButtonState.h"; sourceTree = "<group>"; };
 		9C7C27BD17D7513900CDE4E7 /* UIActionSheet+ButtonState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+ButtonState.m"; sourceTree = "<group>"; };
-		9C7C27BF17D7557B00CDE4E7 /* UploadStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UploadStoryboard.storyboard; sourceTree = "<group>"; };
 		9C7C27C217D756DA00CDE4E7 /* NADropPictureController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NADropPictureController.h; sourceTree = "<group>"; };
 		9C7C27C317D756DA00CDE4E7 /* NADropPictureController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NADropPictureController.m; sourceTree = "<group>"; };
 		9C7C27C517D75AA800CDE4E7 /* upload-large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "upload-large.png"; path = "icons/upload-large.png"; sourceTree = "<group>"; };
@@ -231,8 +231,8 @@
 		9C87C3BA17D1D8B900322005 /* NATransparentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NATransparentCell.m; sourceTree = "<group>"; };
 		9C87C3BD17D1DEE300322005 /* NAAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAAlertView.h; sourceTree = "<group>"; };
 		9C87C3BE17D1DEE300322005 /* NAAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAAlertView.m; sourceTree = "<group>"; };
-		9C87C3C017D1F25400322005 /* NAAutoUploadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAAutoUploadViewController.h; sourceTree = "<group>"; };
-		9C87C3C117D1F25400322005 /* NAAutoUploadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAAutoUploadViewController.m; sourceTree = "<group>"; };
+		9C87C3C017D1F25400322005 /* NASettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NASettingsViewController.h; path = NuageApp/NASettingsViewController.h; sourceTree = "<group>"; };
+		9C87C3C117D1F25400322005 /* NASettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NASettingsViewController.m; path = NuageApp/NASettingsViewController.m; sourceTree = "<group>"; };
 		9C8810FA17CF610C00C09C52 /* NAChangeEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAChangeEmailViewController.h; sourceTree = "<group>"; };
 		9C8810FB17CF610C00C09C52 /* NAChangeEmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAChangeEmailViewController.m; sourceTree = "<group>"; };
 		9C8810FE17CF614700C09C52 /* NATextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NATextFieldCell.h; sourceTree = "<group>"; };
@@ -241,17 +241,17 @@
 		9C88110217CF686900C09C52 /* NAChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAChangePasswordViewController.m; sourceTree = "<group>"; };
 		9C901B6017D454D400887E1E /* NAListItemsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAListItemsViewController.h; sourceTree = "<group>"; };
 		9C901B6117D454D400887E1E /* NAListItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAListItemsViewController.m; sourceTree = "<group>"; };
+		9C97584117DC525B00762B30 /* NACopyHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NACopyHandler.h; sourceTree = "<group>"; };
+		9C97584217DC525B00762B30 /* NACopyHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NACopyHandler.m; sourceTree = "<group>"; };
+		9C97584417DC553400762B30 /* NABonjourClientDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NABonjourClientDelegate.h; sourceTree = "<group>"; };
 		9C97C0B217D57DA1001488D2 /* MBProgressHUD+Network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Network.h"; sourceTree = "<group>"; };
 		9C97C0B317D57DA1001488D2 /* MBProgressHUD+Network.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Network.m"; sourceTree = "<group>"; };
 		9C97C0B517D583FA001488D2 /* NATextFieldCellDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NATextFieldCellDelegate.h; sourceTree = "<group>"; };
-		9C97C0B717D5A6C2001488D2 /* NSError+Network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+Network.h"; sourceTree = "<group>"; };
-		9C97C0B817D5A6C2001488D2 /* NSError+Network.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+Network.m"; sourceTree = "<group>"; };
 		9C97C0BC17D5B072001488D2 /* NACopyToMacActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NACopyToMacActivity.h; sourceTree = "<group>"; };
 		9C97C0BD17D5B072001488D2 /* NACopyToMacActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NACopyToMacActivity.m; sourceTree = "<group>"; };
 		9C97C0BF17D5B0B5001488D2 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		9C97C0EA17D5C2DE001488D2 /* trash-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "trash-icon.png"; path = "icons/trash-icon.png"; sourceTree = "<group>"; };
 		9C97C0EB17D5C2DE001488D2 /* trash-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "trash-icon@2x.png"; path = "icons/trash-icon@2x.png"; sourceTree = "<group>"; };
-		9C97C0EF17D60A4E001488D2 /* ItemsStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ItemsStoryboard.storyboard; sourceTree = "<group>"; };
 		9C98AD5317D80FD6008E1A81 /* UIImage+Rotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Rotate.h"; sourceTree = "<group>"; };
 		9C98AD5417D80FD6008E1A81 /* UIImage+Rotate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Rotate.m"; sourceTree = "<group>"; };
 		9C98AD5A17D8353C008E1A81 /* NADropItemPickerControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NADropItemPickerControllerDelegate.h; sourceTree = "<group>"; };
@@ -283,6 +283,8 @@
 		9C9E994117D49AB200D20A9B /* account-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "account-icon@2x.png"; path = "icons/account-icon@2x.png"; sourceTree = "<group>"; };
 		9C9E994617D4AAF500D20A9B /* drops-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "drops-icon.png"; path = "icons/drops-icon.png"; sourceTree = "<group>"; };
 		9C9E994717D4AAF500D20A9B /* drops-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "drops-icon@2x.png"; path = "icons/drops-icon@2x.png"; sourceTree = "<group>"; };
+		9CAEB4ED17DDED400054356C /* NAMacPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NAMacPickerViewController.h; path = NuageApp/NAMacPickerViewController.h; sourceTree = "<group>"; };
+		9CAEB4EE17DDED400054356C /* NAMacPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NAMacPickerViewController.m; path = NuageApp/NAMacPickerViewController.m; sourceTree = "<group>"; };
 		9CD3E7DF17CCB85500476785 /* CLAPIDeserializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAPIDeserializer.h; sourceTree = "<group>"; };
 		9CD3E7E017CCB85500476785 /* CLAPIDeserializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAPIDeserializer.m; sourceTree = "<group>"; };
 		9CD3E7E117CCB85500476785 /* CLAPISerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAPISerializer.h; sourceTree = "<group>"; };
@@ -353,10 +355,23 @@
 		9C1F47B617DAFE490000A4EF /* BonjourClient */ = {
 			isa = PBXGroup;
 			children = (
+				9C97584417DC553400762B30 /* NABonjourClientDelegate.h */,
 				9C21164E17D9C82400F4C716 /* NABonjourClient.h */,
 				9C21164F17D9C82400F4C716 /* NABonjourClient.m */,
 			);
 			name = BonjourClient;
+			sourceTree = "<group>";
+		};
+		9C2609F617DC4EC400DD1143 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				9CAEB4ED17DDED400054356C /* NAMacPickerViewController.h */,
+				9CAEB4EE17DDED400054356C /* NAMacPickerViewController.m */,
+				9C87C3C017D1F25400322005 /* NASettingsViewController.h */,
+				9C87C3C117D1F25400322005 /* NASettingsViewController.m */,
+			);
+			name = About;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		9C2CB89717CCB5E500561AA0 = {
@@ -405,6 +420,7 @@
 				9C7C27C117D756B100CDE4E7 /* Drop item */,
 				9C6D493417D36C4900C61F80 /* View item */,
 				9C52C51017CF3CBB0019C026 /* Account */,
+				9C2609F617DC4EC400DD1143 /* About */,
 				9C9E994517D4A9EE00D20A9B /* Other sources */,
 			);
 			path = NuageApp;
@@ -508,8 +524,8 @@
 			isa = PBXGroup;
 			children = (
 				9C46794D17D3BF73001B0FB8 /* NANeedsEngine.h */,
-				9C97C0B517D583FA001488D2 /* NATextFieldCellDelegate.h */,
 				9CF8631517DB1AFD000ADD8E /* NANeedsRevealController.h */,
+				9C97C0B517D583FA001488D2 /* NATextFieldCellDelegate.h */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -517,13 +533,12 @@
 		9C46795117D3C406001B0FB8 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				9C2CB8BB17CCB5E500561AA0 /* RearStoryboard.storyboard */,
+				9C2CB8BB17CCB5E500561AA0 /* MenuStoryboard.storyboard */,
 				9C3CA18717CCD2FA00ABEDF0 /* LoginStoryboard.storyboard */,
-				9C97C0EF17D60A4E001488D2 /* ItemsStoryboard.storyboard */,
-				9C7C27BF17D7557B00CDE4E7 /* UploadStoryboard.storyboard */,
 				9CF8630F17DB0AAB000ADD8E /* AccountStoryboard.storyboard */,
 				9CF8631117DB0ED4000ADD8E /* ItemListStoryboard.storyboard */,
 				9CF8631317DB10F3000ADD8E /* TrashListStoryboard.storyboard */,
+				9C2609F417DC46A700DD1143 /* AboutStoryboard.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -531,8 +546,8 @@
 		9C52C50A17CF2A3E0019C026 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
-				9C52C50B17CF2A5D0019C026 /* NAMainViewController.h */,
-				9C52C50C17CF2A5D0019C026 /* NAMainViewController.m */,
+				9C52C50B17CF2A5D0019C026 /* NAMenuViewController.h */,
+				9C52C50C17CF2A5D0019C026 /* NAMenuViewController.m */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -557,8 +572,6 @@
 				9C88110217CF686900C09C52 /* NAChangePasswordViewController.m */,
 				9CDB442917D0359C004D6EC7 /* NAChangeDomainViewController.h */,
 				9CDB442A17D0359C004D6EC7 /* NAChangeDomainViewController.m */,
-				9C87C3C017D1F25400322005 /* NAAutoUploadViewController.h */,
-				9C87C3C117D1F25400322005 /* NAAutoUploadViewController.m */,
 			);
 			name = Account;
 			sourceTree = "<group>";
@@ -727,7 +740,6 @@
 		9C87C3C317D1F65800322005 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				9C97C0BB17D5B053001488D2 /* Activities */,
 				9C87C3BC17D1DECF00322005 /* AlertView */,
 				9C8810FD17CF612500C09C52 /* CustomCells */,
 			);
@@ -759,12 +771,10 @@
 		9C97C0B017D57D1D001488D2 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				9C97C0B217D57DA1001488D2 /* MBProgressHUD+Network.h */,
-				9C97C0B317D57DA1001488D2 /* MBProgressHUD+Network.m */,
-				9C97C0B717D5A6C2001488D2 /* NSError+Network.h */,
-				9C97C0B817D5A6C2001488D2 /* NSError+Network.m */,
 				9C7C27BC17D7513900CDE4E7 /* UIActionSheet+ButtonState.h */,
 				9C7C27BD17D7513900CDE4E7 /* UIActionSheet+ButtonState.m */,
+				9C97C0B217D57DA1001488D2 /* MBProgressHUD+Network.h */,
+				9C97C0B317D57DA1001488D2 /* MBProgressHUD+Network.m */,
 				9C98AD5317D80FD6008E1A81 /* UIImage+Rotate.h */,
 				9C98AD5417D80FD6008E1A81 /* UIImage+Rotate.m */,
 				9C98AD6317D85414008E1A81 /* NSString+URL.h */,
@@ -778,6 +788,8 @@
 		9C97C0BA17D5A7FD001488D2 /* Handlers */ = {
 			isa = PBXGroup;
 			children = (
+				9C97584117DC525B00762B30 /* NACopyHandler.h */,
+				9C97584217DC525B00762B30 /* NACopyHandler.m */,
 				9C9E991E17D478B000D20A9B /* NAIconHandler.h */,
 				9C9E991F17D478B000D20A9B /* NAIconHandler.m */,
 			);
@@ -838,6 +850,7 @@
 			children = (
 				9C2CB8C917CCB60200561AA0 /* NuageApp */,
 				9C52C50F17CF392C0019C026 /* API Wrapper */,
+				9C97C0BB17D5B053001488D2 /* Activities */,
 				9C1F47B617DAFE490000A4EF /* BonjourClient */,
 				9C97C0BA17D5A7FD001488D2 /* Handlers */,
 				9C97C0B017D57D1D001488D2 /* Categories */,
@@ -968,7 +981,7 @@
 				9C2CB8B617CCB5E500561AA0 /* Default.png in Resources */,
 				9C2CB8B817CCB5E500561AA0 /* Default@2x.png in Resources */,
 				9C2CB8BA17CCB5E500561AA0 /* Default-568h@2x.png in Resources */,
-				9C2CB8BD17CCB5E500561AA0 /* RearStoryboard.storyboard in Resources */,
+				9C2CB8BD17CCB5E500561AA0 /* MenuStoryboard.storyboard in Resources */,
 				9C85DCD617CCBCA600E6BAFC /* IFUnicodeURL-LICENSE.txt in Resources */,
 				9C85DCD717CCBCA600E6BAFC /* README.md in Resources */,
 				9C3CA18917CCD2FA00ABEDF0 /* LoginStoryboard.storyboard in Resources */,
@@ -992,7 +1005,6 @@
 				9C9E994917D4AAF500D20A9B /* drops-icon@2x.png in Resources */,
 				9C97C0EC17D5C2DE001488D2 /* trash-icon.png in Resources */,
 				9C97C0ED17D5C2DE001488D2 /* trash-icon@2x.png in Resources */,
-				9C97C0F017D60A4E001488D2 /* ItemsStoryboard.storyboard in Resources */,
 				9C7C27A717D70ED800CDE4E7 /* audio-large.png in Resources */,
 				9C7C27A817D70ED800CDE4E7 /* audio-large@2x.png in Resources */,
 				9C7C27A917D70ED800CDE4E7 /* unknown-large@2x.png in Resources */,
@@ -1006,7 +1018,6 @@
 				9C7C27B917D7116C00CDE4E7 /* image-large@2x.png in Resources */,
 				9C7C27BA17D7116C00CDE4E7 /* text-large.png in Resources */,
 				9C7C27BB17D7116C00CDE4E7 /* text-large@2x.png in Resources */,
-				9C7C27C017D7557B00CDE4E7 /* UploadStoryboard.storyboard in Resources */,
 				9C7C27C717D75AA900CDE4E7 /* upload-large.png in Resources */,
 				9C7C27C817D75AA900CDE4E7 /* upload-large@2x.png in Resources */,
 				9CF8631017DB0AAB000ADD8E /* AccountStoryboard.storyboard in Resources */,
@@ -1014,6 +1025,7 @@
 				9CF8631417DB10F3000ADD8E /* TrashListStoryboard.storyboard in Resources */,
 				9CF8631817DB204F000ADD8E /* barbuttonitem.png in Resources */,
 				9CF8631917DB204F000ADD8E /* barbuttonitem@2x.png in Resources */,
+				9C2609F517DC46A700DD1143 /* AboutStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1078,7 +1090,7 @@
 				9C85DCD517CCBCA600E6BAFC /* NSURL+IFUnicodeURL.m in Sources */,
 				9C0FED6217CDE5E500722D8B /* NALoginViewController.m in Sources */,
 				9C0FED6517CDE94200722D8B /* NAAPIEngine.m in Sources */,
-				9C52C50D17CF2A5D0019C026 /* NAMainViewController.m in Sources */,
+				9C52C50D17CF2A5D0019C026 /* NAMenuViewController.m in Sources */,
 				9C52C51317CF3CD10019C026 /* NAAccountViewController.m in Sources */,
 				9C52C51617CF3CF20019C026 /* NASwitchCell.m in Sources */,
 				9C8810FC17CF610C00C09C52 /* NAChangeEmailViewController.m in Sources */,
@@ -1087,11 +1099,10 @@
 				9CDB442B17D0359C004D6EC7 /* NAChangeDomainViewController.m in Sources */,
 				9C87C3BB17D1D8B900322005 /* NATransparentCell.m in Sources */,
 				9C87C3BF17D1DEE300322005 /* NAAlertView.m in Sources */,
-				9C87C3C217D1F25400322005 /* NAAutoUploadViewController.m in Sources */,
+				9C87C3C217D1F25400322005 /* NASettingsViewController.m in Sources */,
 				9C901B6217D454D400887E1E /* NAListItemsViewController.m in Sources */,
 				9C9E992017D478B000D20A9B /* NAIconHandler.m in Sources */,
 				9C97C0B417D57DA1001488D2 /* MBProgressHUD+Network.m in Sources */,
-				9C97C0B917D5A6C2001488D2 /* NSError+Network.m in Sources */,
 				9C97C0BE17D5B072001488D2 /* NACopyToMacActivity.m in Sources */,
 				9C7C27BE17D7513900CDE4E7 /* UIActionSheet+ButtonState.m in Sources */,
 				9C7C27C417D756DA00CDE4E7 /* NADropPictureController.m in Sources */,
@@ -1103,6 +1114,7 @@
 				9C21166B17D9C82400F4C716 /* NAAudioVideoCellController.m in Sources */,
 				9C21166C17D9C82400F4C716 /* NABonjourClient.m in Sources */,
 				9C21166D17D9C82400F4C716 /* NABookmarkDisplayViewController.m in Sources */,
+				9CAEB4EF17DDED400054356C /* NAMacPickerViewController.m in Sources */,
 				9C21166F17D9C82400F4C716 /* NADocumentCellController.m in Sources */,
 				9C21167017D9C82400F4C716 /* NAImageCellController.m in Sources */,
 				9C21167117D9C82400F4C716 /* NAImageDisplayViewController.m in Sources */,
@@ -1110,6 +1122,7 @@
 				9C21167417D9C82400F4C716 /* NATextCellController.m in Sources */,
 				9C21167517D9C82400F4C716 /* NATextDisplayViewController.m in Sources */,
 				9C21167717D9C82400F4C716 /* NAWebCellController.m in Sources */,
+				9C97584317DC525B00762B30 /* NACopyHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1124,12 +1137,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		9C2CB8BB17CCB5E500561AA0 /* RearStoryboard.storyboard */ = {
+		9C2CB8BB17CCB5E500561AA0 /* MenuStoryboard.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				9C2CB8BC17CCB5E500561AA0 /* en */,
 			);
-			name = RearStoryboard.storyboard;
+			name = MenuStoryboard.storyboard;
 			sourceTree = "<group>";
 		};
 		9C3CA18717CCD2FA00ABEDF0 /* LoginStoryboard.storyboard */ = {
@@ -1204,7 +1217,6 @@
 			baseConfigurationReference = 076D6ADC84554F73A94B8547 /* Pods.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NuageApp/NuageApp-Prefix.pch";
 				HEADER_SEARCH_PATHS = (

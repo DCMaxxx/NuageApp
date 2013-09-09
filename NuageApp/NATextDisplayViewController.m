@@ -26,6 +26,7 @@
 /*----------------------------------------------------------------------------*/
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[self navigationItem] setTitle:@"Bookmark viewer"];
     [_textView setText:_fullText];
 }
 

@@ -10,7 +10,6 @@
 
 #import "MBProgressHUD+Network.h"
 #import "NATextFieldCell.h"
-#import "NSError+Network.h"
 #import "NAAlertView.h"
 #import "NAAPIEngine.h"
 
@@ -18,7 +17,6 @@
 @interface NAChangeEmailViewController () <CLAPIEngineDelegate>
 
 @property (strong, nonatomic) NAAPIEngine * engine;
-
 @property (weak, nonatomic) IBOutlet NATextFieldCell *emailCell;
 @property (weak, nonatomic) IBOutlet NATextFieldCell *passwordCell;
 
@@ -45,6 +43,7 @@
     [[_passwordCell textField] setSecureTextEntry:YES];
 }
 
+
 /*----------------------------------------------------------------------------*/
 #pragma mark - NANeedsEngine
 /*----------------------------------------------------------------------------*/
@@ -63,6 +62,8 @@
     NSString * email = [[_emailCell textField] text];
     NSString * password = [[_passwordCell textField] text];
     if ([email length] && [password length]) {
+        [[_emailCell textField] resignFirstResponder];
+        [[_passwordCell textField] resignFirstResponder];
         [MBProgressHUD showHUDAddedTo:[self view] withText:@"Updating account..." showActivityIndicator:YES animated:YES];
         [_engine setClearsCookies:YES];
         [_engine changeToEmail:email withPassword:password userInfo:nil];
@@ -88,19 +89,7 @@
     [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
     [_engine setClearsCookies:NO];
 
-    NAAlertView * av;
-    if ([error isNetworkError]) {
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVConnection];
-    } else if ([error code] == NSURLErrorUnknown && [[error userInfo][@"statusCode"] isEqual:@(500)]) { // Bad password
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVFailedLogin];
-        [av setMessage:@"Please check your password"];
-    } else if ([error code] == NSURLErrorUnknown && [[error userInfo][@"statusCode"] isEqual:@(204)]) { // Bad email
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVFailedLogin];
-        [av setMessage:@"Please check your new email address"];
-    } else {
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVGeneric];
-        NSLog(@"Other error on NAChangeEmailViewController : %@", error);
-    }
+    NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:userInfo];
     [av show];
 }
 

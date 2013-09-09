@@ -12,15 +12,14 @@
 #import <AFNetworking.h>
 
 #import "NADropItemPickerControllerDelegate.h"
-#import "NAAutoUploadViewController.h"
-#import "NSError+Network.h"
-#import "NABonjourClient.h"
+#import "NASettingsViewController.h"
 #import "NATextFieldCell.h"
+#import "NACopyHandler.h"
 #import "NASwitchCell.h"
 #import "NAAPIEngine.h"
 #import "NAAlertView.h"
 
-#define kUploadSettingsSectionIndex 0
+#define kTableViewSectionIndexUploadSettings 0
 
 
 @interface NADropItemViewController () <CLAPIEngineDelegate, NADropPickerControllerDelegate>
@@ -31,8 +30,6 @@
 @property (weak, nonatomic) IBOutlet NASwitchCell *privateUploadCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *itemPickerCell;
 @property (strong, nonatomic) MBProgressHUD * progressHUD;
-
-@property (strong, nonatomic) id fileData;
 
 @end
 
@@ -64,7 +61,6 @@
     UIBarButtonItem * right = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                             target:self
                                                                             action:@selector(tappedDoneButton:)];
-    [[[self navigationController] navigationBar] setBarStyle:UIBarStyleBlackOpaque];
     [[self navigationItem] setLeftBarButtonItem:left];
     [[self navigationItem] setRightBarButtonItem:right];
     [[self navigationItem] setTitle:[NSString stringWithFormat:@"Drop a %@", [_dropPickerController itemDescription]]];
@@ -79,7 +75,7 @@
 /*----------------------------------------------------------------------------*/
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSString * text = nil;
-    if (section == kUploadSettingsSectionIndex) {
+    if (section == kTableViewSectionIndexUploadSettings) {
         text = [NSString stringWithFormat:@"Upload a %@", [_dropPickerController itemDescription]];
     }
     return text;
@@ -101,7 +97,8 @@
 }
 
 - (void)tappedDoneButton:(id)sender {
-    if (!_fileData) {
+    [[_nameCell textField] resignFirstResponder];
+    if (!_item) {
         NAAlertView * av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVRequiredField];
         [av setMessage:[_dropPickerController missingItemMessage]];
         [av show];
@@ -110,10 +107,10 @@
         NSDictionary * options = [_engine uploadDictionaryForPrivacy:[[_privateUploadCell switchView] isOn]];
         [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
         [_progressHUD show:YES];
-        if ([_fileData isKindOfClass:[NSData class]])
-            [_engine uploadFileWithName:name fileData:_fileData options:options userInfo:nil];
-        else if ([_fileData isKindOfClass:[NSURL class]])
-            [_engine bookmarkLinkWithURL:(NSURL *)_fileData name:name options:options userInfo:nil];
+        if ([_item isKindOfClass:[NSData class]])
+            [_engine uploadFileWithName:name fileData:_item options:options userInfo:nil];
+        else if ([_item isKindOfClass:[NSURL class]])
+            [_engine bookmarkLinkWithURL:(NSURL *)_item name:name options:options userInfo:nil];
     }
 }
 
@@ -145,26 +142,14 @@
 - (void)fileUploadDidSucceedWithResultingItem:(CLWebItem *)item connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
     [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
     [_progressHUD hide:YES];
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kCopyToClipboardKey])
-        [[UIPasteboard generalPasteboard] setURL:[item URL]];
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kCopyToMacClipboardKey]) {
-        NABonjourClient * client = [NABonjourClient sharedInstance];
-        if ([client isReady])
-            [[client currentConnection] sendObject:[[item URL] absoluteString] error:nil]; // here, don't care about error
-    }
+    [[NACopyHandler sharedInstance] copyURL:[item URL]];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)linkBookmarkDidSucceedWithResultingItem:(CLWebItem *)item connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
     [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
     [_progressHUD hide:YES];
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kCopyToClipboardKey])
-        [[UIPasteboard generalPasteboard] setURL:[item URL]];
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kCopyToMacClipboardKey]) {
-        NABonjourClient * client = [NABonjourClient sharedInstance];
-        if ([client isReady])
-            [[client currentConnection] sendObject:[[item URL] absoluteString] error:nil]; // here, don't care about error
-    }
+    [[NACopyHandler sharedInstance] copyURL:[item URL]];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -172,17 +157,7 @@
     [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
     [_progressHUD hide:YES];
 
-    NAAlertView * av;
-    if ([error isNetworkError]) {
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVConnection];
-    } else if ([error code] == 1) {
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVPremium];
-        [av setMessage:@"You've already uploaded ten drops today. You can switch to a premium account if you want more !"];
-    }
-    else {
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVGeneric];
-        NSLog(@"Other error on NDropItemViewController : %@", error);
-    }
+    NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:userInfo];
     [av show];
 }
 
@@ -200,7 +175,7 @@
 #pragma mark - NAItemDropPickerControllerDelegate
 /*----------------------------------------------------------------------------*/
 - (void)didFinishPickingItem:(id)item {
-    _fileData = item;
+    _item = item;
 }
 
 @end

@@ -13,9 +13,7 @@
 #import "NANeedsEngine.h"
 #import "NAItemUpdate.h"
 
-@interface NAListItemsViewController : UITableViewController <NANeedsEngine,
-NAItemViewControllerDelegate,
-NAItemUpdate,
-NANeedsRevealController>
+
+@interface NAListItemsViewController : UITableViewController <NANeedsEngine, NAItemViewControllerDelegate, NAItemUpdate, NANeedsRevealController>
 
 @end

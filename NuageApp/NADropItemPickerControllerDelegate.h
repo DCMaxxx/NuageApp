@@ -10,7 +10,6 @@
 
 @protocol NADropPickerControllerDelegate <NSObject>
 
-@optional
 - (void)didFinishPickingItem:(id)item;
 
 @end

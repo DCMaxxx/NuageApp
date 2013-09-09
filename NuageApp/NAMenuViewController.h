@@ -8,7 +8,7 @@
 
 #import <PKRevealController.h>
 
-@interface NAMainViewController : UITableViewController
+@interface NAMenuViewController : UITableViewController
 
 @property (strong, nonatomic) PKRevealController * revealController;
 @property (strong, nonatomic) NSArray * viewControllers;

@@ -11,9 +11,10 @@
 @implementation UIImage (Data)
 
 - (NSData *)pngData {
-    if ([self imageOrientation] != UIImageOrientationUp)
-        [self rotate:[self imageOrientation]];
-    return UIImagePNGRepresentation(self);
+    UIImage * image = self;
+    if ([image imageOrientation] != UIImageOrientationUp)
+        image = [image rotate:[image imageOrientation]];
+    return UIImagePNGRepresentation(image);
 }
 
 @end

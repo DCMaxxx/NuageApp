@@ -10,9 +10,9 @@ typedef enum {
     kAVRequiredField,
     kAVFailedLogin,
     kAVFailedRegistering,
-    kAVConnection,
+    kAVFailedUpload,
+    kAVNetwork,
     kAVPremium,
-    kAVUnactivatedAccount,
     kAVGeneric,
     kAVNone
 } NAAlertViewKind;
@@ -21,5 +21,6 @@ typedef enum {
 @interface NAAlertView : UIAlertView
 
 - (id)initWithNAAlertViewKind:(NAAlertViewKind)kind;
+- (id)initWithError:(NSError *)error userInfo:(id)userInfo;
 
 @end

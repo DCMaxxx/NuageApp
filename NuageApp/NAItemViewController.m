@@ -17,23 +17,20 @@
 #import "NATextCellController.h"
 #import "NAWebCellController.h"
 #import "NACopyToMacActivity.h"
-#import "NSError+Network.h"
 #import "NAIconHandler.h"
 #import "NAAPIEngine.h"
 #import "NAAlertView.h"
 
-#define kInformationsSectionIndex   1
-#define kUpdatingNameUserInfo       @"updatingName"
-#define kUpdatingPrivateUserInfo    @"updatingPrivate"
+#define kTableViewSectionIndexViewInformations   1
+
+typedef enum { NAUpdatingItemName, NAUpdatingItemPrivacy, NAUpdatingItemNone } NAUpdatingItemType;
 
 
 @interface NAItemViewController () <NATextFieldCellDelegate, CLAPIEngineDelegate, UIActionSheetDelegate>
 
 @property (strong, nonatomic) NAAPIEngine * engine;
-
 @property (strong, nonatomic) id<NAPreviewItemCellController> previewCellController;
-
-@property (nonatomic) BOOL isUpdatingName;
+@property (nonatomic) NAUpdatingItemType currentUpdate;
 
 @end
 
@@ -48,7 +45,7 @@
 /*----------------------------------------------------------------------------*/
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
-        _isUpdatingName = NO;
+        _currentUpdate = NAUpdatingItemNone;
     }
     return self;
 }
@@ -84,11 +81,7 @@
 #pragma mark - UITableViewDataSource
 /*----------------------------------------------------------------------------*/
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    NSString * text = nil;
-    if (section == kInformationsSectionIndex) {
-        text = [NSString stringWithFormat:@"%d views", [_webItem viewCount]];
-    }
-    return text;
+    return (section == kTableViewSectionIndexViewInformations) ? [NSString stringWithFormat:@"%d views", [_webItem viewCount]] : nil;
 }
 
 
@@ -117,14 +110,15 @@
         [textField setText:[_webItem name]];
     } else if (![[textField text] isEqualToString:[_webItem name]]) {
         [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
-        [_engine changeNameOfItem:_webItem toName:[textField text] userInfo:kUpdatingNameUserInfo];
+        _currentUpdate = NAUpdatingItemName;
+        [_engine changeNameOfItem:_webItem toName:[textField text] userInfo:nil];
     }
     [textField resignFirstResponder];
     return YES;
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    return !_isUpdatingName;
+    return _currentUpdate != NAUpdatingItemName;
 }
 
 
@@ -143,20 +137,13 @@
 - (void)requestDidFailWithError:(NSError *)error connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
     [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
 
-    NAAlertView * av;
-    if ([error isNetworkError]) {
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVConnection];
-    } else {
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVGeneric];
-        NSLog(@"Other error in NAItemViewController : %@", error);
-    }
-    [av show];
-    
-    if ([userInfo isEqual: kUpdatingNameUserInfo]) {
+    if (_currentUpdate == NAUpdatingItemName)
         [[_itemNameCell textField] setText:[_webItem name]];
-    } else if ([userInfo isEqual:kUpdatingPrivateUserInfo]) {
+    else if (_currentUpdate == NAUpdatingItemPrivacy)
         [[_itemPrivateCell switchView] setOn:[_webItem isPrivate]];
-    }
+
+    NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:userInfo];
+    [av show];
 }
 
 - (void)itemUpdateDidSucceed:(CLWebItem *)item connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
@@ -164,9 +151,9 @@
     [_delegate item:_webItem wasUpdatedToItem:item];
     _webItem = item;
     
-    if ([userInfo isEqual: kUpdatingNameUserInfo]) {
+    if (_currentUpdate == NAUpdatingItemName)
         [[self navigationItem] setTitle:[_webItem name]];
-    } else if ([userInfo isEqual:kUpdatingPrivateUserInfo])
+    else if (_currentUpdate == NAUpdatingItemPrivacy)
         [[_itemLinkCell textLabel] setText:[[_webItem URL] absoluteString]];
 }
 
@@ -176,8 +163,10 @@
 /*----------------------------------------------------------------------------*/
 - (void)changedPrivacy:(UISwitch *)switchView {
     if (switchView == [_itemPrivateCell switchView]) {
+        [[_itemNameCell textField] resignFirstResponder];
         [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
-        [_engine changePrivacyOfItem:_webItem toPrivate:[switchView isOn] userInfo:kUpdatingPrivateUserInfo];
+        _currentUpdate = NAUpdatingItemPrivacy;
+        [_engine changePrivacyOfItem:_webItem toPrivate:[switchView isOn] userInfo:nil];
     }
 }
 

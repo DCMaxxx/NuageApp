@@ -11,8 +11,8 @@
 #import <PKRevealController.h>
 #import <AFNetworking.h>
 
-#import "NAAutoUploadViewController.h"
-#import "NAMainViewController.h"
+#import "NASettingsViewController.h"
+#import "NAMenuViewController.h"
 #import "NABonjourClient.h"
 
 
@@ -21,12 +21,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
-    [NABonjourClient sharedInstance];
 
-    UIStoryboard * rearStoryboard = [UIStoryboard storyboardWithName:@"RearStoryboard" bundle:nil];
-    NAMainViewController * rearVC = [rearStoryboard instantiateInitialViewController];
+    UIStoryboard * rearStoryboard = [UIStoryboard storyboardWithName:@"MenuStoryboard" bundle:nil];
+    NAMenuViewController * rearVC = [rearStoryboard instantiateInitialViewController];
     UIViewController * frontVC = [rearVC viewControllers][0];
-    PKRevealController * revealController = [PKRevealController revealControllerWithFrontViewController:frontVC leftViewController:rearVC options:nil];
+    PKRevealController * revealController = [PKRevealController revealControllerWithFrontViewController:frontVC leftViewController:rearVC options:@{PKRevealControllerRecognizesPanningOnFrontViewKey:@(NO)}];
     [[self window] setRootViewController:revealController];
     return YES;
 }
@@ -53,8 +52,8 @@
 {
     if ([[[self window] rootViewController] isKindOfClass:[PKRevealController class]]) {
         PKRevealController * reavealController = (PKRevealController *)[[self window] rootViewController];
-        if ([[reavealController leftViewController] isKindOfClass:[NAMainViewController class]]) {
-            NAMainViewController * mainViewController = (NAMainViewController *)[reavealController leftViewController];
+        if ([[reavealController leftViewController] isKindOfClass:[NAMenuViewController class]]) {
+            NAMenuViewController * mainViewController = (NAMenuViewController *)[reavealController leftViewController];
             if ([[NSUserDefaults standardUserDefaults] boolForKey:kAutoUploadKey])
                 [mainViewController displayUploadConfirmAlertView];
         }

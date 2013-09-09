@@ -10,15 +10,8 @@
 
 #import <AFNetworkActivityIndicatorManager.h>
 
-
-/*----------------------------------------------------------------------------*/
-#pragma mark - Implementation
-/*----------------------------------------------------------------------------*/
 @implementation MBProgressHUD (Network)
 
-/*----------------------------------------------------------------------------*/
-#pragma mark - Misc methods
-/*----------------------------------------------------------------------------*/
 + (MB_INSTANCETYPE)showHUDAddedTo:(UIView *)view
                          withText:(NSString *)text
             showActivityIndicator:(BOOL)activityIndicator

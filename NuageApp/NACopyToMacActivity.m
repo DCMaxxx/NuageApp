@@ -6,7 +6,9 @@
 //  Copyright (c) 2013 Maxime de Chalendar. All rights reserved.
 //
 
+#import "NASettingsViewController.h"
 #import "NACopyToMacActivity.h"
+#import "NACopyHandler.h"
 
 @interface NACopyToMacActivity ()
 
@@ -30,7 +32,9 @@
 }
 
 - (BOOL)canPerformWithActivityItems:(NSArray *)activityItems {
-    return [activityItems count] == 1 && [activityItems[0] isKindOfClass:[NSString class]];
+    return [activityItems count] == 1
+    && [activityItems[0] isKindOfClass:[NSString class]]
+    && [[NSUserDefaults standardUserDefaults] boolForKey:kCopyToMacClipboardKey];
 }
 
 - (void)prepareWithActivityItems:(NSArray *)activityItems {
@@ -38,7 +42,8 @@
 }
 
 - (void)performActivity {
-    //TODO : Something very cool here
+    [[NACopyHandler sharedInstance] copyURLToMac:[NSURL URLWithString:_link]];
+    [self activityDidFinish:YES];
 }
 
 @end

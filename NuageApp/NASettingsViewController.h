@@ -6,11 +6,13 @@
 //  Copyright (c) 2013 Maxime de Chalendar. All rights reserved.
 //
 
+#import "NANeedsRevealController.h"
+
 #define kAutoUploadKey          @"auto-upload"
 #define kCopyToClipboardKey     @"copy-to-clipboard"
 #define kCopyToMacClipboardKey  @"copy-to-mac-clipboard"
 
 
-@interface NAAutoUploadViewController : UITableViewController
+@interface NASettingsViewController : UITableViewController <NANeedsRevealController>
 
 @end

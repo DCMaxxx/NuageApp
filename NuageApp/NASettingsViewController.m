@@ -6,13 +6,16 @@
 //  Copyright (c) 2013 Maxime de Chalendar. All rights reserved.
 //
 
-#import "NAAutoUploadViewController.h"
+#import "NASettingsViewController.h"
+
+#import <PKRevealController.h>
 
 #import "NASwitchCell.h"
 
 
-@interface NAAutoUploadViewController ()
+@interface NASettingsViewController ()
 
+@property (strong, nonatomic) PKRevealController *revealController;
 @property (weak, nonatomic) IBOutlet NASwitchCell *autoUploadCell;
 @property (weak, nonatomic) IBOutlet NASwitchCell *cpLinkToClipboardCell;
 @property (weak, nonatomic) IBOutlet NASwitchCell *cpLinkToMacClipboardCell;
@@ -23,7 +26,7 @@
 /*----------------------------------------------------------------------------*/
 #pragma mark - Implementation
 /*----------------------------------------------------------------------------*/
-@implementation NAAutoUploadViewController
+@implementation NASettingsViewController
 
 /*----------------------------------------------------------------------------*/
 #pragma mark - UIViewController
@@ -53,6 +56,25 @@
         [[NSUserDefaults standardUserDefaults] setBool:[switchView isOn] forKey:key];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
+}
+
+
+/*----------------------------------------------------------------------------*/
+#pragma mark - NANeedsRevealController
+/*----------------------------------------------------------------------------*/
+- (void)configureWithRevealController:(PKRevealController *)controller {
+    _revealController = controller;
+    UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"barbuttonitem.png"] style:UIBarButtonItemStylePlain
+                                                             target:self action:@selector(displayMenu)];
+    [[self navigationItem] setLeftBarButtonItem:item];
+}
+
+
+/*----------------------------------------------------------------------------*/
+#pragma mark - Changing view controller
+/*----------------------------------------------------------------------------*/
+- (void)displayMenu {
+    [_revealController showViewController:[_revealController leftViewController] animated:YES completion:nil];
 }
 
 

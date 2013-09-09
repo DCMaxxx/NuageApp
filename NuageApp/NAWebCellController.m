@@ -12,7 +12,6 @@
 
 #import "NABookmarkDisplayViewController.h"
 #import "MBProgressHUD+Network.h"
-#import "NSError+Network.h"
 #import "NAAlertView.h"
 
 
@@ -49,7 +48,7 @@
 
 - (void)cell:(UITableViewCell *)cell wasTappedOnViewController:(UIViewController *)viewController withWebItem:(CLWebItem *)webItem {
     if (_webView) {
-        UIStoryboard * storyBoard = [UIStoryboard storyboardWithName:@"ItemsStoryboard" bundle:nil];
+        UIStoryboard * storyBoard = [UIStoryboard storyboardWithName:@"ItemListStoryboard" bundle:nil];
         NABookmarkDisplayViewController * vc = [storyBoard instantiateViewControllerWithIdentifier:@"NABookmarkDisplayViewController"];
         [vc setWebView:_webView];
         [[viewController navigationController] pushViewController:vc animated:YES];
@@ -66,13 +65,7 @@
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     [MBProgressHUD hideHUDForView:_webView hideActivityIndicator:YES animated:YES];
-    NAAlertView * av;
-    if ([error isNetworkError]) {
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVConnection];
-    } else {
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVGeneric];
-        NSLog(@"Other error on NAImageCellController : %@", error);
-    }
+    NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:nil];
     [av show];
 }
 

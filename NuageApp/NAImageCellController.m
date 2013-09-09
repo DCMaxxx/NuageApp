@@ -13,7 +13,6 @@
 
 #import "NAImageDisplayViewController.h"
 #import "MBProgressHUD+Network.h"
-#import "NSError+Network.h"
 #import "NAAlertView.h"
 
 
@@ -51,13 +50,7 @@
                                }
                                failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
                                    [MBProgressHUD hideHUDForView:imageView animated:YES];
-                                   NAAlertView * av;
-                                   if ([error isNetworkError]) {
-                                       av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVConnection];
-                                   } else {
-                                       av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVGeneric];
-                                       NSLog(@"Other error on NAImageCellController : %@", error);
-                                   }
+                                   NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:nil];
                                    [av show];
                                }];
     [cell addSubview:_imageView];
@@ -65,7 +58,7 @@
 
 - (void)cell:(UITableViewCell *)cell wasTappedOnViewController:(UIViewController *)viewController withWebItem:(CLWebItem *)webItem {
     if (_image) {
-        UIStoryboard * storyBoard = [UIStoryboard storyboardWithName:@"ItemsStoryboard" bundle:nil];
+        UIStoryboard * storyBoard = [UIStoryboard storyboardWithName:@"ItemListStoryboard" bundle:nil];
         NAImageDisplayViewController * vc = [storyBoard instantiateViewControllerWithIdentifier:@"NAImageDisplayViewController"];
         [vc setImage:_image];
         [[viewController navigationController] pushViewController:vc animated:YES];

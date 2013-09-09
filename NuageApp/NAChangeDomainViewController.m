@@ -9,7 +9,6 @@
 #import "NAChangeDomainViewController.h"
 
 #import "MBProgressHUD+Network.h"
-#import "NSError+Network.h"
 #import "NATextFieldCell.h"
 #import "NAAlertView.h"
 #import "NAAPIEngine.h"
@@ -18,7 +17,6 @@
 @interface NAChangeDomainViewController () <CLAPIEngineDelegate>
 
 @property (strong, nonatomic) NAAPIEngine * engine;
-
 @property (weak, nonatomic) IBOutlet NATextFieldCell *domainCell;
 @property (weak, nonatomic) IBOutlet NATextFieldCell *domainHomeCell;
 
@@ -36,7 +34,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[_domainCell textField] setPlaceholder:@"Custom domain"];
+    [[_domainCell textField] setKeyboardType:UIKeyboardTypeURL];
+    [[_domainCell textField] setAutocapitalizationType:UITextAutocapitalizationTypeNone];
+    [[_domainCell textField] setAutocorrectionType:UITextAutocorrectionTypeNo];
     [[_domainHomeCell textField] setPlaceholder:@"Home page (optional)"];
+    [[_domainCell textField] setKeyboardType:UIKeyboardTypeURL];
+    [[_domainCell textField] setAutocapitalizationType:UITextAutocapitalizationTypeNone];
+    [[_domainCell textField] setAutocorrectionType:UITextAutocorrectionTypeNo];
 }
 
 
@@ -47,6 +51,8 @@
     NSString * domain = [[_domainCell textField] text];
     NSString * domainHome = [[_domainHomeCell textField] text];
     if ([domain length]) {
+        [[_domainCell textField] resignFirstResponder];
+        [[_domainHomeCell textField] resignFirstResponder];
         [_engine updateCustomDomain:domain customDomainHome:([domainHome length] ? domainHome : nil) userInfo:nil];
         [MBProgressHUD showHUDAddedTo:[self view] withText:@"Updating account..." showActivityIndicator:YES animated:YES];
     } else {
@@ -73,17 +79,7 @@
 - (void)requestDidFailWithError:(NSError *)error connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
     [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
     
-    NAAlertView * av;
-    if ([error isNetworkError]) {
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVConnection];
-    } else if ([error code] == NSURLErrorUnknown && [[error userInfo][@"statusCode"] isEqual:@(204)]) { // Need paid plan. I guess.
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVPremium];
-        [av setMessage:@"A premium account is needed to setup a custom domain"];
-    }
-    else {
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVGeneric];
-        NSLog(@"Other error on NAChangeDomainViewController : %@", error);
-    }
+    NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:userInfo];
     [av show];
 }
 

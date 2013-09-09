@@ -18,8 +18,8 @@
 #import "NAAPIEngine.h"
 #import "NAAlertView.h"
 
-#define kCameraSourceButtonIndex    0
-#define kLibrarySourceButtonIndex   1
+#define kAlertViewButtonIndexCamera    0
+#define kAlertViewButtonIndexLibrary   1
 
 
 @interface NADropPictureController () <UIImagePickerControllerDelegate,
@@ -29,8 +29,7 @@
 @property (strong, nonatomic) UIImage * image;
 @property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) UIImagePickerController * imagePickerController;
-
-@property (strong, nonatomic) UIViewController * tmpViewController;
+@property (strong, nonatomic) UIViewController * mainViewController;
 
 @end
 
@@ -66,7 +65,7 @@
                                                destructiveButtonTitle:nil
                                                     otherButtonTitles:@"Camera", @"Library", nil];
             [as showInView:[vc view]];
-            _tmpViewController = vc;
+            _mainViewController = vc;
             return ;
         }
         else if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
@@ -103,13 +102,13 @@
 #pragma mark - UIActionSheetDelegate
 /*----------------------------------------------------------------------------*/
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == kCameraSourceButtonIndex)
+    if (buttonIndex == kAlertViewButtonIndexCamera)
         [_imagePickerController setSourceType:UIImagePickerControllerSourceTypeCamera];
-    else if (buttonIndex == kLibrarySourceButtonIndex)
+    else if (buttonIndex == kAlertViewButtonIndexLibrary)
         [_imagePickerController setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     else
         return ;
-    [_tmpViewController presentViewController:_imagePickerController animated:YES completion:nil];
+    [_mainViewController presentViewController:_imagePickerController animated:YES completion:nil];
 }
 
 
@@ -119,10 +118,7 @@
 - (void)changedImage:(UIImage *)image {
     _image = image;
     [_imageView setImage:_image];
-    if (_delegate) {
-        if ([_delegate respondsToSelector:@selector(didFinishPickingItem:)])
-            [_delegate didFinishPickingItem:[image pngData]];
-    }    
+    [_delegate didFinishPickingItem:[image pngData]];
 }
 
 @end

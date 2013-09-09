@@ -13,7 +13,6 @@
 
 #import "NATextDisplayViewController.h"
 #import "MBProgressHUD+Network.h"
-#import "NSError+Network.h"
 #import "NAAlertView.h"
 
 
@@ -52,13 +51,7 @@
         [_label setText:_fullText];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [MBProgressHUD hideHUDForView:_label animated:YES];
-        NAAlertView * av;
-        if ([error isNetworkError])
-            av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVConnection];
-        else {
-            av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVGeneric];
-            NSLog(@"Other error on NATextCellController : %@", error);
-        }
+        NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:nil];
         [av show];
     }];
     [operation start];
@@ -66,7 +59,7 @@
 
 - (void)cell:(UITableViewCell *)cell wasTappedOnViewController:(UIViewController *)viewController withWebItem:(CLWebItem *)webItem {
     if (_fullText) {
-        UIStoryboard * storyBoard = [UIStoryboard storyboardWithName:@"ItemsStoryboard" bundle:nil];
+        UIStoryboard * storyBoard = [UIStoryboard storyboardWithName:@"ItemListStoryboard" bundle:nil];
         NATextDisplayViewController * vc = [storyBoard instantiateViewControllerWithIdentifier:@"NATextDisplayViewController"];
         [vc setFullText:_fullText];
         [[viewController navigationController] pushViewController:vc animated:YES];

@@ -12,7 +12,6 @@
 #import <CLWebItem.h>
 
 #import "MBProgressHUD+Network.h"
-#import "NSError+Network.h"
 #import "NAIconHandler.h"
 #import "NAAlertView.h"
 
@@ -65,13 +64,7 @@
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [MBProgressHUD hideHUDForView:[cell contentView] animated:YES];
             _isDownloadingFile = NO;
-            NAAlertView * av;
-            if ([error isNetworkError])
-                av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVConnection];
-            else {
-                av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVGeneric];
-                NSLog(@"Other error on NADocumentCellController : %@", error);
-            }
+            NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:nil];
             [av show];
         }];
         [operation start];

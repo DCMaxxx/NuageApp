@@ -8,25 +8,24 @@
 
 #import "NABonjourClient.h"
 
-@interface NABonjourClient () <NSNetServiceBrowserDelegate, NSNetServiceDelegate, DTBonjourDataConnectionDelegate>
+
+@interface NABonjourClient () <NSNetServiceBrowserDelegate, NSNetServiceDelegate>
 
 @property (strong, nonatomic) NSNetServiceBrowser * serviceBrowser;
 @property (strong, nonatomic) NSMutableArray * servers;
-@property (nonatomic) NSNetService * currentService;
+@property (strong, nonatomic) NSString * serverToConnect;
 
 @end
 
+
+/*----------------------------------------------------------------------------*/
+#pragma mark - Implementation
+/*----------------------------------------------------------------------------*/
 @implementation NABonjourClient
 
-+ (NABonjourClient *)sharedInstance {
-    static dispatch_once_t pred;
-    static NABonjourClient *shared = nil;
-    dispatch_once(&pred, ^{
-        shared = [[NABonjourClient alloc] init];
-    });
-    return shared;
-}
-
+/*----------------------------------------------------------------------------*/
+#pragma mark - Init
+/*----------------------------------------------------------------------------*/
 - (id)init {
     if (self = [super init]) {
         _servers = [NSMutableArray array];
@@ -37,42 +36,51 @@
     return self;
 }
 
-- (BOOL)isReady {
-    return _currentConnection && [_currentConnection isOpen];
-}
 
-
-- (void)chooseServer:(NSUInteger)idx {
-    if ([_servers count] > idx) {
-        NSLog(@"Choosing server : %@", _servers[idx]);
-        _currentService = _servers[idx];
-        _currentConnection = [[DTBonjourDataConnection alloc] initWithService:_currentService];
-        [_currentConnection setDelegate:self];
-        [_currentConnection open];
-    }
-}
-
-- (void)connectionDidClose:(DTBonjourDataConnection *)connection {
-    NSLog(@"Connection closed");
-    _currentConnection = nil;
-    [self chooseServer:0];
-}
-
-#pragma mark - NetServiceBrowser Delegate
-- (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser
-           didFindService:(NSNetService *)aNetService moreComing:(BOOL)moreComing {
-    NSLog(@"Found server : %@", aNetService);
+/*----------------------------------------------------------------------------*/
+#pragma mark - NSNetServiceBrowserDelegate
+/*----------------------------------------------------------------------------*/
+- (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didFindService:(NSNetService *)aNetService moreComing:(BOOL)moreComing {
     [aNetService setDelegate:self];
 	[aNetService startMonitoring];
     [_servers addObject:aNetService];
-    [self chooseServer:0];
+    if (_serverToConnect)
+        [self chooseServerWithName:_serverToConnect];
+    if (!moreComing && _delegate && [_delegate respondsToSelector:@selector(didUpdateSevers:)])
+        [_delegate didUpdateSevers:[_servers copy]];
 }
 
-- (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser
-         didRemoveService:(NSNetService *)aNetService moreComing:(BOOL)moreComing{
-    NSLog(@"Removed server : %@", aNetService);
-    _currentConnection = nil;
+- (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didRemoveService:(NSNetService *)aNetService moreComing:(BOOL)moreComing{
     [_servers removeObject:aNetService];
+    if (!moreComing && _delegate && [_delegate respondsToSelector:@selector(didUpdateSevers:)])
+        [_delegate didUpdateSevers:[_servers copy]];
+}
+
+
+/*----------------------------------------------------------------------------*/
+#pragma mark - Misc public methods
+/*----------------------------------------------------------------------------*/
+- (void)chooseServerWithIndex:(NSUInteger)idx {
+    if ([_servers count] > idx) {
+        NSNetService * currentService = _servers[idx];
+        DTBonjourDataConnection * currentConnection = [[DTBonjourDataConnection alloc] initWithService:currentService];
+        [currentConnection open];
+        if (_delegate && [_delegate respondsToSelector:@selector(didConnectToServer:withConnection:)])
+            [_delegate didConnectToServer:[currentService name] withConnection:currentConnection];
+    }
+}
+
+- (void)chooseServerWithName:(NSString *)name {
+    NSUInteger i = 0;
+    _serverToConnect = name;
+    for (NSNetService * server in _servers) {
+        if ([[server name] isEqualToString:name]) {
+            [self chooseServerWithIndex:i];
+            _serverToConnect = nil;
+            break ;
+        }
+        ++i;
+    }
 }
 
 @end

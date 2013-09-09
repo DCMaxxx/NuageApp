@@ -11,7 +11,6 @@
 #import <AFNetworking.h>
 
 #import "MBProgressHUD+Network.h"
-#import "NSError+Network.h"
 #import "NATextFieldCell.h"
 #import "NAAlertView.h"
 #import "NAAPIEngine.h"
@@ -20,7 +19,6 @@
 @interface NAChangePasswordViewController () <CLAPIEngineDelegate>
 
 @property (strong, nonatomic) NAAPIEngine * engine;
-
 @property (weak, nonatomic) IBOutlet NATextFieldCell *currentPasswordCell;
 @property (weak, nonatomic) IBOutlet NATextFieldCell *updatedPasswordCell;
 
@@ -53,6 +51,8 @@
     NSString * currentPassword = [[_currentPasswordCell textField] text];
     NSString * updatedPassword = [[_updatedPasswordCell textField] text];
     if ([currentPassword length] && [updatedPassword length]) {
+        [[_currentPasswordCell textField] resignFirstResponder];
+        [[_updatedPasswordCell textField] resignFirstResponder];
         [MBProgressHUD showHUDAddedTo:[self view] withText:@"Updating account..." showActivityIndicator:YES animated:YES];
         [_engine changeToPassword:updatedPassword withCurrentPassword:currentPassword userInfo:nil];
     } else {
@@ -77,19 +77,7 @@
     [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
     [_engine setClearsCookies:NO];
     
-    NAAlertView * av;
-    if ([error isNetworkError]) {
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVConnection];
-    } else if ([error code] == NSURLErrorUnknown && [[error userInfo][@"statusCode"] isEqual:@(500)]) { // Bad current password
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVFailedLogin];
-        [av setMessage:@"Please check your password"];
-    } else if ([error code] == NSURLErrorUnknown && [[error userInfo][@"statusCode"] isEqual:@(204)]) { // Bad email
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVFailedLogin];
-        [av setMessage:@"Please check your new email address"];
-    } else {
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVGeneric];
-        NSLog(@"Other error on NAChangePasswordViewController : %@", error);
-    }
+    NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:userInfo];
     [av show];
 }
 

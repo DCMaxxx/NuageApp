@@ -10,8 +10,7 @@
 
 #import <AFNetworking.h>
 
-#import "NAMainViewController.h"
-#import "NSError+Network.h"
+#import "NAMenuViewController.h"
 #import "NANeedsEngine.h"
 #import "NASwitchCell.h"
 #import "NAAlertView.h"
@@ -25,9 +24,7 @@
 
 @property (strong, nonatomic) NAAPIEngine * engine;
 @property (strong, nonatomic) CLAccount * account;
-
 @property (strong, nonatomic) PKRevealController * revealController;
-
 @property (weak, nonatomic) IBOutlet UITableViewCell *emailCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *customDomainCell;
 @property (weak, nonatomic) IBOutlet NASwitchCell *privateUploadCell;
@@ -45,10 +42,7 @@
 /*----------------------------------------------------------------------------*/
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(userDidLogout:)
-                                                     name:@"NAUserLogout"
-                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogout:) name:@"NAUserLogout" object:nil];
     }
     return self;
 }
@@ -76,7 +70,7 @@
 }
 
 
-/*----------------------------------------------------------------------------*/
+/*-----------------------------------n-----------------------------------------*/
 #pragma mark - UITableViewDelegate
 /*----------------------------------------------------------------------------*/
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -90,8 +84,8 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == kLogoutActionSheetButtonIndex) {
         [_engine logout];
-        if ([[_revealController leftViewController] isKindOfClass:[NAMainViewController class]]) {
-            NAMainViewController * mainController = (NAMainViewController *)[_revealController leftViewController];
+        if ([[_revealController leftViewController] isKindOfClass:[NAMenuViewController class]]) {
+            NAMenuViewController * mainController = (NAMenuViewController *)[_revealController leftViewController];
             [mainController displayLoginView];
         }
     }
@@ -109,11 +103,8 @@
 }
 
 - (IBAction)didTapLogoutButton:(id)sender {
-    UIActionSheet * as = [[UIActionSheet alloc] initWithTitle:@"Do you really want to log out ?"
-                                                     delegate:self
-                                            cancelButtonTitle:@"Cancel"
-                                       destructiveButtonTitle:@"Log out"
-                                            otherButtonTitles:nil];
+    UIActionSheet * as = [[UIActionSheet alloc] initWithTitle:@"Do you really want to log out ?" delegate:self
+                                            cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Log out" otherButtonTitles:nil];
     [as showInView:[self view]];
 }
 
@@ -131,13 +122,7 @@
     
     [[_privateUploadCell switchView] setOn:![[_privateUploadCell switchView] isOn]];
 
-    NAAlertView * av;
-    if ([error isNetworkError]) {
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVConnection];
-    } else {
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVGeneric];
-        NSLog(@"Other error in NAAcountViewController : %@", error);
-    }
+    NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:userInfo];
     [av show];
 }
 
@@ -149,11 +134,16 @@
     [_engine setDelegate:self];
     _account = [_engine currentAccount];
 
-    [[_emailCell detailTextLabel] setText:[_account email]];
-    
+    if ([_account email])
+        [[_emailCell detailTextLabel] setText:[_account email]];
+    else
+        [[_emailCell detailTextLabel] setText:@"Email"];
+
     if ([_account domain])
         [[_customDomainCell detailTextLabel] setText:[[_account domain] absoluteString]];
-    
+    else
+        [[_customDomainCell detailTextLabel] setText:@"Premium account only"];
+
     [[_privateUploadCell switchView] setOn:([_account uploadsArePrivate]) animated:YES];
     [[_privateUploadCell switchView] addTarget:self action:@selector(changedPrivateUpload:) forControlEvents:UIControlEventValueChanged];
     
@@ -166,11 +156,8 @@
 /*----------------------------------------------------------------------------*/
 - (void)configureWithRevealController:(PKRevealController *)controller {
     _revealController = controller;
-    UIBarButtonItem * item = [[UIBarButtonItem alloc]
-                              initWithImage:[UIImage imageNamed:@"barbuttonitem.png"]
-                              style:UIBarButtonItemStylePlain
-                              target:self
-                              action:@selector(displayMenu)];
+    UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"barbuttonitem.png"] style:UIBarButtonItemStylePlain
+                              target:self action:@selector(displayMenu)];
     [[self navigationItem] setLeftBarButtonItem:item];
 }
 
@@ -206,9 +193,6 @@
 /*----------------------------------------------------------------------------*/
 - (void)userDidLogout:(NSNotification *)notification {
     [_engine cancelAllConnections];
-    [[_emailCell detailTextLabel] setText:@"Email"];
-    [[_customDomainCell detailTextLabel] setText:@"Premium account only"];
 }
-
 
 @end

@@ -9,7 +9,6 @@
 #import "NALoginViewController.h"
 
 #import "MBProgressHUD+Network.h"
-#import "NSError+Network.h"
 #import "NATextFieldCell.h"
 #import "NAAlertView.h"
 #import "NAAPIEngine.h"
@@ -19,7 +18,6 @@
 
 @property (weak, nonatomic) IBOutlet NATextFieldCell *emailCell;
 @property (weak, nonatomic) IBOutlet NATextFieldCell *passwordCell;
-
 @property (strong, nonatomic) NAAPIEngine * engine;
 
 @end
@@ -47,20 +45,14 @@
 
 
 /*----------------------------------------------------------------------------*/
-#pragma mark - UITextFieldDelegate
-/*----------------------------------------------------------------------------*/
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    return YES;
-}
-
-
-/*----------------------------------------------------------------------------*/
 #pragma mark - User actions
 /*----------------------------------------------------------------------------*/
 - (IBAction)tappedLoginButton:(id)sender {
     NSString * email = [[_emailCell textField] text];
     NSString * password = [[_passwordCell textField] text];
     if ([email length] && [password length]) {
+        [[_emailCell textField] resignFirstResponder];
+        [[_passwordCell textField] resignFirstResponder];
         [MBProgressHUD showHUDAddedTo:[self view]
                              withText:@"Loggin in..."
                 showActivityIndicator:YES
@@ -80,6 +72,8 @@
     NSString * email = [[_emailCell textField] text];
     NSString * password = [[_passwordCell textField] text];
     if ([email length] && [password length]) {
+        [[_emailCell textField] resignFirstResponder];
+        [[_passwordCell textField] resignFirstResponder];
         [MBProgressHUD showHUDAddedTo:[self view]
                              withText:@"Registering..."
                 showActivityIndicator:YES
@@ -111,40 +105,16 @@
     [_engine setPassword:nil];
     [_engine setClearsCookies:NO];
 
-    NAAlertView * av;
-    if ([error code] == NSURLErrorUnknown && [error userInfo][NSLocalizedRecoverySuggestionErrorKey]) { // Registering - Invalid email
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVFailedRegistering];
-        [av setMessage:@"Please enter a valid email address"];
-    } else if ([error code] == NSURLErrorUnknown && [[error userInfo][@"statusCode"] isEqual:@(406)]) { // Registering - Email already in use
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVFailedRegistering];
-        [av setMessage:@"This email address is already in use"];
-    } else if ([error code] == NSURLErrorUserCancelledAuthentication) { // Loggin in - Bad email or password
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVFailedLogin];
-    } else if ([error code] == NSURLErrorUnknown && [[error userInfo][@"statusCode"] isEqual:@(409)]) { // Loggin in - Unactivated account (Never got it though)
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVUnactivatedAccount];
-    } else if ([error isNetworkError]) { // Network-related error
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVConnection];
-    } else {
-        av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVGeneric];
-        NSLog(@"Other error in NALoginViewController : %@", error);
-    }
+    NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:userInfo];
     [av show];
 }
 
 - (void)accountCreationSucceeded:(CLAccount *)newAccount connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
-    [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
-
-    [_engine setCurrentAccount:newAccount];
-    [_engine setClearsCookies:NO];
-    [self displayMainViewControllerWithTabIndex:1];
+    [self displayMainViewControllerWithAccount:newAccount];
 }
 
 - (void)accountInformationRetrievalSucceeded:(CLAccount *)account connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
-    [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
-
-    [_engine setCurrentAccount:account];
-    [_engine setClearsCookies:NO];
-    [self displayMainViewControllerWithTabIndex:1];
+    [self displayMainViewControllerWithAccount:account];
 }
 
 
@@ -162,7 +132,11 @@
 /*----------------------------------------------------------------------------*/
 #pragma mark - Changing view controller
 /*----------------------------------------------------------------------------*/
-- (void)displayMainViewControllerWithTabIndex:(NSUInteger)tabIndex {
+- (void)displayMainViewControllerWithAccount:(CLAccount *)account {
+    [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
+    [_engine setCurrentAccount:account];
+    [_engine setClearsCookies:NO];
+    
     NSString * email = [[_emailCell textField] text];
     NSString * password = [[_passwordCell textField] text];
     [_engine setUserWithEmail:email andPassword:password];
