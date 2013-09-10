@@ -8,7 +8,10 @@
 
 #import "NAAppDelegate.h"
 
-@implementation NAAppDelegate 
+#import <ServiceManagement/ServiceManagement.h>
+
+
+@implementation NAAppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -23,6 +26,9 @@
     [statusItem setImage:icon];
     [statusItem setAlternateImage:selectedIcon];
     [statusItem setHighlightMode:YES];
+    
+    if ([self isLaunchAtStartupEnabled])
+        [_launchAtStartup setState:NSOnState];
 
     server = [[DTBonjourServer alloc] initWithBonjourType:@"_NuageApp._tcp."];
     [server setDelegate:self];
@@ -53,6 +59,27 @@
 
 - (IBAction)tappedQuitButton:(id)sender {
     [NSApp terminate:self];
+}
+
+- (IBAction)tappedLaunchAtStartupButton:(id)sender {
+    [self setLaunchAtStartupValue:![self isLaunchAtStartupEnabled]];
+}
+
+- (BOOL)isLaunchAtStartupEnabled {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"launch-at-startup"];
+}
+
+- (void)setLaunchAtStartupValue:(BOOL)launchAtStartup {
+    if (SMLoginItemSetEnabled ((__bridge CFStringRef)@"com.maxime-dechalendar.NuageApp-Server-Helper", launchAtStartup)) {
+        [_launchAtStartup setState:(launchAtStartup ? NSOnState : NSOffState)];
+        [[NSUserDefaults standardUserDefaults] setBool:launchAtStartup forKey:@"launch-at-startup"];
+    } else {
+        NSAlert *alert = [NSAlert alertWithMessageText:@"An error ocurred"
+                                         defaultButton:@"OK" alternateButton:nil otherButton:nil
+                             informativeTextWithFormat:@"Oops. You might want to try again. Sorry for the inconvenience !"];
+        [alert runModal];
+
+    }
 }
 
 @end

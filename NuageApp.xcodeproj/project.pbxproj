@@ -21,7 +21,7 @@
 		9C21167417D9C82400F4C716 /* NATextCellController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C21166417D9C82400F4C716 /* NATextCellController.m */; };
 		9C21167517D9C82400F4C716 /* NATextDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C21166617D9C82400F4C716 /* NATextDisplayViewController.m */; };
 		9C21167717D9C82400F4C716 /* NAWebCellController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C21166A17D9C82400F4C716 /* NAWebCellController.m */; };
-		9C2609F517DC46A700DD1143 /* AboutStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C2609F417DC46A700DD1143 /* AboutStoryboard.storyboard */; };
+		9C2609F517DC46A700DD1143 /* SettingsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C2609F417DC46A700DD1143 /* SettingsStoryboard.storyboard */; };
 		9C2CB8A417CCB5E500561AA0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C2CB8A317CCB5E500561AA0 /* UIKit.framework */; };
 		9C2CB8A617CCB5E500561AA0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C2CB8A517CCB5E500561AA0 /* Foundation.framework */; };
 		9C2CB8A817CCB5E500561AA0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C2CB8A717CCB5E500561AA0 /* CoreGraphics.framework */; };
@@ -154,7 +154,7 @@
 		9C21166617D9C82400F4C716 /* NATextDisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NATextDisplayViewController.m; path = NuageApp/NATextDisplayViewController.m; sourceTree = "<group>"; };
 		9C21166917D9C82400F4C716 /* NAWebCellController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NAWebCellController.h; path = NuageApp/NAWebCellController.h; sourceTree = "<group>"; };
 		9C21166A17D9C82400F4C716 /* NAWebCellController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NAWebCellController.m; path = NuageApp/NAWebCellController.m; sourceTree = "<group>"; };
-		9C2609F417DC46A700DD1143 /* AboutStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AboutStoryboard.storyboard; sourceTree = "<group>"; };
+		9C2609F417DC46A700DD1143 /* SettingsStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SettingsStoryboard.storyboard; sourceTree = "<group>"; };
 		9C2CB8A017CCB5E500561AA0 /* NuageApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NuageApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C2CB8A317CCB5E500561AA0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9C2CB8A517CCB5E500561AA0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -362,7 +362,7 @@
 			name = BonjourClient;
 			sourceTree = "<group>";
 		};
-		9C2609F617DC4EC400DD1143 /* About */ = {
+		9C2609F617DC4EC400DD1143 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
 				9CAEB4ED17DDED400054356C /* NAMacPickerViewController.h */,
@@ -370,7 +370,7 @@
 				9C87C3C017D1F25400322005 /* NASettingsViewController.h */,
 				9C87C3C117D1F25400322005 /* NASettingsViewController.m */,
 			);
-			name = About;
+			name = Settings;
 			path = ..;
 			sourceTree = "<group>";
 		};
@@ -420,7 +420,7 @@
 				9C7C27C117D756B100CDE4E7 /* Drop item */,
 				9C6D493417D36C4900C61F80 /* View item */,
 				9C52C51017CF3CBB0019C026 /* Account */,
-				9C2609F617DC4EC400DD1143 /* About */,
+				9C2609F617DC4EC400DD1143 /* Settings */,
 				9C9E994517D4A9EE00D20A9B /* Other sources */,
 			);
 			path = NuageApp;
@@ -538,7 +538,7 @@
 				9CF8630F17DB0AAB000ADD8E /* AccountStoryboard.storyboard */,
 				9CF8631117DB0ED4000ADD8E /* ItemListStoryboard.storyboard */,
 				9CF8631317DB10F3000ADD8E /* TrashListStoryboard.storyboard */,
-				9C2609F417DC46A700DD1143 /* AboutStoryboard.storyboard */,
+				9C2609F417DC46A700DD1143 /* SettingsStoryboard.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -1025,7 +1025,7 @@
 				9CF8631417DB10F3000ADD8E /* TrashListStoryboard.storyboard in Resources */,
 				9CF8631817DB204F000ADD8E /* barbuttonitem.png in Resources */,
 				9CF8631917DB204F000ADD8E /* barbuttonitem@2x.png in Resources */,
-				9C2609F517DC46A700DD1143 /* AboutStoryboard.storyboard in Resources */,
+				9C2609F517DC46A700DD1143 /* SettingsStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

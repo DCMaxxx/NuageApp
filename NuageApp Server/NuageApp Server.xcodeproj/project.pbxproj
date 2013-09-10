@@ -16,7 +16,33 @@
 		9C438C0917DA0B6000160E22 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C438C0717DA0B6000160E22 /* MainMenu.xib */; };
 		9C438C1117DA0D7900160E22 /* baricon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C438C0F17DA0D7900160E22 /* baricon.png */; };
 		9C438C1217DA0D7900160E22 /* barselectedIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C438C1017DA0D7900160E22 /* barselectedIcon.png */; };
+		9CAFFE7417DEA96000347256 /* NuageApp Server Helper.app in Copy Helper App */ = {isa = PBXBuildFile; fileRef = 9CAFFE7217DEA8E000347256 /* NuageApp Server Helper.app */; };
+		9CAFFE7617DEA9A200347256 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CAFFE7517DEA9A200347256 /* ServiceManagement.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9CAFFE7117DEA8E000347256 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9CAFFE6D17DEA8DF00347256 /* NuageApp Server Helper.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9CAFFE4D17DEA8DF00347256;
+			remoteInfo = "NuageApp Server Helper";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9CAFFE7317DEA93500347256 /* Copy Helper App */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LoginItems;
+			dstSubfolderSpec = 1;
+			files = (
+				9CAFFE7417DEA96000347256 /* NuageApp Server Helper.app in Copy Helper App */,
+			);
+			name = "Copy Helper App";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		9C438BEF17DA0B5F00160E22 /* NuageApp Server.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NuageApp Server.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -34,6 +60,8 @@
 		9C438C0817DA0B6000160E22 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9C438C0F17DA0D7900160E22 /* baricon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = baricon.png; sourceTree = "<group>"; };
 		9C438C1017DA0D7900160E22 /* barselectedIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = barselectedIcon.png; sourceTree = "<group>"; };
+		9CAFFE6D17DEA8DF00347256 /* NuageApp Server Helper.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "NuageApp Server Helper.xcodeproj"; path = "NuageApp Server Helper/NuageApp Server Helper.xcodeproj"; sourceTree = "<group>"; };
+		9CAFFE7517DEA9A200347256 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		9CF7AA176CF24B6899070064 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F88DA7809B674021864A6E89 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -43,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CAFFE7617DEA9A200347256 /* ServiceManagement.framework in Frameworks */,
 				9C438BF317DA0B5F00160E22 /* Cocoa.framework in Frameworks */,
 				129D612C68204C0D951850B8 /* libPods.a in Frameworks */,
 			);
@@ -54,6 +83,7 @@
 		9C438BE617DA0B5F00160E22 = {
 			isa = PBXGroup;
 			children = (
+				9CAFFE6D17DEA8DF00347256 /* NuageApp Server Helper.xcodeproj */,
 				9C438BF817DA0B6000160E22 /* NuageApp Server */,
 				9C438BF117DA0B5F00160E22 /* Frameworks */,
 				9C438BF017DA0B5F00160E22 /* Products */,
@@ -72,6 +102,7 @@
 		9C438BF117DA0B5F00160E22 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9CAFFE7517DEA9A200347256 /* ServiceManagement.framework */,
 				9C438BF217DA0B5F00160E22 /* Cocoa.framework */,
 				9C438BF417DA0B5F00160E22 /* Other Frameworks */,
 				9CF7AA176CF24B6899070064 /* libPods.a */,
@@ -114,6 +145,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		9CAFFE6E17DEA8DF00347256 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9CAFFE7217DEA8E000347256 /* NuageApp Server Helper.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -126,6 +165,7 @@
 				9C438BEC17DA0B5F00160E22 /* Frameworks */,
 				9C438BED17DA0B5F00160E22 /* Resources */,
 				76951EFD38584323B5983A2F /* Copy Pods Resources */,
+				9CAFFE7317DEA93500347256 /* Copy Helper App */,
 			);
 			buildRules = (
 			);
@@ -156,12 +196,28 @@
 			mainGroup = 9C438BE617DA0B5F00160E22;
 			productRefGroup = 9C438BF017DA0B5F00160E22 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 9CAFFE6E17DEA8DF00347256 /* Products */;
+					ProjectRef = 9CAFFE6D17DEA8DF00347256 /* NuageApp Server Helper.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				9C438BEE17DA0B5F00160E22 /* NuageApp Server */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		9CAFFE7217DEA8E000347256 /* NuageApp Server Helper.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "NuageApp Server Helper.app";
+			remoteRef = 9CAFFE7117DEA8E000347256 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		9C438BED17DA0B5F00160E22 /* Resources */ = {
@@ -278,7 +334,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -305,7 +361,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -318,6 +374,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NuageApp Server/NuageApp Server-Prefix.pch";
 				INFOPLIST_FILE = "NuageApp Server/NuageApp Server-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -328,9 +385,11 @@
 			baseConfigurationReference = F88DA7809B674021864A6E89 /* Pods.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NuageApp Server/NuageApp Server-Prefix.pch";
 				INFOPLIST_FILE = "NuageApp Server/NuageApp Server-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

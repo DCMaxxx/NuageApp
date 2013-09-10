@@ -47,7 +47,7 @@
         _viewControllers = @[ [[UIStoryboard storyboardWithName:@"AccountStoryboard" bundle:nil] instantiateInitialViewController],
                               [[UIStoryboard storyboardWithName:@"ItemListStoryboard" bundle:nil] instantiateInitialViewController],
                               [[UIStoryboard storyboardWithName:@"TrashListStoryboard" bundle:nil] instantiateInitialViewController],
-                              [[UIStoryboard storyboardWithName:@"AboutStoryboard" bundle:nil] instantiateInitialViewController]
+                              [[UIStoryboard storyboardWithName:@"SettingsStoryboard" bundle:nil] instantiateInitialViewController]
                              ];
         _engine = [[NAAPIEngine alloc] initWithDelegate:self];
         _needToShodUploadPopup = NO;
@@ -111,10 +111,6 @@
                                                   message:@"Link has been copied according to your preferences"
                                                  delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [av show];
-}
-
-- (void)fileUploadDidProgress:(CGFloat)percentageComplete connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
-    NSLog(@"%f %%", percentageComplete * 100);
 }
 
 - (void)requestDidFailWithError:(NSError *)error connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
