@@ -89,7 +89,7 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
-                                            <segue destination="r7m-lx-n34" kind="push" id="slc-dc-LVj"/>
+                                            <segue destination="r7m-lx-n34" kind="push" identifier="NAMacPickerSegue" id="slc-dc-LVj"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -160,22 +160,6 @@
             <point key="canvasLocation" x="-565" y="43"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="NAMacPickerViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NAMacPickerViewController.h"/>
-        </class>
-        <class className="NASettingsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NASettingsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="autoUploadCell" candidateClass="NASwitchCell"/>
-                <relationship kind="outlet" name="cpLinkToClipboardCell" candidateClass="NASwitchCell"/>
-                <relationship kind="outlet" name="cpLinkToMacClipboardCell" candidateClass="NASwitchCell"/>
-            </relationships>
-        </class>
-        <class className="NASwitchCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NASwitchCell.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

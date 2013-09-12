@@ -19,6 +19,6 @@
 - (NSString *)itemPathExtenstion;
 
 @optional
-@property (strong, nonatomic) id<NADropPickerControllerDelegate> delegate;
+@property (weak, nonatomic) id<NADropPickerControllerDelegate> delegate;
 
 @end

@@ -22,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *itemLinkCell;
 @property (weak, nonatomic) IBOutlet NASwitchCell *itemPrivateCell;
 
-@property (strong, nonatomic) id<NAItemViewControllerDelegate> delegate;
+@property (weak, nonatomic) id<NAItemViewControllerDelegate> delegate;
 @property (strong, nonatomic) CLWebItem * webItem;
 
 - (void)configureWithItem:(CLWebItem *)item;

@@ -51,7 +51,6 @@
 #pragma mark - UITableViewDataSource
 /*----------------------------------------------------------------------------*/
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"%zu servers", (unsigned long)[_servers count]);
     return [_servers count];
 }
 

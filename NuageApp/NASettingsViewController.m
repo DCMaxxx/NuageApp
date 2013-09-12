@@ -11,6 +11,7 @@
 #import <PKRevealController.h>
 
 #import "NASwitchCell.h"
+#import "NAAlertView.h"
 
 
 @interface NASettingsViewController ()
@@ -39,6 +40,15 @@
     [self configureCell:_cpLinkToMacClipboardCell withSettingKey:kCopyToMacClipboardKey];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self configureWithRevealController:_revealController];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
 
 /*----------------------------------------------------------------------------*/
 #pragma mark - User interaction
@@ -64,6 +74,7 @@
 /*----------------------------------------------------------------------------*/
 - (void)configureWithRevealController:(PKRevealController *)controller {
     _revealController = controller;
+    [[[self navigationController] navigationBar] addGestureRecognizer:[_revealController revealPanGestureRecognizer]];
     UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"barbuttonitem.png"] style:UIBarButtonItemStylePlain
                                                              target:self action:@selector(displayMenu)];
     [[self navigationItem] setLeftBarButtonItem:item];
@@ -75,6 +86,18 @@
 /*----------------------------------------------------------------------------*/
 - (void)displayMenu {
     [_revealController showViewController:[_revealController leftViewController] animated:YES completion:nil];
+}
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    if ([identifier isEqualToString:@"NAMacPickerSegue"]
+        && ![[_cpLinkToMacClipboardCell switchView] isOn]) {
+        NAAlertView * av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVGeneric];
+        [av setTitle:@"You're doing it wrong !"];
+        [av setMessage:@"Please enable copy to Mac first"];
+        [av show];
+        return NO;
+    }
+    return YES;
 }
 
 

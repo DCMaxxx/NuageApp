@@ -13,7 +13,7 @@
 
 @interface NABonjourClient : NSObject
 
-@property (strong, nonatomic) id<NABonjourClientDelegate> delegate;
+@property (weak, nonatomic) id<NABonjourClientDelegate> delegate;
 
 - (void)chooseServerWithIndex:(NSUInteger)idx;
 - (void)chooseServerWithName:(NSString *)name;

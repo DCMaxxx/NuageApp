@@ -36,7 +36,12 @@
 /*----------------------------------------------------------------------------*/
 - (void)cell:(UITableViewCell *)cell didLoadWithWebItem:(CLWebItem *)webItem {
     _isDownloadingFile = NO;
-    [[cell contentView] addSubview:[[UIImageView alloc] initWithImage:[NAIconHandler iconWithKind:[webItem type]]]];
+    CGRect frame = [[cell contentView] frame];
+    frame.origin.x -= 10.0f;
+    UIImageView * imageView = [[UIImageView alloc] initWithFrame:frame];
+    [imageView setContentMode:UIViewContentModeScaleAspectFit];
+    [imageView setImage:[NAIconHandler imageWithKind:[webItem type]]];
+    [[cell contentView] addSubview:imageView];
 }
 
 - (void)cell:(UITableViewCell *)cell wasTappedOnViewController:(UIViewController *)viewController withWebItem:(CLWebItem *)webItem {

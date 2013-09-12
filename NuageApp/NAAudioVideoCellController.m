@@ -31,9 +31,11 @@
 /*----------------------------------------------------------------------------*/
 - (void)cell:(UITableViewCell *)cell didLoadWithWebItem:(CLWebItem *)webItem {
     CGRect frame = [[cell contentView] frame];
+    frame.origin.x -= 10.0f;
     UIImageView * imageView = [[UIImageView alloc] initWithFrame:frame];
+    [imageView setContentMode:UIViewContentModeScaleAspectFit];
     [imageView setImage:[NAIconHandler imageWithKind:[webItem type]]];
-    [cell addSubview:imageView];
+    [[cell contentView] addSubview:imageView];
 
     _player = [[MPMoviePlayerViewController alloc] initWithContentURL:[webItem remoteURL]];
 }

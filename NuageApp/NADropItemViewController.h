@@ -12,7 +12,7 @@
 
 @interface NADropItemViewController : UITableViewController <NANeedsEngine>
 
-@property id<NADropItemPickerController> dropPickerController;
-@property id item;
+@property (strong, nonatomic) id<NADropItemPickerController> dropPickerController;
+@property (strong, nonatomic) id item;
 
 @end

@@ -143,6 +143,7 @@
     [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
     [_progressHUD hide:YES];
     [[NACopyHandler sharedInstance] copyURL:[item URL]];
+    [[self navigationController] dismissViewControllerAnimated:YES completion:nil];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -150,6 +151,7 @@
     [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
     [_progressHUD hide:YES];
     [[NACopyHandler sharedInstance] copyURL:[item URL]];
+    [[self navigationController] dismissViewControllerAnimated:YES completion:nil];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

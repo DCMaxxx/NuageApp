@@ -28,13 +28,13 @@
 }
 
 - (UIImage *)activityImage {
-    return [UIImage imageNamed:@"account-icon.png"]; //TODO : Fix this
+    return [UIImage imageNamed:@"mac-icon.png"];
 }
 
 - (BOOL)canPerformWithActivityItems:(NSArray *)activityItems {
     return [activityItems count] == 1
     && [activityItems[0] isKindOfClass:[NSString class]]
-    && [[NSUserDefaults standardUserDefaults] boolForKey:kCopyToMacClipboardKey];
+    && [[NACopyHandler sharedInstance] canCopyToMac];
 }
 
 - (void)prepareWithActivityItems:(NSArray *)activityItems {

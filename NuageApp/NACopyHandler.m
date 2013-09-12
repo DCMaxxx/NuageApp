@@ -48,6 +48,9 @@
     if (self = [super init]) {
         _client = [[NABonjourClient alloc] init];
         [_client setDelegate:self];
+        NSString * serverName = [[NSUserDefaults standardUserDefaults] stringForKey:kDefautServerKey];
+        if (serverName)
+            [_client chooseServerWithName:serverName];
     }
     return self;
 }
@@ -92,6 +95,12 @@
         } else
             [self sendURLToMac:URL];
     }
+}
+
+- (BOOL)canCopyToMac {
+    return [[[NSUserDefaults standardUserDefaults] stringForKey:kDefautServerKey] length]
+    && [[NSUserDefaults standardUserDefaults] boolForKey:kCopyToMacClipboardKey]
+    && _currentConnection != nil;
 }
 
 

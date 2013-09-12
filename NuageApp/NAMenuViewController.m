@@ -44,9 +44,9 @@
 /*----------------------------------------------------------------------------*/
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
-        _viewControllers = @[ [[UIStoryboard storyboardWithName:@"AccountStoryboard" bundle:nil] instantiateInitialViewController],
-                              [[UIStoryboard storyboardWithName:@"ItemListStoryboard" bundle:nil] instantiateInitialViewController],
+        _viewControllers = @[ [[UIStoryboard storyboardWithName:@"ItemListStoryboard" bundle:nil] instantiateInitialViewController],
                               [[UIStoryboard storyboardWithName:@"TrashListStoryboard" bundle:nil] instantiateInitialViewController],
+                              [[UIStoryboard storyboardWithName:@"AccountStoryboard" bundle:nil] instantiateInitialViewController],
                               [[UIStoryboard storyboardWithName:@"SettingsStoryboard" bundle:nil] instantiateInitialViewController]
                              ];
         _engine = [[NAAPIEngine alloc] initWithDelegate:self];
@@ -61,7 +61,7 @@
 /*----------------------------------------------------------------------------*/
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [_revealController setMinimumWidth:45.0f maximumWidth:310.0f forViewController:self];
+    [_revealController setMinimumWidth:50.0f maximumWidth:310.0f forViewController:self];
     for (UIViewController * vc in _viewControllers)
         [self checkNeedsRevealController:vc];
     [self prepareDisplayViewController:_viewControllers[0]];

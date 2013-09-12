@@ -14,6 +14,7 @@
 @interface NACopyHandler : NSObject <NABonjourClientDelegate>
 
 + (NACopyHandler *)sharedInstance;
+- (BOOL)canCopyToMac;
 - (void)copyURL:(NSURL *)URL;
 - (void)copyURLToMac:(NSURL *)URL;
 

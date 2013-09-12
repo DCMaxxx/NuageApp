@@ -78,6 +78,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self configureWithRevealController:_revealController];
     [_engine setDelegate:self];
 }
 
@@ -147,7 +148,8 @@
 /*----------------------------------------------------------------------------*/
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     float endScrolling = scrollView.contentOffset.y + scrollView.frame.size.height;
-    if (endScrolling >= scrollView.contentSize.height && !_isFetchingItems)
+    if (endScrolling >= scrollView.contentSize.height && !_isFetchingItems &&
+        [_items count] >= kNumberOfItemsPerPage)
         [self loadMoreItems];
 }
 
@@ -292,6 +294,7 @@
 /*----------------------------------------------------------------------------*/
 - (void)configureWithRevealController:(PKRevealController *)controller {
     _revealController = controller;
+    [[[self navigationController] navigationBar] addGestureRecognizer:[controller revealPanGestureRecognizer]];
     UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"barbuttonitem.png"] style:UIBarButtonItemStylePlain
                               target:self action:@selector(displayMenu)];
     [[self navigationItem] setLeftBarButtonItem:item];

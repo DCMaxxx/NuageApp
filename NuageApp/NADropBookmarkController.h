@@ -10,6 +10,6 @@
 
 @interface NADropBookmarkController : NSObject <NADropItemPickerController>
 
-@property (strong, nonatomic) id<NADropPickerControllerDelegate> delegate;
+@property (weak, nonatomic) id<NADropPickerControllerDelegate> delegate;
 
 @end

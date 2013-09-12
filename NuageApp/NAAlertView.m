@@ -50,9 +50,7 @@
                      otherButtonTitles:nil];
 }
 
-- (id)initWithError:(NSError *)error userInfo:(id)userInfo {
-    NSLog(@"Error : %@", error);
-    
+- (id)initWithError:(NSError *)error userInfo:(id)userInfo {    
     NAAlertViewKind kind = kAVGeneric;
     NSString * title = nil;
     NSString * message = nil;
