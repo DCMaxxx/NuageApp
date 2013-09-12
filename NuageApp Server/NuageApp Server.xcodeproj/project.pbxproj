@@ -16,6 +16,7 @@
 		9C438C0917DA0B6000160E22 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C438C0717DA0B6000160E22 /* MainMenu.xib */; };
 		9C438C1117DA0D7900160E22 /* baricon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C438C0F17DA0D7900160E22 /* baricon.png */; };
 		9C438C1217DA0D7900160E22 /* barselectedIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C438C1017DA0D7900160E22 /* barselectedIcon.png */; };
+		9C468B2617E17FB500D1282F /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9C468B2517E17FB500D1282F /* icon.icns */; };
 		9CAFFE7417DEA96000347256 /* NuageApp Server Helper.app in Copy Helper App */ = {isa = PBXBuildFile; fileRef = 9CAFFE7217DEA8E000347256 /* NuageApp Server Helper.app */; };
 		9CAFFE7617DEA9A200347256 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CAFFE7517DEA9A200347256 /* ServiceManagement.framework */; };
 /* End PBXBuildFile section */
@@ -60,6 +61,7 @@
 		9C438C0817DA0B6000160E22 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9C438C0F17DA0D7900160E22 /* baricon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = baricon.png; sourceTree = "<group>"; };
 		9C438C1017DA0D7900160E22 /* barselectedIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = barselectedIcon.png; sourceTree = "<group>"; };
+		9C468B2517E17FB500D1282F /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = SOURCE_ROOT; };
 		9CAFFE6D17DEA8DF00347256 /* NuageApp Server Helper.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "NuageApp Server Helper.xcodeproj"; path = "NuageApp Server Helper/NuageApp Server Helper.xcodeproj"; sourceTree = "<group>"; };
 		9CAFFE7517DEA9A200347256 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		9CF7AA176CF24B6899070064 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -123,6 +125,7 @@
 		9C438BF817DA0B6000160E22 /* NuageApp Server */ = {
 			isa = PBXGroup;
 			children = (
+				9C468B2517E17FB500D1282F /* icon.icns */,
 				9C438C0F17DA0D7900160E22 /* baricon.png */,
 				9C438C1017DA0D7900160E22 /* barselectedIcon.png */,
 				9C438C0417DA0B6000160E22 /* NAAppDelegate.h */,
@@ -229,6 +232,7 @@
 				9C438C0917DA0B6000160E22 /* MainMenu.xib in Resources */,
 				9C438C1117DA0D7900160E22 /* baricon.png in Resources */,
 				9C438C1217DA0D7900160E22 /* barselectedIcon.png in Resources */,
+				9C468B2617E17FB500D1282F /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
