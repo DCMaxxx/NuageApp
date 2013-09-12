@@ -59,13 +59,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Trash" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p1g-W1-Pga">
-                                                    <rect key="frame" x="45" y="0.0" width="265" height="59"/>
+                                                    <rect key="frame" x="52" y="0.0" width="258" height="59"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="trash-icon.png" id="B9A-Zz-fGd">
-                                                    <rect key="frame" x="10" y="17" width="25" height="25"/>
+                                                    <rect key="frame" x="10" y="13" width="32" height="32"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
@@ -132,7 +132,7 @@
         <image name="account-icon.png" width="32" height="32"/>
         <image name="drops-icon.png" width="32" height="32"/>
         <image name="settings-icon.png" width="32" height="32"/>
-        <image name="trash-icon.png" width="25" height="25"/>
+        <image name="trash-icon.png" width="32" height="32"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

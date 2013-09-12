@@ -37,6 +37,8 @@
 		9C2CB8BA17CCB5E500561AA0 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C2CB8B917CCB5E500561AA0 /* Default-568h@2x.png */; };
 		9C2CB8BD17CCB5E500561AA0 /* MenuStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C2CB8BB17CCB5E500561AA0 /* MenuStoryboard.storyboard */; };
 		9C3CA18917CCD2FA00ABEDF0 /* LoginStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C3CA18717CCD2FA00ABEDF0 /* LoginStoryboard.storyboard */; };
+		9C4B054F17E173490029B083 /* Default-iOS7-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C4B054D17E173490029B083 /* Default-iOS7-568h@2x.png */; };
+		9C4B055017E173490029B083 /* Default-iOS7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C4B054E17E173490029B083 /* Default-iOS7@2x.png */; };
 		9C52C50D17CF2A5D0019C026 /* NAMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C52C50C17CF2A5D0019C026 /* NAMenuViewController.m */; };
 		9C52C51317CF3CD10019C026 /* NAAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C52C51217CF3CD10019C026 /* NAAccountViewController.m */; };
 		9C52C51617CF3CF20019C026 /* NASwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C52C51517CF3CF20019C026 /* NASwitchCell.m */; };
@@ -119,12 +121,17 @@
 		9CD3E80417CCB85500476785 /* CLWebItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3E7F917CCB85500476785 /* CLWebItem.m */; };
 		9CDB442B17D0359C004D6EC7 /* NAChangeDomainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDB442A17D0359C004D6EC7 /* NAChangeDomainViewController.m */; };
 		9CEA4ABA17CD904500838C9E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CEA4AB917CD904500838C9E /* Security.framework */; };
+		9CF776C017E1690F002428FA /* icon-29x29.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CF776BA17E1690F002428FA /* icon-29x29.png */; };
+		9CF776C117E1690F002428FA /* icon-57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CF776BB17E1690F002428FA /* icon-57x57.png */; };
+		9CF776C217E1690F002428FA /* icon-58x58.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CF776BC17E1690F002428FA /* icon-58x58.png */; };
+		9CF776C317E1690F002428FA /* icon-80x80.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CF776BD17E1690F002428FA /* icon-80x80.png */; };
+		9CF776C417E1690F002428FA /* icon-114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CF776BE17E1690F002428FA /* icon-114x114.png */; };
+		9CF776C517E1690F002428FA /* icon-120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CF776BF17E1690F002428FA /* icon-120x120.png */; };
 		9CF8631017DB0AAB000ADD8E /* AccountStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CF8630F17DB0AAB000ADD8E /* AccountStoryboard.storyboard */; };
 		9CF8631217DB0ED4000ADD8E /* ItemListStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CF8631117DB0ED4000ADD8E /* ItemListStoryboard.storyboard */; };
 		9CF8631417DB10F3000ADD8E /* TrashListStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CF8631317DB10F3000ADD8E /* TrashListStoryboard.storyboard */; };
 		9CF8631817DB204F000ADD8E /* barbuttonitem.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CF8631617DB204F000ADD8E /* barbuttonitem.png */; };
 		9CF8631917DB204F000ADD8E /* barbuttonitem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CF8631717DB204F000ADD8E /* barbuttonitem@2x.png */; };
-		9CF8631B17DB3E5B000ADD8E /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CF8631A17DB3E5B000ADD8E /* iAd.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -180,6 +187,8 @@
 		9C2CB8BC17CCB5E500561AA0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MenuStoryboard.storyboard; sourceTree = "<group>"; };
 		9C3CA18817CCD2FA00ABEDF0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/LoginStoryboard.storyboard; sourceTree = "<group>"; };
 		9C46794D17D3BF73001B0FB8 /* NANeedsEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NANeedsEngine.h; sourceTree = "<group>"; };
+		9C4B054D17E173490029B083 /* Default-iOS7-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-iOS7-568h@2x.png"; sourceTree = "<group>"; };
+		9C4B054E17E173490029B083 /* Default-iOS7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-iOS7@2x.png"; sourceTree = "<group>"; };
 		9C52C50B17CF2A5D0019C026 /* NAMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAMenuViewController.h; sourceTree = "<group>"; };
 		9C52C50C17CF2A5D0019C026 /* NAMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAMenuViewController.m; sourceTree = "<group>"; };
 		9C52C51117CF3CD10019C026 /* NAAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAAccountViewController.h; sourceTree = "<group>"; };
@@ -323,6 +332,12 @@
 		9CDB442917D0359C004D6EC7 /* NAChangeDomainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAChangeDomainViewController.h; sourceTree = "<group>"; };
 		9CDB442A17D0359C004D6EC7 /* NAChangeDomainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAChangeDomainViewController.m; sourceTree = "<group>"; };
 		9CEA4AB917CD904500838C9E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		9CF776BA17E1690F002428FA /* icon-29x29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-29x29.png"; path = "icons/icon-29x29.png"; sourceTree = "<group>"; };
+		9CF776BB17E1690F002428FA /* icon-57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-57x57.png"; path = "icons/icon-57x57.png"; sourceTree = "<group>"; };
+		9CF776BC17E1690F002428FA /* icon-58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-58x58.png"; path = "icons/icon-58x58.png"; sourceTree = "<group>"; };
+		9CF776BD17E1690F002428FA /* icon-80x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-80x80.png"; path = "icons/icon-80x80.png"; sourceTree = "<group>"; };
+		9CF776BE17E1690F002428FA /* icon-114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-114x114.png"; path = "icons/icon-114x114.png"; sourceTree = "<group>"; };
+		9CF776BF17E1690F002428FA /* icon-120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-120x120.png"; path = "icons/icon-120x120.png"; sourceTree = "<group>"; };
 		9CF8630F17DB0AAB000ADD8E /* AccountStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AccountStoryboard.storyboard; sourceTree = "<group>"; };
 		9CF8631117DB0ED4000ADD8E /* ItemListStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ItemListStoryboard.storyboard; sourceTree = "<group>"; };
 		9CF8631317DB10F3000ADD8E /* TrashListStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TrashListStoryboard.storyboard; sourceTree = "<group>"; };
@@ -337,7 +352,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9CF8631B17DB3E5B000ADD8E /* iAd.framework in Frameworks */,
 				9C1681C817D76F5D00CFEAE7 /* AssetsLibrary.framework in Frameworks */,
 				9C7C279F17D70ABE00CDE4E7 /* MediaPlayer.framework in Frameworks */,
 				9C97C0C017D5B0B5001488D2 /* Social.framework in Frameworks */,
@@ -461,6 +475,14 @@
 		9C2CB91E17CCB6DE00561AA0 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				9C4B054D17E173490029B083 /* Default-iOS7-568h@2x.png */,
+				9C4B054E17E173490029B083 /* Default-iOS7@2x.png */,
+				9CF776BA17E1690F002428FA /* icon-29x29.png */,
+				9CF776BB17E1690F002428FA /* icon-57x57.png */,
+				9CF776BC17E1690F002428FA /* icon-58x58.png */,
+				9CF776BD17E1690F002428FA /* icon-80x80.png */,
+				9CF776BE17E1690F002428FA /* icon-114x114.png */,
+				9CF776BF17E1690F002428FA /* icon-120x120.png */,
 				9C1DCD5A17DF26B300CF8F23 /* mac-icon.png */,
 				9C1DCD5B17DF26B300CF8F23 /* mac-icon@2x.png */,
 				9C1DCD5617DF25D600CF8F23 /* settings-icon.png */,
@@ -1001,6 +1023,7 @@
 				9C85DCD617CCBCA600E6BAFC /* IFUnicodeURL-LICENSE.txt in Resources */,
 				9C85DCD717CCBCA600E6BAFC /* README.md in Resources */,
 				9C3CA18917CCD2FA00ABEDF0 /* LoginStoryboard.storyboard in Resources */,
+				9CF776C417E1690F002428FA /* icon-114x114.png in Resources */,
 				9C9E992317D496A300D20A9B /* bookmark-icon.png in Resources */,
 				9C9E992417D496A300D20A9B /* bookmark-icon@2x.png in Resources */,
 				9C9E993417D4992300D20A9B /* archive-icon.png in Resources */,
@@ -1014,6 +1037,7 @@
 				9C9E993C17D4992300D20A9B /* unknown-icon@2x.png in Resources */,
 				9C9E993E17D4992300D20A9B /* video-icon.png in Resources */,
 				9C9E993F17D4992300D20A9B /* video-icon@2x.png in Resources */,
+				9CF776C017E1690F002428FA /* icon-29x29.png in Resources */,
 				9C9E994217D49AB200D20A9B /* account-icon.png in Resources */,
 				9C9E994317D49AB200D20A9B /* account-icon@2x.png in Resources */,
 				9C9E994817D4AAF500D20A9B /* drops-icon.png in Resources */,
@@ -1025,15 +1049,20 @@
 				9C65AE1417E14AD8000C633C /* unknown-large.png in Resources */,
 				9C7C27A917D70ED800CDE4E7 /* unknown-large@2x.png in Resources */,
 				9C7C27AA17D70ED800CDE4E7 /* video-large.png in Resources */,
+				9CF776C517E1690F002428FA /* icon-120x120.png in Resources */,
 				9C7C27AB17D70ED800CDE4E7 /* video-large@2x.png in Resources */,
 				9C7C27B417D7116C00CDE4E7 /* archive-large.png in Resources */,
 				9C7C27B517D7116C00CDE4E7 /* archive-large@2x.png in Resources */,
 				9C7C27B617D7116C00CDE4E7 /* bookmark-large.png in Resources */,
 				9C7C27B717D7116C00CDE4E7 /* bookmark-large@2x.png in Resources */,
+				9CF776C217E1690F002428FA /* icon-58x58.png in Resources */,
+				9CF776C117E1690F002428FA /* icon-57x57.png in Resources */,
 				9C7C27B817D7116C00CDE4E7 /* image-large.png in Resources */,
+				9C4B054F17E173490029B083 /* Default-iOS7-568h@2x.png in Resources */,
 				9C7C27B917D7116C00CDE4E7 /* image-large@2x.png in Resources */,
 				9C7C27BA17D7116C00CDE4E7 /* text-large.png in Resources */,
 				9C7C27BB17D7116C00CDE4E7 /* text-large@2x.png in Resources */,
+				9CF776C317E1690F002428FA /* icon-80x80.png in Resources */,
 				9C7C27C717D75AA900CDE4E7 /* upload-large.png in Resources */,
 				9C7C27C817D75AA900CDE4E7 /* upload-large@2x.png in Resources */,
 				9CF8631017DB0AAB000ADD8E /* AccountStoryboard.storyboard in Resources */,
@@ -1043,6 +1072,7 @@
 				9CF8631917DB204F000ADD8E /* barbuttonitem@2x.png in Resources */,
 				9C2609F517DC46A700DD1143 /* SettingsStoryboard.storyboard in Resources */,
 				9C1DCD5817DF25D600CF8F23 /* settings-icon.png in Resources */,
+				9C4B055017E173490029B083 /* Default-iOS7@2x.png in Resources */,
 				9C1DCD5917DF25D600CF8F23 /* settings-icon@2x.png in Resources */,
 				9C1DCD5C17DF26B300CF8F23 /* mac-icon.png in Resources */,
 				9C1DCD5D17DF26B300CF8F23 /* mac-icon@2x.png in Resources */,
