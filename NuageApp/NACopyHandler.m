@@ -46,6 +46,10 @@
 /*----------------------------------------------------------------------------*/
 - (id)init {
     if (self = [super init]) {
+        [[NSUserDefaults standardUserDefaults] addObserver:self
+                                                forKeyPath:kDefautServerKey
+                                                   options:NSKeyValueObservingOptionNew
+                                                   context:NULL];
         _client = [[NABonjourClient alloc] init];
         [_client setDelegate:self];
         NSString * serverName = [[NSUserDefaults standardUserDefaults] stringForKey:kDefautServerKey];
@@ -103,6 +107,20 @@
     && _currentConnection != nil;
 }
 
+
+/*----------------------------------------------------------------------------*/
+#pragma mark - KVO
+/*----------------------------------------------------------------------------*/
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:kDefautServerKey]) {
+        NSString * serverName = [object valueForKeyPath:keyPath];
+        [_currentConnection close];
+        if (serverName)
+            [_client chooseServerWithName:serverName];
+        else
+            _currentConnection = nil;
+    }
+}
 
 /*----------------------------------------------------------------------------*/
 #pragma mark - Misc private methods

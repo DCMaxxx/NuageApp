@@ -59,8 +59,11 @@
         key = kAutoUploadKey;
     else if (switchView == [_cpLinkToClipboardCell switchView])
         key = kCopyToClipboardKey;
-    else if (switchView == [_cpLinkToMacClipboardCell switchView])
+    else if (switchView == [_cpLinkToMacClipboardCell switchView]) {
         key = kCopyToMacClipboardKey;
+        if (![switchView isOn])
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:kDefautServerKey];
+    }
 
     if (key) {
         [[NSUserDefaults standardUserDefaults] setBool:[switchView isOn] forKey:key];

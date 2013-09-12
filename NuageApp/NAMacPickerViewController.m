@@ -8,6 +8,7 @@
 
 #import "NAMacPickerViewController.h"
 
+#import "NASettingsViewController.h"
 #import "NABonjourClientDelegate.h"
 #import "NABonjourClient.h"
 

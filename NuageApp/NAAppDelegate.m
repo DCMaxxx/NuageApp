@@ -13,7 +13,7 @@
 
 #import "NASettingsViewController.h"
 #import "NAMenuViewController.h"
-#import "NABonjourClient.h"
+#import "NACopyHandler.h"
 
 
 @implementation NAAppDelegate
@@ -21,6 +21,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+    [NACopyHandler sharedInstance];
 
     UIStoryboard * rearStoryboard = [UIStoryboard storyboardWithName:@"MenuStoryboard" bundle:nil];
     NAMenuViewController * rearVC = [rearStoryboard instantiateInitialViewController];

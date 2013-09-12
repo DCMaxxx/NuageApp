@@ -11,6 +11,8 @@
 #define kAutoUploadKey          @"auto-upload"
 #define kCopyToClipboardKey     @"copy-to-clipboard"
 #define kCopyToMacClipboardKey  @"copy-to-mac-clipboard"
+#define kDefautServerKey        @"default-server"
+
 
 
 @interface NASettingsViewController : UITableViewController <NANeedsRevealController>
