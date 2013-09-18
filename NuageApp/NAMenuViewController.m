@@ -16,7 +16,6 @@
 #import "MBProgressHUD+Network.h"
 #import "NALoginViewController.h"
 #import "NACopyHandler.h"
-#import "NANeedsEngine.h"
 #import "UIImage+Data.h"
 #import "NAAPIEngine.h"
 #import "NAAlertView.h"
@@ -26,7 +25,6 @@
 
 @interface NAMenuViewController () <CLAPIEngineDelegate, UIAlertViewDelegate>
 
-@property (strong, nonatomic) NAAPIEngine * engine;
 @property (strong, nonatomic) UIViewController * nextViewController;
 @property (nonatomic) BOOL isShowingPopup;
 @property (nonatomic) BOOL needToShodUploadPopup;
@@ -49,7 +47,7 @@
                               [[UIStoryboard storyboardWithName:@"AccountStoryboard" bundle:nil] instantiateInitialViewController],
                               [[UIStoryboard storyboardWithName:@"SettingsStoryboard" bundle:nil] instantiateInitialViewController]
                              ];
-        _engine = [[NAAPIEngine alloc] initWithDelegate:self];
+        [[NAAPIEngine sharedEngine] addDelegate:self];
         _needToShodUploadPopup = NO;
     }
     return self;
@@ -61,7 +59,7 @@
 /*----------------------------------------------------------------------------*/
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [_revealController setMinimumWidth:50.0f maximumWidth:310.0f forViewController:self];
+    [_revealController setMinimumWidth:200.0f maximumWidth:310.0f forViewController:self];
     for (UIViewController * vc in _viewControllers)
         [self checkNeedsRevealController:vc];
     [self prepareDisplayViewController:_viewControllers[0]];
@@ -81,10 +79,8 @@
 /*----------------------------------------------------------------------------*/
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     _isShowingPopup = NO;
-    if (buttonIndex == kAlertViewButtonIndexUpload) {
-        [_engine setDelegate:self];
+    if (buttonIndex == kAlertViewButtonIndexUpload)
         [self uploadLastTakenPicture];
-    }
 }
 
 
@@ -93,7 +89,8 @@
 /*----------------------------------------------------------------------------*/
 - (void)accountInformationRetrievalSucceeded:(CLAccount *)account connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
     [MBProgressHUD hideHUDForView:[[_revealController frontViewController] view] hideActivityIndicator:YES animated:YES];
-    [_engine setCurrentAccount:account];
+    [[NAAPIEngine sharedEngine] setCurrentAccount:account];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"NAUserLogin" object:nil];
     if (_needToShodUploadPopup) {
         _needToShodUploadPopup = NO;
         [self displayUploadConfirmAlertView];
@@ -123,35 +120,32 @@
 #pragma mark - Changing view controller
 /*----------------------------------------------------------------------------*/
 - (void)prepareDisplayViewController:(UIViewController *)viewController {
-    if (![_engine loadUser]) {
-        [self checkNeedsEngine:viewController];
+    NAAPIEngine * engine = [NAAPIEngine sharedEngine];
+    if (![engine loadUser])
         [self displayLoginView];
-    }
-    else if (![_engine currentAccount]) {
+    else if (![engine currentAccount]) {
         _nextViewController = viewController;
         [MBProgressHUD showHUDAddedTo:[[_revealController frontViewController] view] withText:@"Login in..."
                                       showActivityIndicator:YES animated:YES];
-        [_engine setDelegate:self];
-        [_engine getAccountInformationWithUserInfo:nil];
+        [engine getAccountInformationWithUserInfo:self];
     } else {
         [self displayViewController:viewController];
     }
 }
 
 - (void)displayViewController:(UIViewController *)viewController {
-    [self checkNeedsEngine:viewController];
     [_revealController setFrontViewController:viewController];
     [_revealController showViewController:_revealController.frontViewController];
 }
 
 - (void)displayLoginView {
     UIViewController * loginVC = [[UIStoryboard storyboardWithName:@"LoginStoryboard" bundle:nil] instantiateInitialViewController];
-    [self checkNeedsEngine:loginVC];
+    [self checkNeedsRevealController:loginVC];
     [[self revealController] presentViewController:loginVC animated:YES completion:nil];
 }
 
 - (void)displayUploadConfirmAlertView {
-    if (![_engine currentAccount]) {
+    if (![[NAAPIEngine sharedEngine] currentAccount]) {
         _needToShodUploadPopup = YES;
         _isShowingPopup = NO;
     } else if (!_isShowingPopup) {
@@ -182,10 +176,11 @@
                                                      ALAssetRepresentation *repr = [asset defaultRepresentation];
                                                      UIImage *img = [UIImage imageWithCGImage:[repr fullScreenImage]];
                                                      [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
-                                                     [_engine uploadFileWithName:[[_engine uniqueName] stringByAppendingPathExtension:@"png"]
+                                                     NAAPIEngine * engine = [NAAPIEngine sharedEngine];
+                                                     [engine uploadFileWithName:[[engine uniqueName] stringByAppendingPathExtension:@"png"]
                                                                         fileData:[img pngData]
-                                                                         options:[_engine uploadDictionary]
-                                                                        userInfo:nil];
+                                                                         options:[engine uploadDictionary]
+                                                                        userInfo:self];
                                                      *stop = YES;
                                                  }
                                              }];
@@ -201,14 +196,6 @@
                                      [av setMessage:@"Please give NuageApp access to your photos in the Settings application"];
                                      [av show];
                                  }];
-}
-
-- (void)checkNeedsEngine:(UIViewController *)viewController {
-    UIViewController * root = viewController;
-    if ([viewController isKindOfClass:[UINavigationController class]])
-        root = [(UINavigationController *)root viewControllers][0];
-    if ([[root class] conformsToProtocol:@protocol(NANeedsEngine)])
-        [(id<NANeedsEngine>)root configureWithEngine:_engine];
 }
 
 - (void)checkNeedsRevealController:(UIViewController *)viewController {

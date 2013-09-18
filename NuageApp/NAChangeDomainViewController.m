@@ -16,7 +16,6 @@
 
 @interface NAChangeDomainViewController () <CLAPIEngineDelegate>
 
-@property (strong, nonatomic) NAAPIEngine * engine;
 @property (weak, nonatomic) IBOutlet NATextFieldCell *domainCell;
 @property (weak, nonatomic) IBOutlet NATextFieldCell *domainHomeCell;
 
@@ -27,6 +26,16 @@
 #pragma mark - Implementation
 /*----------------------------------------------------------------------------*/
 @implementation NAChangeDomainViewController
+
+/*----------------------------------------------------------------------------*/
+#pragma mark - Init
+/*----------------------------------------------------------------------------*/
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        [[NAAPIEngine sharedEngine] addDelegate:self];
+    }
+    return self;
+}
 
 /*----------------------------------------------------------------------------*/
 #pragma mark - UIViewController
@@ -43,6 +52,20 @@
     [[_domainCell textField] setAutocorrectionType:UITextAutocorrectionTypeNo];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    CLAccount * account = [[NAAPIEngine sharedEngine] currentAccount];
+    [[_domainCell textField] setText:[[account domain] absoluteString]];
+    [[_domainHomeCell textField] setText:[[account domainHomePage] absoluteString]];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+
+    [[NAAPIEngine sharedEngine] removeDelegate:self];
+}
+
 
 /*----------------------------------------------------------------------------*/
 #pragma mark - User interactions
@@ -53,7 +76,7 @@
     if ([domain length]) {
         [[_domainCell textField] resignFirstResponder];
         [[_domainHomeCell textField] resignFirstResponder];
-        [_engine updateCustomDomain:domain customDomainHome:([domainHome length] ? domainHome : nil) userInfo:nil];
+        [[NAAPIEngine sharedEngine] updateCustomDomain:domain customDomainHome:([domainHome length] ? domainHome : nil) userInfo:self];
         [MBProgressHUD showHUDAddedTo:[self view] withText:@"Updating account..." showActivityIndicator:YES animated:YES];
     } else {
         NAAlertView * av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVRequiredField];
@@ -72,29 +95,14 @@
 /*----------------------------------------------------------------------------*/
 - (void)accountUpdateDidSucceed:(CLAccount *)account connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
     [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
-    [_engine setCurrentAccount:account];
+    [[NAAPIEngine sharedEngine] setCurrentAccount:account];
     [[self navigationController] popViewControllerAnimated:YES];
 }
 
 - (void)requestDidFailWithError:(NSError *)error connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
     [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
-    
     NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:userInfo];
     [av show];
-}
-
-
-/*----------------------------------------------------------------------------*/
-#pragma mark - NANeedsEngine
-/*----------------------------------------------------------------------------*/
-- (void)configureWithEngine:(NAAPIEngine *)engine {
-    _engine = engine;
-    [_engine setDelegate:self];
-
-    CLAccount * account = [_engine currentAccount];
-    [[_domainCell textField] setText:[[account domain] absoluteString]];
-    [[_domainHomeCell textField] setText:[[account domainHomePage] absoluteString]];
-    [[self tableView] reloadData];
 }
 
 @end

@@ -11,11 +11,10 @@
 #import "NAItemViewControllerDelegate.h"
 #import "NATransparentCell.h"
 #import "NATextFieldCell.h"
-#import "NANeedsEngine.h"
 #import "NASwitchCell.h"
 
 
-@interface NAItemViewController : UITableViewController <NANeedsEngine>
+@interface NAItemViewController : UITableViewController
 
 @property (weak, nonatomic) IBOutlet NATextFieldCell *itemNameCell;
 @property (weak, nonatomic) IBOutlet NATransparentCell *itemPreviewCell;

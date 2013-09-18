@@ -24,8 +24,6 @@
 
 @interface NADropItemViewController () <CLAPIEngineDelegate, NADropPickerControllerDelegate>
 
-@property (strong, nonatomic) NAAPIEngine * engine;
-
 @property (weak, nonatomic) IBOutlet NATextFieldCell *nameCell;
 @property (weak, nonatomic) IBOutlet NASwitchCell *privateUploadCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *itemPickerCell;
@@ -39,21 +37,27 @@
 /*----------------------------------------------------------------------------*/
 @implementation NADropItemViewController
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        [[NAAPIEngine sharedEngine] addDelegate:self];
+    }
+    return self;
+}
+
 /*----------------------------------------------------------------------------*/
 #pragma mark - UIViewController
 /*----------------------------------------------------------------------------*/
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (_engine)
-        [[_privateUploadCell switchView] setOn:[[_engine currentAccount] uploadsArePrivate]];
+    [[_privateUploadCell switchView] setOn:[[[NAAPIEngine sharedEngine] currentAccount] uploadsArePrivate]];
     
     _progressHUD = [[MBProgressHUD alloc] init];
     [_progressHUD setLabelText:@"Begining upload..."];
     [[self view] addSubview:_progressHUD];
     
     [[_nameCell textField] setPlaceholder:@"Upload name"];
-    [[_nameCell textField] setText:[_engine uniqueName]];
+    [[_nameCell textField] setText:[[NAAPIEngine sharedEngine] uniqueName]];
     
     UIBarButtonItem * left = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
                                                                            target:self
@@ -69,6 +73,12 @@
     [_dropPickerController cell:_itemPickerCell didLoadWithItem:_item];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[NAAPIEngine sharedEngine] removeDelegate:self];
+}
+
 
 /*----------------------------------------------------------------------------*/
 #pragma mark - UITableViewDataSource
@@ -80,6 +90,7 @@
     }
     return text;
 }
+
 
 /*----------------------------------------------------------------------------*/
 #pragma mark - UITableViewDelegate
@@ -104,13 +115,13 @@
         [av show];
     } else {
         NSString * name = [[[_nameCell textField] text] stringByAppendingPathExtension:[_dropPickerController itemPathExtenstion]];
-        NSDictionary * options = [_engine uploadDictionaryForPrivacy:[[_privateUploadCell switchView] isOn]];
+        NSDictionary * options = [[NAAPIEngine sharedEngine] uploadDictionaryForPrivacy:[[_privateUploadCell switchView] isOn]];
         [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
         [_progressHUD show:YES];
         if ([_item isKindOfClass:[NSData class]])
-            [_engine uploadFileWithName:name fileData:_item options:options userInfo:nil];
+            [[NAAPIEngine sharedEngine] uploadFileWithName:name fileData:_item options:options userInfo:self];
         else if ([_item isKindOfClass:[NSURL class]])
-            [_engine bookmarkLinkWithURL:(NSURL *)_item name:name options:options userInfo:nil];
+            [[NAAPIEngine sharedEngine] bookmarkLinkWithURL:(NSURL *)_item name:name options:options userInfo:self];
     }
 }
 
@@ -161,15 +172,6 @@
 
     NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:userInfo];
     [av show];
-}
-
-
-/*----------------------------------------------------------------------------*/
-#pragma mark - NANeedsEngine
-/*----------------------------------------------------------------------------*/
-- (void)configureWithEngine:(NAAPIEngine *)engine {
-    _engine = engine;
-    [_engine setDelegate:self];
 }
 
 

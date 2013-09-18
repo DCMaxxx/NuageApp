@@ -6,8 +6,6 @@
 //  Copyright (c) 2013 Maxime de Chalendar. All rights reserved.
 //
 
-#import "NANeedsEngine.h"
-
-@interface NAChangeEmailViewController : UITableViewController <NANeedsEngine>
+@interface NAChangeEmailViewController : UITableViewController
 
 @end

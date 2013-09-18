@@ -23,8 +23,7 @@
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     [NACopyHandler sharedInstance];
 
-    UIStoryboard * rearStoryboard = [UIStoryboard storyboardWithName:@"MenuStoryboard" bundle:nil];
-    NAMenuViewController * rearVC = [rearStoryboard instantiateInitialViewController];
+    NAMenuViewController * rearVC = (NAMenuViewController *)[[self window] rootViewController];
     UIViewController * frontVC = [rearVC viewControllers][0];
     PKRevealController * revealController = [PKRevealController revealControllerWithFrontViewController:frontVC leftViewController:rearVC options:@{PKRevealControllerRecognizesPanningOnFrontViewKey:@(NO)}];
     [[self window] setRootViewController:revealController];

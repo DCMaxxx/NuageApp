@@ -63,6 +63,8 @@
     [[cell textLabel] setText:[service name]];
     if ([[service name] isEqualToString:_serverName])
         [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+    else
+        [cell setAccessoryType:UITableViewCellAccessoryNone];
     
     return cell;
 }
@@ -73,8 +75,13 @@
 /*----------------------------------------------------------------------------*/
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
     UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
-    _serverName = [[cell textLabel] text];
+    if ([_serverName length] && [[[cell textLabel] text] isEqualToString:_serverName])
+        _serverName = nil;
+    else
+        _serverName = [[cell textLabel] text];
+
     [[NSUserDefaults standardUserDefaults] setObject:_serverName forKey:kDefautServerKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
     

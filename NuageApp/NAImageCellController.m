@@ -50,7 +50,7 @@
                                }
                                failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
                                    [MBProgressHUD hideHUDForView:imageView animated:YES];
-                                   NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:nil];
+                                   NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:weakSelf];
                                    [av show];
                                }];
     [cell addSubview:_imageView];

@@ -6,8 +6,6 @@
 //  Copyright (c) 2013 Maxime de Chalendar. All rights reserved.
 //
 
-#import "NANeedsEngine.h"
-
-@interface NAChangePasswordViewController : UITableViewController <NANeedsEngine>
+@interface NAChangePasswordViewController : UITableViewController
 
 @end

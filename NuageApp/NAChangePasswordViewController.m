@@ -18,7 +18,6 @@
 
 @interface NAChangePasswordViewController () <CLAPIEngineDelegate>
 
-@property (strong, nonatomic) NAAPIEngine * engine;
 @property (weak, nonatomic) IBOutlet NATextFieldCell *currentPasswordCell;
 @property (weak, nonatomic) IBOutlet NATextFieldCell *updatedPasswordCell;
 
@@ -29,6 +28,16 @@
 #pragma mark - Implementation
 /*----------------------------------------------------------------------------*/
 @implementation NAChangePasswordViewController
+
+/*----------------------------------------------------------------------------*/
+#pragma mark - Init
+/*----------------------------------------------------------------------------*/
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        [[NAAPIEngine sharedEngine] addDelegate:self];
+    }
+    return self;
+}
 
 /*----------------------------------------------------------------------------*/
 #pragma mark - UIViewController
@@ -43,6 +52,18 @@
     [[_updatedPasswordCell textField] setSecureTextEntry:YES];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    [[NAAPIEngine sharedEngine] setClearsCookies:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[NAAPIEngine sharedEngine] removeDelegate:self];
+}
+
 
 /*----------------------------------------------------------------------------*/
 #pragma mark - User interactions
@@ -54,7 +75,7 @@
         [[_currentPasswordCell textField] resignFirstResponder];
         [[_updatedPasswordCell textField] resignFirstResponder];
         [MBProgressHUD showHUDAddedTo:[self view] withText:@"Updating account..." showActivityIndicator:YES animated:YES];
-        [_engine changeToPassword:updatedPassword withCurrentPassword:currentPassword userInfo:nil];
+        [[NAAPIEngine sharedEngine] changeToPassword:updatedPassword withCurrentPassword:currentPassword userInfo:self];
     } else {
         NAAlertView * av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVRequiredField];
         [av setMessage:@"Both current and new password fields are required"];
@@ -68,26 +89,17 @@
 /*----------------------------------------------------------------------------*/
 - (void)accountUpdateDidSucceed:(CLAccount *)account connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
     [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
-    [_engine setCurrentAccount:account];
-    [_engine setClearsCookies:NO];
+    [[NAAPIEngine sharedEngine] setCurrentAccount:account];
+    [[NAAPIEngine sharedEngine] setClearsCookies:NO];
     [[self navigationController] popViewControllerAnimated:YES];
 }
 
 - (void)requestDidFailWithError:(NSError *)error connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
     [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
-    [_engine setClearsCookies:NO];
+    [[NAAPIEngine sharedEngine] setClearsCookies:NO];
     
     NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:userInfo];
     [av show];
-}
-
-/*----------------------------------------------------------------------------*/
-#pragma mark - NANeedsEngine
-/*----------------------------------------------------------------------------*/
-- (void)configureWithEngine:(NAAPIEngine *)engine {
-    _engine = engine;
-    [_engine setDelegate:self];
-    [_engine setClearsCookies:YES];
 }
 
 @end

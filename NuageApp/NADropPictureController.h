@@ -8,7 +8,6 @@
 
 #import "NADropItemPickerControllerDelegate.h"
 #import "NADropItemPickerController.h"
-#import "NANeedsEngine.h"
 
 @interface NADropPictureController : NSObject <NADropItemPickerController>
 

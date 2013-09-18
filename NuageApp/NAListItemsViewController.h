@@ -10,10 +10,9 @@
 
 #import "NAItemViewControllerDelegate.h"
 #import "NANeedsRevealController.h"
-#import "NANeedsEngine.h"
 #import "NAItemUpdate.h"
 
 
-@interface NAListItemsViewController : UITableViewController <NANeedsEngine, NAItemViewControllerDelegate, NAItemUpdate, NANeedsRevealController>
+@interface NAListItemsViewController : UITableViewController <NAItemViewControllerDelegate, NAItemUpdate, NANeedsRevealController>
 
 @end

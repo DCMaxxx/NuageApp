@@ -11,7 +11,6 @@
 #import <AFNetworking.h>
 
 #import "NAMenuViewController.h"
-#import "NANeedsEngine.h"
 #import "NASwitchCell.h"
 #import "NAAlertView.h"
 #import "NAAPIEngine.h"
@@ -22,8 +21,6 @@
 
 @interface NAAccountViewController () <CLAPIEngineDelegate, UIActionSheetDelegate>
 
-@property (strong, nonatomic) NAAPIEngine * engine;
-@property (strong, nonatomic) CLAccount * account;
 @property (strong, nonatomic) PKRevealController * revealController;
 @property (weak, nonatomic) IBOutlet UITableViewCell *emailCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *customDomainCell;
@@ -42,15 +39,29 @@
 /*----------------------------------------------------------------------------*/
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogout:) name:@"NAUserLogout" object:nil];
+        [[NAAPIEngine sharedEngine] addDelegate:self];
     }
     return self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self configureWithEngine:_engine];
+    
     [self configureWithRevealController:_revealController];
+
+    CLAccount * currentAccount = [[NAAPIEngine sharedEngine] currentAccount];
+    if ([currentAccount email])
+        [[_emailCell detailTextLabel] setText:[currentAccount email]];
+    else
+        [[_emailCell detailTextLabel] setText:@"Email"];
+    
+    if ([currentAccount domain])
+        [[_customDomainCell detailTextLabel] setText:[[currentAccount domain] absoluteString]];
+    else
+        [[_customDomainCell detailTextLabel] setText:@"Premium account only"];
+    
+    [[_privateUploadCell switchView] setOn:([currentAccount uploadsArePrivate]) animated:YES];
+    [[_privateUploadCell switchView] addTarget:self action:@selector(changedPrivateUpload:) forControlEvents:UIControlEventValueChanged];
 }
 
 
@@ -60,10 +71,11 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSString * text = @"";
     if (section == kAccountDetailsSectionIndex) {
-        if ([_account subscriptionExpiresAt]) {
+        CLAccount * currentAccount = [[NAAPIEngine sharedEngine] currentAccount];
+        if ([currentAccount subscriptionExpiresAt]) {
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setDateStyle:NSDateFormatterShortStyle];
-            text = [NSString stringWithFormat:@"Premium up to %@", [dateFormatter stringFromDate:[_account subscriptionExpiresAt]]];
+            text = [NSString stringWithFormat:@"Premium up to %@", [dateFormatter stringFromDate:[currentAccount subscriptionExpiresAt]]];
         } else
             text = @"Standard member";
     }
@@ -84,7 +96,7 @@
 /*----------------------------------------------------------------------------*/
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == kLogoutActionSheetButtonIndex) {
-        [_engine logout];
+        [[NAAPIEngine sharedEngine] logout];
         if ([[_revealController leftViewController] isKindOfClass:[NAMenuViewController class]]) {
             NAMenuViewController * mainController = (NAMenuViewController *)[_revealController leftViewController];
             [mainController displayLoginView];
@@ -99,7 +111,7 @@
 - (void)changedPrivateUpload:(UISwitch *)switchView {
     if (switchView == [_privateUploadCell switchView]) {
         [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
-        [_engine changePrivacyOfAccount:[_engine currentAccount] userInfo:nil];
+        [[NAAPIEngine sharedEngine] changePrivacyOfAccount:[[NAAPIEngine sharedEngine] currentAccount] userInfo:self];
     }
 }
 
@@ -115,7 +127,7 @@
 /*----------------------------------------------------------------------------*/
 - (void)accountUpdateDidSucceed:(CLAccount *)account connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
     [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
-    [_engine setCurrentAccount:account];
+    [[NAAPIEngine sharedEngine] setCurrentAccount:account];
 }
 
 - (void)requestDidFailWithError:(NSError *)error connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
@@ -125,30 +137,6 @@
 
     NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:userInfo];
     [av show];
-}
-
-/*----------------------------------------------------------------------------*/
-#pragma mark - NANeedsEngine
-/*----------------------------------------------------------------------------*/
-- (void)configureWithEngine:(NAAPIEngine *)engine {
-    _engine = engine;
-    [_engine setDelegate:self];
-    _account = [_engine currentAccount];
-
-    if ([_account email])
-        [[_emailCell detailTextLabel] setText:[_account email]];
-    else
-        [[_emailCell detailTextLabel] setText:@"Email"];
-
-    if ([_account domain])
-        [[_customDomainCell detailTextLabel] setText:[[_account domain] absoluteString]];
-    else
-        [[_customDomainCell detailTextLabel] setText:@"Premium account only"];
-
-    [[_privateUploadCell switchView] setOn:([_account uploadsArePrivate]) animated:YES];
-    [[_privateUploadCell switchView] addTarget:self action:@selector(changedPrivateUpload:) forControlEvents:UIControlEventValueChanged];
-    
-    [[self tableView] reloadData];
 }
 
 
@@ -168,7 +156,8 @@
 #pragma mark - Changing view controller
 /*----------------------------------------------------------------------------*/
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
-    if (![_account subscriptionExpiresAt] && [identifier isEqualToString:@"ChangeDomainSegue"]) {
+    if (![[[NAAPIEngine sharedEngine] currentAccount] subscriptionExpiresAt]
+        && [identifier isEqualToString:@"ChangeDomainSegue"]) {
         NAAlertView * av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVPremium];
         [av setMessage:@"You need a premium CloudApp account to setup a custom domain"];
         [av show];
@@ -177,24 +166,10 @@
     return YES;
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    UIViewController * nextViewController = [segue destinationViewController];
-    if ([[nextViewController class] conformsToProtocol:@protocol(NANeedsEngine)])
-        [(id<NANeedsEngine>)nextViewController configureWithEngine:_engine];
-}
-
 - (void)displayMenu {
     [[self revealController] showViewController:[[self revealController] leftViewController]
                                        animated:YES
                                      completion:nil];
-}
-
-
-/*----------------------------------------------------------------------------*/
-#pragma mark - Notification observation
-/*----------------------------------------------------------------------------*/
-- (void)userDidLogout:(NSNotification *)notification {
-    [_engine cancelAllConnections];
 }
 
 @end

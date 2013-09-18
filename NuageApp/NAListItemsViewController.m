@@ -33,7 +33,6 @@
 
 @interface NAListItemsViewController () <CLAPIEngineDelegate, UIActionSheetDelegate>
 
-@property (strong, nonatomic) NAAPIEngine * engine;
 @property (strong, nonatomic) PKRevealController * revealController;
 @property (nonatomic) BOOL displaysTrash;
 @property (strong, nonatomic) NSMutableArray * items;
@@ -58,6 +57,8 @@
         _isFetchingItems = NO;
         _currentPage = 1;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogout:) name:@"NAUserLogout" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogin:) name:@"NAUserLogin" object:nil];
+        [[NAAPIEngine sharedEngine] addDelegate:self];
     }
     return self;
 }
@@ -79,7 +80,9 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self configureWithRevealController:_revealController];
-    [_engine setDelegate:self];
+    
+    if (![_items count])
+        [self loadMoreItems];
 }
 
 
@@ -137,7 +140,7 @@
         _selectedIndexPath = indexPath;
         CLWebItem * item = _items[indexPath.row];
         [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
-        [_engine deleteItem:item userInfo:nil];
+        [[NAAPIEngine sharedEngine] deleteItem:item userInfo:self];
     }
 }
 
@@ -162,7 +165,7 @@
         if (buttonIndex == kAlertViewButtonIndexRestore) {
             CLWebItem * item = _items[_selectedIndexPath.row];
             [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
-            [_engine restoreItem:item userInfo:nil];
+            [[NAAPIEngine sharedEngine] restoreItem:item userInfo:self];
         }
     } else {
         id<NADropItemPickerController> picker = nil;
@@ -207,7 +210,7 @@
 - (void)triggeredRefreshControl:(id)sender {
     [[self refreshControl] endRefreshing];
     if (!_isFetchingItems) {
-        [_engine cancelAllConnections];
+        [[NAAPIEngine sharedEngine] cancelAllConnections]; // TODO: Cancel only correct one
         _currentPage = 1;
         _items = [NSMutableArray array];
         _isFetchingItems = NO;
@@ -279,17 +282,6 @@
 
 
 /*----------------------------------------------------------------------------*/
-#pragma mark - NANeedsEngine
-/*----------------------------------------------------------------------------*/
-- (void)configureWithEngine:(NAAPIEngine *)engine {
-    _engine = engine;
-    [_engine setDelegate:self];
-    if (![_items count])
-        [self loadMoreItems];
-}
-
-
-/*----------------------------------------------------------------------------*/
 #pragma mark - NANeedsRevealController
 /*----------------------------------------------------------------------------*/
 - (void)configureWithRevealController:(PKRevealController *)controller {
@@ -321,7 +313,6 @@
         NSIndexPath * selectedIndexPath = [[self tableView] indexPathsForSelectedRows][0];
         NAItemViewController * itemViewController = [segue destinationViewController];
         [itemViewController configureWithItem:_items[selectedIndexPath.row]];
-        [itemViewController configureWithEngine:_engine];
         [itemViewController setDelegate:self];
     }
 }
@@ -330,7 +321,6 @@
     UIStoryboard * storyboard = [UIStoryboard storyboardWithName:@"ItemListStoryboard" bundle:nil];
     NADropItemViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"NADropItemViewController"];
     [vc setDropPickerController:picker];
-    [vc configureWithEngine:_engine];
     [vc setItem:item];
     UINavigationController * nc = [[UINavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nc animated:YES completion:nil];
@@ -346,7 +336,6 @@
 #pragma mark - Notification observation
 /*----------------------------------------------------------------------------*/
 - (void)userDidLogout:(NSNotification *)notification {
-    [_engine cancelAllConnections];
     _currentPage = 1;
     _items = [NSMutableArray array];
     _isFetchingItems = NO;
@@ -354,12 +343,17 @@
     [[self tableView] reloadData];
 }
 
+- (void)userDidLogin:(NSNotification *)notification {
+    if (![_items count] && [_revealController focusedController] == [self navigationController])
+        [self loadMoreItems];
+}
+
 
 /*----------------------------------------------------------------------------*/
 #pragma mark - Misc private methods
 /*----------------------------------------------------------------------------*/
 - (void)loadMoreItems {
-    if (!_isFetchingItems) {
+    if (!_isFetchingItems && [[NAAPIEngine sharedEngine] currentAccount]) {
         if (![_items count]) {
             [MBProgressHUD showHUDAddedTo:[self view] withText:@"Loading drops..." showActivityIndicator:YES animated:YES];
         } else {
@@ -375,9 +369,10 @@
             }
         }
         if (_displaysTrash)
-            [_engine getItemListStartingAtPage:_currentPage ofType:CLWebItemTypeNone itemsPerPage:kNumberOfItemsPerPage showOnlyItemsInTrash:YES userInfo:nil];
+            [[NAAPIEngine sharedEngine] getItemListStartingAtPage:_currentPage ofType:CLWebItemTypeNone
+                                                     itemsPerPage:kNumberOfItemsPerPage showOnlyItemsInTrash:YES userInfo:self];
         else
-            [_engine getItemListStartingAtPage:_currentPage itemsPerPage:kNumberOfItemsPerPage userInfo:nil];
+            [[NAAPIEngine sharedEngine] getItemListStartingAtPage:_currentPage itemsPerPage:kNumberOfItemsPerPage userInfo:self];
         _isFetchingItems = YES;
     }
 }

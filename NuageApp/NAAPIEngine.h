@@ -14,6 +14,11 @@
 
 @property (strong, nonatomic) CLAccount * currentAccount;
 
++ (instancetype)sharedEngine;
+
+- (void)addDelegate:(id<CLAPIEngineDelegate>)delegate;
+- (void)removeDelegate:(id<CLAPIEngineDelegate>)delegate;
+
 - (void)setUserWithEmail:(NSString *)email andPassword:(NSString *)password;
 - (BOOL)loadUser;
 - (void)logout;

@@ -186,7 +186,6 @@
 		9C2CB8B917CCB5E500561AA0 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		9C2CB8BC17CCB5E500561AA0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MenuStoryboard.storyboard; sourceTree = "<group>"; };
 		9C3CA18817CCD2FA00ABEDF0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/LoginStoryboard.storyboard; sourceTree = "<group>"; };
-		9C46794D17D3BF73001B0FB8 /* NANeedsEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NANeedsEngine.h; sourceTree = "<group>"; };
 		9C4B054D17E173490029B083 /* Default-iOS7-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-iOS7-568h@2x.png"; sourceTree = "<group>"; };
 		9C4B054E17E173490029B083 /* Default-iOS7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-iOS7@2x.png"; sourceTree = "<group>"; };
 		9C52C50B17CF2A5D0019C026 /* NAMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAMenuViewController.h; sourceTree = "<group>"; };
@@ -344,7 +343,6 @@
 		9CF8631517DB1AFD000ADD8E /* NANeedsRevealController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NANeedsRevealController.h; sourceTree = "<group>"; };
 		9CF8631617DB204F000ADD8E /* barbuttonitem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = barbuttonitem.png; path = icons/barbuttonitem.png; sourceTree = "<group>"; };
 		9CF8631717DB204F000ADD8E /* barbuttonitem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "barbuttonitem@2x.png"; path = "icons/barbuttonitem@2x.png"; sourceTree = "<group>"; };
-		9CF8631A17DB3E5B000ADD8E /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -421,7 +419,6 @@
 		9C2CB8A217CCB5E500561AA0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9CF8631A17DB3E5B000ADD8E /* iAd.framework */,
 				9C1681C717D76F5D00CFEAE7 /* AssetsLibrary.framework */,
 				9C7C279E17D70ABE00CDE4E7 /* MediaPlayer.framework */,
 				9C97C0BF17D5B0B5001488D2 /* Social.framework */,
@@ -560,7 +557,6 @@
 		9C46795017D3C3E9001B0FB8 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				9C46794D17D3BF73001B0FB8 /* NANeedsEngine.h */,
 				9CF8631517DB1AFD000ADD8E /* NANeedsRevealController.h */,
 				9C97C0B517D583FA001488D2 /* NATextFieldCellDelegate.h */,
 			);

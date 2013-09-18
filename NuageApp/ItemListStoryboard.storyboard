@@ -343,10 +343,10 @@
             </objects>
             <point key="canvasLocation" x="413" y="-1349"/>
         </scene>
-        <!--Text Display View Controller-->
+        <!--Text Display View Controller - Text viewer-->
         <scene sceneID="5Pe-DD-1kg">
             <objects>
-                <viewController storyboardIdentifier="NATextDisplayViewController" id="Fll-HC-2va" customClass="NATextDisplayViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NATextDisplayViewController" title="Text viewer" id="Fll-HC-2va" customClass="NATextDisplayViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="g15-Pl-bPt">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

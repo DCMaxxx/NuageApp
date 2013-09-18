@@ -16,7 +16,6 @@
 
 @interface NAChangeEmailViewController () <CLAPIEngineDelegate>
 
-@property (strong, nonatomic) NAAPIEngine * engine;
 @property (weak, nonatomic) IBOutlet NATextFieldCell *emailCell;
 @property (weak, nonatomic) IBOutlet NATextFieldCell *passwordCell;
 
@@ -27,6 +26,17 @@
 #pragma mark - Implementation
 /*----------------------------------------------------------------------------*/
 @implementation NAChangeEmailViewController
+
+/*----------------------------------------------------------------------------*/
+#pragma mark - Init
+/*----------------------------------------------------------------------------*/
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        [[NAAPIEngine sharedEngine] addDelegate:self];
+    }
+    return self;
+}
+
 
 /*----------------------------------------------------------------------------*/
 #pragma mark - UIViewController
@@ -43,15 +53,16 @@
     [[_passwordCell textField] setSecureTextEntry:YES];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [[_emailCell textField] setText:[[[NAAPIEngine sharedEngine] currentAccount] email]];
+}
 
-/*----------------------------------------------------------------------------*/
-#pragma mark - NANeedsEngine
-/*----------------------------------------------------------------------------*/
-- (void)configureWithEngine:(NAAPIEngine *)engine {
-    _engine = engine;
-    [_engine setDelegate:self];
-    [[_emailCell textField] setText:[[_engine currentAccount] email]];
-    [[self tableView] reloadData];
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[NAAPIEngine sharedEngine] removeDelegate:self];
 }
 
 
@@ -65,8 +76,8 @@
         [[_emailCell textField] resignFirstResponder];
         [[_passwordCell textField] resignFirstResponder];
         [MBProgressHUD showHUDAddedTo:[self view] withText:@"Updating account..." showActivityIndicator:YES animated:YES];
-        [_engine setClearsCookies:YES];
-        [_engine changeToEmail:email withPassword:password userInfo:nil];
+        [[NAAPIEngine sharedEngine] setClearsCookies:YES];
+        [[NAAPIEngine sharedEngine] changeToEmail:email withPassword:password userInfo:self];
     } else {
         NAAlertView * av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVRequiredField];
         [av setMessage:@"Both email and password fields are required"];
@@ -80,14 +91,14 @@
 /*----------------------------------------------------------------------------*/
 - (void)accountUpdateDidSucceed:(CLAccount *)account connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
     [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
-    [_engine setCurrentAccount:account];
-    [_engine setClearsCookies:NO];
+    [[NAAPIEngine sharedEngine] setCurrentAccount:account];
+    [[NAAPIEngine sharedEngine] setClearsCookies:NO];
     [[self navigationController] popViewControllerAnimated:YES];
 }
 
 - (void)requestDidFailWithError:(NSError *)error connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
     [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
-    [_engine setClearsCookies:NO];
+    [[NAAPIEngine sharedEngine] setClearsCookies:NO];
 
     NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:userInfo];
     [av show];

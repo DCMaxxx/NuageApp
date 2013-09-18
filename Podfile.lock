@@ -4,6 +4,7 @@ PODS:
   - KeychainItemWrapper (1.2)
   - MBProgressHUD (0.7)
   - PKRevealController (1.0b2)
+  - Reveal-iOS-SDK (0.9.1)
 
 DEPENDENCIES:
   - AFNetworking (~> 1)
@@ -11,6 +12,7 @@ DEPENDENCIES:
   - KeychainItemWrapper
   - MBProgressHUD
   - PKRevealController
+  - Reveal-iOS-SDK
 
 SPEC CHECKSUMS:
   AFNetworking: 7f9bcd7c287a75476cd5c61e82fd3380e93e4c54
@@ -18,5 +20,6 @@ SPEC CHECKSUMS:
   KeychainItemWrapper: b532e85de8792ea70dad237e7ead90993af763cf
   MBProgressHUD: 1fd8591a2216d5dec6de24e09187bb03bcbe9946
   PKRevealController: 631e6a3db833a0c660203c2dba0963109549ec8a
+  Reveal-iOS-SDK: 7396a20e743807b1e6f1caae664e1a9dc0cc442c
 
 COCOAPODS: 0.23.0

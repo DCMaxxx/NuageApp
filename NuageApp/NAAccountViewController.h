@@ -9,9 +9,8 @@
 #import <PKRevealController.h>
 
 #import "NANeedsRevealController.h"
-#import "NANeedsEngine.h"
 
 
-@interface NAAccountViewController : UITableViewController <NANeedsEngine, NANeedsRevealController>
+@interface NAAccountViewController : UITableViewController <NANeedsRevealController>
 
 @end

@@ -7,10 +7,9 @@
 //
 
 #import "NADropItemPickerController.h"
-#import "NANeedsEngine.h"
 
 
-@interface NADropItemViewController : UITableViewController <NANeedsEngine>
+@interface NADropItemViewController : UITableViewController
 
 @property (strong, nonatomic) id<NADropItemPickerController> dropPickerController;
 @property (strong, nonatomic) id item;

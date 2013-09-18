@@ -28,7 +28,6 @@ typedef enum { NAUpdatingItemName, NAUpdatingItemPrivacy, NAUpdatingItemNone } N
 
 @interface NAItemViewController () <NATextFieldCellDelegate, CLAPIEngineDelegate, UIActionSheetDelegate>
 
-@property (strong, nonatomic) NAAPIEngine * engine;
 @property (strong, nonatomic) id<NAPreviewItemCellController> previewCellController;
 @property (nonatomic) NAUpdatingItemType currentUpdate;
 
@@ -46,6 +45,7 @@ typedef enum { NAUpdatingItemName, NAUpdatingItemPrivacy, NAUpdatingItemNone } N
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
         _currentUpdate = NAUpdatingItemNone;
+        [[NAAPIEngine sharedEngine] addDelegate:self];
     }
     return self;
 }
@@ -71,9 +71,14 @@ typedef enum { NAUpdatingItemName, NAUpdatingItemPrivacy, NAUpdatingItemNone } N
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [_engine setDelegate:self];
     if ([_previewCellController respondsToSelector:@selector(cell:willAppearWithWebItem:)])
         [_previewCellController cell:_itemPreviewCell willAppearWithWebItem:_webItem];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[NAAPIEngine sharedEngine] removeDelegate:self];
 }
 
 
@@ -111,7 +116,7 @@ typedef enum { NAUpdatingItemName, NAUpdatingItemPrivacy, NAUpdatingItemNone } N
     } else if (![[textField text] isEqualToString:[_webItem name]]) {
         [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
         _currentUpdate = NAUpdatingItemName;
-        [_engine changeNameOfItem:_webItem toName:[textField text] userInfo:nil];
+        [[NAAPIEngine sharedEngine] changeNameOfItem:_webItem toName:[textField text] userInfo:self];
     }
     [textField resignFirstResponder];
     return YES;
@@ -119,15 +124,6 @@ typedef enum { NAUpdatingItemName, NAUpdatingItemPrivacy, NAUpdatingItemNone } N
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     return _currentUpdate != NAUpdatingItemName;
-}
-
-
-/*----------------------------------------------------------------------------*/
-#pragma mark - NANeedsEngine
-/*----------------------------------------------------------------------------*/
-- (void)configureWithEngine:(NAAPIEngine *)engine {
-    _engine = engine;
-    [_engine setDelegate:self];
 }
 
 
@@ -166,7 +162,7 @@ typedef enum { NAUpdatingItemName, NAUpdatingItemPrivacy, NAUpdatingItemNone } N
         [[_itemNameCell textField] resignFirstResponder];
         [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
         _currentUpdate = NAUpdatingItemPrivacy;
-        [_engine changePrivacyOfItem:_webItem toPrivate:[switchView isOn] userInfo:nil];
+        [[NAAPIEngine sharedEngine] changePrivacyOfItem:_webItem toPrivate:[switchView isOn] userInfo:self];
     }
 }
 
