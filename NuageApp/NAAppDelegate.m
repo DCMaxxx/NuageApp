@@ -27,6 +27,7 @@
     UIViewController * frontVC = [rearVC viewControllers][0];
     PKRevealController * revealController = [PKRevealController revealControllerWithFrontViewController:frontVC leftViewController:rearVC options:@{PKRevealControllerRecognizesPanningOnFrontViewKey:@(NO)}];
     [[self window] setRootViewController:revealController];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"NAApplicationWillEnterForeground" object:nil];
     return YES;
 }
 
