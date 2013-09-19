@@ -44,20 +44,13 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"NAApplicationWillEnterForeground" object:nil];
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    if ([[[self window] rootViewController] isKindOfClass:[PKRevealController class]]) {
-        PKRevealController * reavealController = (PKRevealController *)[[self window] rootViewController];
-        if ([[reavealController leftViewController] isKindOfClass:[NAMenuViewController class]]) {
-            NAMenuViewController * mainViewController = (NAMenuViewController *)[reavealController leftViewController];
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:kAutoUploadKey])
-                [mainViewController displayUploadConfirmAlertView];
-        }
-    }
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

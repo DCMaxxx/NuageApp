@@ -49,6 +49,11 @@
                              ];
         [[NAAPIEngine sharedEngine] addDelegate:self];
         _needToShodUploadPopup = NO;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(displayUploadConfirmAlertView)
+                                                     name:@"NAApplicationWillEnterForeground"
+                                                   object:nil];
     }
     return self;
 }
