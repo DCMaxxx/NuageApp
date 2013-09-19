@@ -11,6 +11,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AFNetworking.h>
 
+#import "NAItemViewControllerDelegate.h"
 #import "NASettingsViewController.h"
 #import "NANeedsRevealController.h"
 #import "MBProgressHUD+Network.h"
@@ -28,6 +29,7 @@
 @property (strong, nonatomic) UIViewController * nextViewController;
 @property (nonatomic) BOOL isShowingPopup;
 @property (nonatomic) BOOL needToShodUploadPopup;
+@property (weak, nonatomic) id<NAItemViewControllerDelegate> delegate;
 
 @end
 
@@ -47,8 +49,9 @@
                               [[UIStoryboard storyboardWithName:@"AccountStoryboard" bundle:nil] instantiateInitialViewController],
                               [[UIStoryboard storyboardWithName:@"SettingsStoryboard" bundle:nil] instantiateInitialViewController]
                              ];
-        [[NAAPIEngine sharedEngine] addDelegate:self];
+        _delegate = [((UINavigationController *)_viewControllers[0]) viewControllers][0];
         _needToShodUploadPopup = NO;
+        [[NAAPIEngine sharedEngine] addDelegate:self];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(displayUploadConfirmAlertView)
@@ -109,6 +112,7 @@
 - (void)fileUploadDidSucceedWithResultingItem:(CLWebItem *)item connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
     [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
     [[NACopyHandler sharedInstance] copyURL:[item URL]];
+    [_delegate addedNewItem:item];
     NAAlertView * av = [[NAAlertView alloc] initWithTitle:@"Picture uploaded"
                                                   message:@"Link has been copied according to your preferences"
                                                  delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];

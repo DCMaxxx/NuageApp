@@ -11,5 +11,6 @@
 @protocol NAItemViewControllerDelegate <NSObject>
 
 - (void)item:(CLWebItem *)item wasUpdatedToItem:(CLWebItem *)updatedItem;
+- (void)addedNewItem:(CLWebItem *)item;
 
 @end

@@ -30,6 +30,8 @@
 #define kAlertViewButtonIndexLink       1
 #define kAlertViewButtonIndexImage      2
 
+typedef enum { NAFetchingMoreItems, NARefreshingItems, NANotFetchingItems } NAFetchingItemType;
+
 
 @interface NAListItemsViewController () <CLAPIEngineDelegate, UIActionSheetDelegate>
 
@@ -37,7 +39,7 @@
 @property (nonatomic) BOOL displaysTrash;
 @property (strong, nonatomic) NSMutableArray * items;
 @property (strong, nonatomic) NSIndexPath * selectedIndexPath;
-@property (nonatomic) BOOL isFetchingItems;
+@property (nonatomic) NAFetchingItemType fetchingItemType;
 @property (nonatomic) NSUInteger currentPage;
 
 @end
@@ -54,7 +56,7 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
         _items = [NSMutableArray array];
-        _isFetchingItems = NO;
+        _fetchingItemType = NANotFetchingItems;
         _currentPage = 1;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogout:) name:@"NAUserLogout" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogin:) name:@"NAUserLogin" object:nil];
@@ -151,8 +153,9 @@
 /*----------------------------------------------------------------------------*/
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     float endScrolling = scrollView.contentOffset.y + scrollView.frame.size.height;
-    if (endScrolling >= scrollView.contentSize.height && !_isFetchingItems &&
-        [_items count] >= kNumberOfItemsPerPage)
+    if (endScrolling >= scrollView.contentSize.height
+        && _fetchingItemType == NANotFetchingItems
+        && [_items count] >= kNumberOfItemsPerPage)
         [self loadMoreItems];
 }
 
@@ -208,16 +211,7 @@
 }
 
 - (void)triggeredRefreshControl:(id)sender {
-    [[self refreshControl] endRefreshing];
-    if (!_isFetchingItems) {
-        [[NAAPIEngine sharedEngine] cancelAllConnections]; // TODO: Cancel only correct one
-        _currentPage = 1;
-        _items = [NSMutableArray array];
-        _isFetchingItems = NO;
-        _selectedIndexPath = nil;
-        [[self tableView] reloadData];
-        [self loadMoreItems];
-    }
+    [self reloadItems];
 }
 
 
@@ -228,7 +222,9 @@
     [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
     [[self tableView] setTableFooterView:nil];
 
-    _isFetchingItems = NO;
+    if (_fetchingItemType == NARefreshingItems)
+        [[self refreshControl] endRefreshing];
+    _fetchingItemType = NANotFetchingItems;
     _selectedIndexPath = nil;
 
     NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:userInfo];
@@ -239,13 +235,53 @@
     [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
     [[self tableView] setTableFooterView:nil];
     
-    if ([items count]) {
-        _items = [[_items arrayByAddingObjectsFromArray:items] mutableCopy];
-        [[self tableView] reloadData];
-        ++_currentPage;
-    } else
-        [[self tableView] setTableFooterView:nil];
-    _isFetchingItems = NO;
+    NSMutableArray * indexPaths = [NSMutableArray array];
+    for (NSUInteger i = 0; i < [items count]; ++i) {
+        NSIndexPath * indexPath = nil;
+        if (_fetchingItemType == NAFetchingMoreItems) {
+            [_items addObject:items[i]];
+            indexPath = [NSIndexPath indexPathForRow:[_items count]-1 inSection:0];
+        } else if (_fetchingItemType == NARefreshingItems) {
+            if (![[items[i] href] isEqual:[_items[i] href]]) {
+                [_items insertObject:items[i] atIndex:i];
+                indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+            }
+        }
+        if (indexPath)
+            [indexPaths addObject:indexPath];
+    }
+    if ([indexPaths count]) {
+        [self.tableView beginUpdates];
+        [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView endUpdates];
+    }
+    if (_fetchingItemType == NARefreshingItems)
+        [[self refreshControl] endRefreshing];
+//
+//    
+//    if (_fetchingItemType == NAFetchingMoreItems) {
+//        if ([items count]) {
+//            _items = [[_items arrayByAddingObjectsFromArray:items] mutableCopy];
+//            [[self tableView] reloadData];
+//            ++_currentPage;
+//        } else
+//            [[self tableView] setTableFooterView:nil];
+//    } else if (_fetchingItemType == NARefreshingItems) {
+//        NSUInteger i = 0;
+//        NSMutableArray * indexPaths = [NSMutableArray array];
+//        [self.tableView beginUpdates];
+//        for (CLWebItem * item in items) {
+//            if (i >= [_items count] || ![[_items[i] href] isEqual:[item href]]) {
+//                [_items insertObject:item atIndex:i];
+//                [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+//                ++i;
+//            }
+//        }
+//        [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+//        [self.tableView endUpdates];
+//        [[self refreshControl] endRefreshing];
+//    }
+    _fetchingItemType = NANotFetchingItems;
 }
 
 - (void)itemRestorationDidSucceed:(CLWebItem *)item connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
@@ -265,13 +301,15 @@
 
     [_items removeObjectAtIndex:_selectedIndexPath.row];
     
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *path = [paths[0] stringByAppendingPathComponent:[[item remoteURL] lastPathComponent]];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-        NSError * error = nil;
-        [[NSFileManager defaultManager] removeItemAtPath:path error:&error];
-        if (error)
-            NSLog(@"Error %@ while removing file : %@ in NAListItemsViewController", error, path);
+    if ([[[item remoteURL] lastPathComponent] length]) {
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *path = [paths[0] stringByAppendingPathComponent:[[item remoteURL] lastPathComponent]];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+            NSError * error = nil;
+            [[NSFileManager defaultManager] removeItemAtPath:path error:&error];
+            if (error)
+                NSLog(@"Error %@ while removing file : %@ in NAListItemsViewController", error, path);
+        }
     }
     [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -300,8 +338,20 @@
     NSUInteger itemIdx = [_items indexOfObject:item];
     if (itemIdx != NSNotFound) {
         [_items replaceObjectAtIndex:itemIdx withObject:updatedItem];
-        [[self tableView] reloadData];
+        NSIndexPath * indexPath = [NSIndexPath indexPathForRow:itemIdx inSection:0];
+        [self.tableView beginUpdates];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView endUpdates];
     }
+}
+
+- (void)addedNewItem:(CLWebItem *)item {
+    [_items insertObject:item atIndex:0];
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView beginUpdates];
+    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView endUpdates];
+    
 }
 
 
@@ -322,6 +372,7 @@
     NADropItemViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"NADropItemViewController"];
     [vc setDropPickerController:picker];
     [vc setItem:item];
+    [vc setDelegate:self];
     UINavigationController * nc = [[UINavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nc animated:YES completion:nil];
 }
@@ -338,7 +389,7 @@
 - (void)userDidLogout:(NSNotification *)notification {
     _currentPage = 1;
     _items = [NSMutableArray array];
-    _isFetchingItems = NO;
+    _fetchingItemType = NANotFetchingItems;
     _selectedIndexPath = nil;
     [[self tableView] reloadData];
 }
@@ -353,7 +404,7 @@
 #pragma mark - Misc private methods
 /*----------------------------------------------------------------------------*/
 - (void)loadMoreItems {
-    if (!_isFetchingItems && [[NAAPIEngine sharedEngine] currentAccount]) {
+    if (_fetchingItemType == NANotFetchingItems && [[NAAPIEngine sharedEngine] currentAccount]) {
         if (![_items count]) {
             [MBProgressHUD showHUDAddedTo:[self view] withText:@"Loading drops..." showActivityIndicator:YES animated:YES];
         } else {
@@ -373,7 +424,18 @@
                                                      itemsPerPage:kNumberOfItemsPerPage showOnlyItemsInTrash:YES userInfo:self];
         else
             [[NAAPIEngine sharedEngine] getItemListStartingAtPage:_currentPage itemsPerPage:kNumberOfItemsPerPage userInfo:self];
-        _isFetchingItems = YES;
+        _fetchingItemType = NAFetchingMoreItems;
+    }
+}
+
+- (void)reloadItems {
+    if (_fetchingItemType == NANotFetchingItems && [[NAAPIEngine sharedEngine] currentAccount]) {
+        if (_displaysTrash)
+            [[NAAPIEngine sharedEngine] getItemListStartingAtPage:1 ofType:CLWebItemTypeNone
+                                                     itemsPerPage:kNumberOfItemsPerPage showOnlyItemsInTrash:YES userInfo:self];
+        else
+            [[NAAPIEngine sharedEngine] getItemListStartingAtPage:1 itemsPerPage:kNumberOfItemsPerPage userInfo:self];
+        _fetchingItemType = NARefreshingItems;
     }
 }
 
