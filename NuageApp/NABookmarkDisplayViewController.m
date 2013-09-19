@@ -27,7 +27,7 @@
 
 /*----------------------------------------------------------------------------*/
 #pragma mark - UIViewController
-/*----------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------x--------*/
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[self navigationItem] setTitle:@"Bookmark viewer"];
@@ -37,8 +37,14 @@
     [super viewWillAppear:animated];
     CGRect webViewFrame = [[self view] frame];
     CGRect toolbarFrame = [_toolbar frame];
-    CGRect navigationBarFrame = [[[self navigationController] navigationBar] frame];
-    webViewFrame.size.height -= (CGRectGetHeight(toolbarFrame) + CGRectGetHeight(navigationBarFrame));
+    float sysVer = [[[UIDevice currentDevice] systemVersion] floatValue];
+    if (sysVer >= 7.0) {
+        CGRect navigationBarFrame = [[[self navigationController] navigationBar] frame];
+        CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+        webViewFrame.size.height -= (CGRectGetHeight(navigationBarFrame) + CGRectGetHeight(toolbarFrame) + CGRectGetHeight(statusBarFrame));
+        webViewFrame.origin.y += (CGRectGetHeight(navigationBarFrame) + CGRectGetHeight(statusBarFrame));
+    } else
+        webViewFrame.size.height -= CGRectGetHeight(toolbarFrame);
     [_webView setFrame:webViewFrame];
     [_webView setUserInteractionEnabled:YES];
     [_webView setDelegate:self];

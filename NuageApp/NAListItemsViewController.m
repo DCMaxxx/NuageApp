@@ -242,7 +242,7 @@ typedef enum { NAFetchingMoreItems, NARefreshingItems, NANotFetchingItems } NAFe
             [_items addObject:items[i]];
             indexPath = [NSIndexPath indexPathForRow:[_items count]-1 inSection:0];
         } else if (_fetchingItemType == NARefreshingItems) {
-            if (![[items[i] href] isEqual:[_items[i] href]]) {
+            if (i >= [_items count] || ![[items[i] href] isEqual:[_items[i] href]]) {
                 [_items insertObject:items[i] atIndex:i];
                 indexPath = [NSIndexPath indexPathForRow:i inSection:0];
             }
@@ -257,30 +257,6 @@ typedef enum { NAFetchingMoreItems, NARefreshingItems, NANotFetchingItems } NAFe
     }
     if (_fetchingItemType == NARefreshingItems)
         [[self refreshControl] endRefreshing];
-//
-//    
-//    if (_fetchingItemType == NAFetchingMoreItems) {
-//        if ([items count]) {
-//            _items = [[_items arrayByAddingObjectsFromArray:items] mutableCopy];
-//            [[self tableView] reloadData];
-//            ++_currentPage;
-//        } else
-//            [[self tableView] setTableFooterView:nil];
-//    } else if (_fetchingItemType == NARefreshingItems) {
-//        NSUInteger i = 0;
-//        NSMutableArray * indexPaths = [NSMutableArray array];
-//        [self.tableView beginUpdates];
-//        for (CLWebItem * item in items) {
-//            if (i >= [_items count] || ![[_items[i] href] isEqual:[item href]]) {
-//                [_items insertObject:item atIndex:i];
-//                [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
-//                ++i;
-//            }
-//        }
-//        [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
-//        [self.tableView endUpdates];
-//        [[self refreshControl] endRefreshing];
-//    }
     _fetchingItemType = NANotFetchingItems;
 }
 
