@@ -31,6 +31,12 @@ But... what if you want to get the link on your Mac? You could always send it by
 
 And here it is, CloudApp's best feature, brought to iOS.
 
+How can I get and use it ?
+--------
+For now on, you'll have to compile and run it by yourself. In a few weeks though, I'll post it on the AppStore (with a better design and icon, I promise).
+To enable sharing to your Mac, you'll have to compile and run NuageApp Server's sub-project, and enable it in the iOS application settings.
+After, you'll just have to upload a picture, and that's it !
+
 License
 --------
 ```
