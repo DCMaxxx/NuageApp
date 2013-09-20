@@ -50,3 +50,14 @@ License
  * ----------------------------------------------------------------------------
  */
  ```
+
+ Stuff NuageApp relies on
+ --------
+ NuageApp relies on a bunch of open-source stuff, which really simplified my life. Thanks to :
+ + [DTBonjour](https://github.com/Cocoanetics/DTBonjour "DTBonjour")
+ + [MBProgressHUD](https://github.com/matej/MBProgressHUD "MBProgressHUD")
+ + [AFNetworking](https://github.com/AFNetworking/AFNetworking "MBProgressHUD")
+ + [PKRevealController](https://github.com/pkluz/PKRevealController "PKRevealController")
+ + [Igh0zt's icons](http://igh0zt.deviantart.com/art/iOS-7-Style-Metro-UI-Icons-384587316 "Igh0zt's icons") (used in the iOS application)
+ + [Iynque's icons](http://iynque.deviantart.com/art/iOS-7-Icons-Updated-378969049 "Iynque's icons") (used in the Mac OS application)
+ 
