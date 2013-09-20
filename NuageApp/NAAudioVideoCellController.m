@@ -48,6 +48,8 @@
     UIImage * play = [UIImage imageNamed:@"play-icon.png"];
     UIImageView * playView = [[UIImageView alloc] initWithImage:play];
     [playView setCenter:[_previewView center]];
+    if (sysVer < 7.0)
+        playView.center = CGPointMake(playView.center.x + 10.0f, playView.center.y);
     [playView setOpaque:NO];
     [_previewView addSubview:playView];
     [[cell contentView] addSubview:_previewView];
