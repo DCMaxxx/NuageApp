@@ -17,7 +17,7 @@ Here are its main features:
 + Bookmark a link
 + Drop a picture
 
-Why is it cool?
+Why is it (so) cool?
 --------
 If you've ever used CloudApp Mac's client, you've probably fallen in love with the screenshot autoupload feature.
 When you take a screenshot, it automatically gets uploaded and the link copied to your clipboard.
