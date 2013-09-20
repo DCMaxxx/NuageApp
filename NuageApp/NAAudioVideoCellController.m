@@ -8,10 +8,10 @@
 
 #import "NAAudioVideoCellController.h"
 
+#import <AFNetworkActivityIndicatorManager.h>
 #import <MediaPlayer/MediaPlayer.h>
 #import <CLWebItem.h>
 
-#import "MBProgressHUD+Network.h"
 #import "NAIconHandler.h"
 #import "NAAlertView.h"
 
@@ -53,6 +53,7 @@
     [[cell contentView] addSubview:_previewView];
 
     if ([webItem type] == CLWebItemTypeVideo) {
+        [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(toto:)
                                                      name:MPMoviePlayerThumbnailImageRequestDidFinishNotification
@@ -71,6 +72,7 @@
 #pragma mark - Notification Obersavtion
 /*----------------------------------------------------------------------------*/
 - (void)toto:(NSNotification *)notification {
+    [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
     NSDictionary * dic = [notification userInfo];
     if (dic[MPMoviePlayerThumbnailErrorKey]) {
         NAAlertView * av = [[NAAlertView alloc] initWithError:dic[MPMoviePlayerThumbnailErrorKey] userInfo:nil];
