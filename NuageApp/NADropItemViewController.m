@@ -37,13 +37,6 @@
 /*----------------------------------------------------------------------------*/
 @implementation NADropItemViewController
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    if (self = [super initWithCoder:aDecoder]) {
-        [[NAAPIEngine sharedEngine] addDelegate:self];
-    }
-    return self;
-}
-
 /*----------------------------------------------------------------------------*/
 #pragma mark - UIViewController
 /*----------------------------------------------------------------------------*/
@@ -71,6 +64,12 @@
     
     [_dropPickerController setDelegate:self];
     [_dropPickerController cell:_itemPickerCell didLoadWithItem:_item];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    [[NAAPIEngine sharedEngine] addDelegate:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -141,10 +140,11 @@
         [_progressHUD setLabelText:@"Uploading file..."];
     else if (newProgress == 100) {
         [_progressHUD setLabelText:@"Finalizing upload..."];
+        [_progressHUD setDetailsLabelText:@"100 %"];
         lastProgress = NSUIntegerMax;
         return ;
     }
-    if (newProgress != lastProgress) {
+    if (newProgress != lastProgress || newProgress == 100) {
         [_progressHUD setDetailsLabelText:[NSString stringWithFormat:@"%zu %%", (unsigned long)newProgress]];
         lastProgress = newProgress;
     }
