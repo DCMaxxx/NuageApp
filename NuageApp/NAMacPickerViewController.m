@@ -45,6 +45,10 @@
 /*----------------------------------------------------------------------------*/
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
+    [refresh addTarget:self action:@selector(triggeredRefreshControl) forControlEvents:UIControlEventValueChanged];
+    [self setRefreshControl:refresh];
 }
 
 
@@ -77,17 +81,27 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
-    if ([_serverName length] && [[[cell textLabel] text] isEqualToString:_serverName])
+    if ([_serverName length] && [[[cell textLabel] text] isEqualToString:_serverName]) {
         _serverName = nil;
-    else
+        [cell setAccessoryType:UITableViewCellAccessoryNone];
+    } else {
         _serverName = [[cell textLabel] text];
+        [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+    }
 
     [[NSUserDefaults standardUserDefaults] setObject:_serverName forKey:kDefautServerKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    [[self tableView] reloadData];
 }
 
+
+/*----------------------------------------------------------------------------*/
+#pragma mark - User interactions
+/*----------------------------------------------------------------------------*/
+- (void)triggeredRefreshControl {
+    _servers = [_client servers];
+    [[self refreshControl] endRefreshing];
+    [[self tableView] reloadData];
+}
 
 /*----------------------------------------------------------------------------*/
 #pragma mark - NABonjourClientDelegate

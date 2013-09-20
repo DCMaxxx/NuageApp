@@ -89,6 +89,8 @@
 		9C98AD6117D844F9008E1A81 /* NADropBookmarkController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C98AD6017D844F9008E1A81 /* NADropBookmarkController.m */; };
 		9C98AD6517D85414008E1A81 /* NSString+URL.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C98AD6417D85414008E1A81 /* NSString+URL.m */; };
 		9C98AD7517D95650008E1A81 /* UIImage+Data.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C98AD7417D9564F008E1A81 /* UIImage+Data.m */; };
+		9C9B055F17EBF88600C1DB0A /* play-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C9B055D17EBF88600C1DB0A /* play-icon.png */; };
+		9C9B056017EBF88600C1DB0A /* play-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C9B055E17EBF88600C1DB0A /* play-icon@2x.png */; };
 		9C9E992017D478B000D20A9B /* NAIconHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C9E991F17D478B000D20A9B /* NAIconHandler.m */; };
 		9C9E992317D496A300D20A9B /* bookmark-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C9E992117D496A300D20A9B /* bookmark-icon.png */; };
 		9C9E992417D496A300D20A9B /* bookmark-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C9E992217D496A300D20A9B /* bookmark-icon@2x.png */; };
@@ -282,6 +284,8 @@
 		9C98AD6417D85414008E1A81 /* NSString+URL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URL.m"; sourceTree = "<group>"; };
 		9C98AD7317D9564F008E1A81 /* UIImage+Data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Data.h"; sourceTree = "<group>"; };
 		9C98AD7417D9564F008E1A81 /* UIImage+Data.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Data.m"; sourceTree = "<group>"; };
+		9C9B055D17EBF88600C1DB0A /* play-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play-icon.png"; path = "icons/play-icon.png"; sourceTree = "<group>"; };
+		9C9B055E17EBF88600C1DB0A /* play-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play-icon@2x.png"; path = "icons/play-icon@2x.png"; sourceTree = "<group>"; };
 		9C9E991E17D478B000D20A9B /* NAIconHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAIconHandler.h; sourceTree = "<group>"; };
 		9C9E991F17D478B000D20A9B /* NAIconHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAIconHandler.m; sourceTree = "<group>"; };
 		9C9E992117D496A300D20A9B /* bookmark-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bookmark-icon.png"; path = "icons/bookmark-icon.png"; sourceTree = "<group>"; };
@@ -472,6 +476,8 @@
 		9C2CB91E17CCB6DE00561AA0 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				9C9B055D17EBF88600C1DB0A /* play-icon.png */,
+				9C9B055E17EBF88600C1DB0A /* play-icon@2x.png */,
 				9C4B054D17E173490029B083 /* Default-iOS7-568h@2x.png */,
 				9C4B054E17E173490029B083 /* Default-iOS7@2x.png */,
 				9CF776BA17E1690F002428FA /* icon-29x29.png */,
@@ -1062,10 +1068,12 @@
 				9C7C27C717D75AA900CDE4E7 /* upload-large.png in Resources */,
 				9C7C27C817D75AA900CDE4E7 /* upload-large@2x.png in Resources */,
 				9CF8631017DB0AAB000ADD8E /* AccountStoryboard.storyboard in Resources */,
+				9C9B055F17EBF88600C1DB0A /* play-icon.png in Resources */,
 				9CF8631217DB0ED4000ADD8E /* ItemListStoryboard.storyboard in Resources */,
 				9CF8631417DB10F3000ADD8E /* TrashListStoryboard.storyboard in Resources */,
 				9CF8631817DB204F000ADD8E /* barbuttonitem.png in Resources */,
 				9CF8631917DB204F000ADD8E /* barbuttonitem@2x.png in Resources */,
+				9C9B056017EBF88600C1DB0A /* play-icon@2x.png in Resources */,
 				9C2609F517DC46A700DD1143 /* SettingsStoryboard.storyboard in Resources */,
 				9C1DCD5817DF25D600CF8F23 /* settings-icon.png in Resources */,
 				9C4B055017E173490029B083 /* Default-iOS7@2x.png in Resources */,

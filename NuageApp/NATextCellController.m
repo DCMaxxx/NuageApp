@@ -34,7 +34,9 @@
 /*----------------------------------------------------------------------------*/
 - (void)cell:(UITableViewCell *)cell didLoadWithWebItem:(CLWebItem *)webItem {
     CGRect frame = [[cell contentView] frame];
-    frame.origin.x -= 5;
+    float sysVer = [[[UIDevice currentDevice] systemVersion] floatValue];
+    if (sysVer < 7.0)
+        frame.origin.x -= 5;
     _label = [[UILabel alloc] initWithFrame:frame];
     [_label setBackgroundColor:[UIColor clearColor]];
     [_label setNumberOfLines:10];

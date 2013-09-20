@@ -154,6 +154,9 @@
 }
 
 - (void)displayUploadConfirmAlertView {
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:kAutoUploadKey])
+        return ;
+    
     if (![[NAAPIEngine sharedEngine] currentAccount]) {
         _needToShodUploadPopup = YES;
         _isShowingPopup = NO;

@@ -18,4 +18,6 @@
 - (void)chooseServerWithIndex:(NSUInteger)idx;
 - (void)chooseServerWithName:(NSString *)name;
 
+- (NSArray *)servers;
+
 @end

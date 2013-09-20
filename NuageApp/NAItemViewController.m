@@ -77,7 +77,7 @@ typedef enum { NAUpdatingItemName, NAUpdatingItemPrivacy, NAUpdatingItemNone } N
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
+    // TODO: stop connexions
     [[NAAPIEngine sharedEngine] removeDelegate:self];
 }
 

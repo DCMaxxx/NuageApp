@@ -18,6 +18,7 @@
 @interface NAWebCellController () <UIWebViewDelegate>
 
 @property (strong, nonatomic) UIWebView * webView;
+@property (nonatomic) BOOL endedLoading;
 
 @end
 
@@ -31,6 +32,7 @@
 #pragma mark - NAPreviewItemCellViewController
 /*----------------------------------------------------------------------------*/
 - (void)cell:(UITableViewCell *)cell didLoadWithWebItem:(CLWebItem *)webItem {
+    _endedLoading = NO;
     NSURLRequest * request = [NSURLRequest requestWithURL:[webItem remoteURL]];
     _webView = [[UIWebView alloc] init];
     [self configureWebViewInCell:cell];
@@ -47,7 +49,7 @@
 }
 
 - (void)cell:(UITableViewCell *)cell wasTappedOnViewController:(UIViewController *)viewController withWebItem:(CLWebItem *)webItem {
-    if (_webView) {
+    if (_endedLoading) {
         UIStoryboard * storyBoard = [UIStoryboard storyboardWithName:@"ItemListStoryboard" bundle:nil];
         NABookmarkDisplayViewController * vc = [storyBoard instantiateViewControllerWithIdentifier:@"NABookmarkDisplayViewController"];
         [vc setWebView:_webView];
@@ -61,12 +63,14 @@
 /*----------------------------------------------------------------------------*/
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     [MBProgressHUD hideHUDForView:_webView hideActivityIndicator:YES animated:YES];
+    _endedLoading = YES;
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     [MBProgressHUD hideHUDForView:_webView hideActivityIndicator:YES animated:YES];
     NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:nil];
     [av show];
+    _endedLoading = YES;
 }
 
 
