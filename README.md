@@ -58,6 +58,8 @@ License
  + [MBProgressHUD](https://github.com/matej/MBProgressHUD "MBProgressHUD")
  + [AFNetworking](https://github.com/AFNetworking/AFNetworking "MBProgressHUD")
  + [PKRevealController](https://github.com/pkluz/PKRevealController "PKRevealController")
+ 
+ Also, even if the icons will most probably change :
  + [Igh0zt's icons](http://igh0zt.deviantart.com/art/iOS-7-Style-Metro-UI-Icons-384587316 "Igh0zt's icons") (used in the iOS application)
  + [Iynque's icons](http://iynque.deviantart.com/art/iOS-7-Icons-Updated-378969049 "Iynque's icons") (used in the Mac OS application)
  
