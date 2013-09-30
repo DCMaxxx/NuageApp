@@ -110,6 +110,10 @@
 		9C9E994817D4AAF500D20A9B /* drops-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C9E994617D4AAF500D20A9B /* drops-icon.png */; };
 		9C9E994917D4AAF500D20A9B /* drops-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C9E994717D4AAF500D20A9B /* drops-icon@2x.png */; };
 		9CAEB4EF17DDED400054356C /* NAMacPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CAEB4EE17DDED400054356C /* NAMacPickerViewController.m */; };
+		9CB7DFD517F9B85100685A67 /* greyButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CB7DFD117F9B85100685A67 /* greyButton.png */; };
+		9CB7DFD617F9B85100685A67 /* greyButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CB7DFD217F9B85100685A67 /* greyButton@2x.png */; };
+		9CB7DFD717F9B85100685A67 /* greyButtonHighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CB7DFD317F9B85100685A67 /* greyButtonHighlight.png */; };
+		9CB7DFD817F9B85100685A67 /* greyButtonHighlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CB7DFD417F9B85100685A67 /* greyButtonHighlight@2x.png */; };
 		9CD3E7FA17CCB85500476785 /* CLAPIDeserializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3E7E017CCB85500476785 /* CLAPIDeserializer.m */; };
 		9CD3E7FB17CCB85500476785 /* CLAPISerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3E7E217CCB85500476785 /* CLAPISerializer.m */; };
 		9CD3E7FC17CCB85500476785 /* NSMutableURLRequest+NPPOSTBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3E7E517CCB85500476785 /* NSMutableURLRequest+NPPOSTBody.m */; };
@@ -307,6 +311,10 @@
 		9C9E994717D4AAF500D20A9B /* drops-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "drops-icon@2x.png"; path = "icons/drops-icon@2x.png"; sourceTree = "<group>"; };
 		9CAEB4ED17DDED400054356C /* NAMacPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NAMacPickerViewController.h; path = NuageApp/NAMacPickerViewController.h; sourceTree = "<group>"; };
 		9CAEB4EE17DDED400054356C /* NAMacPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NAMacPickerViewController.m; path = NuageApp/NAMacPickerViewController.m; sourceTree = "<group>"; };
+		9CB7DFD117F9B85100685A67 /* greyButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = greyButton.png; path = icons/greyButton.png; sourceTree = "<group>"; };
+		9CB7DFD217F9B85100685A67 /* greyButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "greyButton@2x.png"; path = "icons/greyButton@2x.png"; sourceTree = "<group>"; };
+		9CB7DFD317F9B85100685A67 /* greyButtonHighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = greyButtonHighlight.png; path = icons/greyButtonHighlight.png; sourceTree = "<group>"; };
+		9CB7DFD417F9B85100685A67 /* greyButtonHighlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "greyButtonHighlight@2x.png"; path = "icons/greyButtonHighlight@2x.png"; sourceTree = "<group>"; };
 		9CD3E7DF17CCB85500476785 /* CLAPIDeserializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAPIDeserializer.h; sourceTree = "<group>"; };
 		9CD3E7E017CCB85500476785 /* CLAPIDeserializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAPIDeserializer.m; sourceTree = "<group>"; };
 		9CD3E7E117CCB85500476785 /* CLAPISerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAPISerializer.h; sourceTree = "<group>"; };
@@ -476,6 +484,10 @@
 		9C2CB91E17CCB6DE00561AA0 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				9CB7DFD117F9B85100685A67 /* greyButton.png */,
+				9CB7DFD217F9B85100685A67 /* greyButton@2x.png */,
+				9CB7DFD317F9B85100685A67 /* greyButtonHighlight.png */,
+				9CB7DFD417F9B85100685A67 /* greyButtonHighlight@2x.png */,
 				9C9B055D17EBF88600C1DB0A /* play-icon.png */,
 				9C9B055E17EBF88600C1DB0A /* play-icon@2x.png */,
 				9C4B054D17E173490029B083 /* Default-iOS7-568h@2x.png */,
@@ -1038,6 +1050,7 @@
 				9C9E993B17D4992300D20A9B /* text-icon@2x.png in Resources */,
 				9C9E993C17D4992300D20A9B /* unknown-icon@2x.png in Resources */,
 				9C9E993E17D4992300D20A9B /* video-icon.png in Resources */,
+				9CB7DFD717F9B85100685A67 /* greyButtonHighlight.png in Resources */,
 				9C9E993F17D4992300D20A9B /* video-icon@2x.png in Resources */,
 				9CF776C017E1690F002428FA /* icon-29x29.png in Resources */,
 				9C9E994217D49AB200D20A9B /* account-icon.png in Resources */,
@@ -1049,13 +1062,16 @@
 				9C7C27A717D70ED800CDE4E7 /* audio-large.png in Resources */,
 				9C7C27A817D70ED800CDE4E7 /* audio-large@2x.png in Resources */,
 				9C65AE1417E14AD8000C633C /* unknown-large.png in Resources */,
+				9CB7DFD517F9B85100685A67 /* greyButton.png in Resources */,
 				9C7C27A917D70ED800CDE4E7 /* unknown-large@2x.png in Resources */,
 				9C7C27AA17D70ED800CDE4E7 /* video-large.png in Resources */,
 				9CF776C517E1690F002428FA /* icon-120x120.png in Resources */,
+				9CB7DFD817F9B85100685A67 /* greyButtonHighlight@2x.png in Resources */,
 				9C7C27AB17D70ED800CDE4E7 /* video-large@2x.png in Resources */,
 				9C7C27B417D7116C00CDE4E7 /* archive-large.png in Resources */,
 				9C7C27B517D7116C00CDE4E7 /* archive-large@2x.png in Resources */,
 				9C7C27B617D7116C00CDE4E7 /* bookmark-large.png in Resources */,
+				9CB7DFD617F9B85100685A67 /* greyButton@2x.png in Resources */,
 				9C7C27B717D7116C00CDE4E7 /* bookmark-large@2x.png in Resources */,
 				9CF776C217E1690F002428FA /* icon-58x58.png in Resources */,
 				9CF776C117E1690F002428FA /* icon-57x57.png in Resources */,

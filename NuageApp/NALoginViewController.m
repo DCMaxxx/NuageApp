@@ -22,6 +22,12 @@
 @property (strong, nonatomic) PKRevealController * revealController;
 @property (weak, nonatomic) IBOutlet NATextFieldCell *emailCell;
 @property (weak, nonatomic) IBOutlet NATextFieldCell *passwordCell;
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet UIButton *registerButton;
+@property (weak, nonatomic) IBOutlet UILabel *orLabel;
+@property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
+@property (weak, nonatomic) IBOutlet UIButton *termsButton;
+
 @property (strong, nonatomic) NSString * connectionIdentifier;
 
 @end
@@ -52,6 +58,26 @@
     
     [[_passwordCell textField] setPlaceholder:@"Your CloudApp password"];
     [[_passwordCell textField] setSecureTextEntry:YES];    
+
+    float sysVer = [[[UIDevice currentDevice] systemVersion] floatValue];
+    if (sysVer < 7.0) {
+        UIImage *buttonImage = [[UIImage imageNamed:@"greyButton.png"]
+                                resizableImageWithCapInsets:UIEdgeInsetsMake(9, 9, 9, 9)];
+        UIImage *buttonImageHighlight = [[UIImage imageNamed:@"greyButtonHighlight.png"]
+                                         resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+        for (UIButton * button in @[_loginButton, _registerButton]) {
+            [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+            [button setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
+            [button setTitleColor:[UIColor darkTextColor] forState:UIControlStateHighlighted];
+            [[button titleLabel] setFont:[UIFont systemFontOfSize:[UIFont systemFontSize]]];
+        }
+        [_orLabel setHidden:YES];
+        [_forgotPasswordButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+        [_termsButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    }
+
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
