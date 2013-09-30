@@ -22,6 +22,7 @@
 @property (strong, nonatomic) PKRevealController * revealController;
 @property (weak, nonatomic) IBOutlet NATextFieldCell *emailCell;
 @property (weak, nonatomic) IBOutlet NATextFieldCell *passwordCell;
+@property (strong, nonatomic) NSString * connectionIdentifier;
 
 @end
 
@@ -61,7 +62,11 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
+
+    if (_connectionIdentifier) {
+        [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
+        [[NAAPIEngine sharedEngine] cancelConnection:_connectionIdentifier];
+    }
     [[NAAPIEngine sharedEngine] removeDelegate:self];
 }
 
@@ -70,6 +75,9 @@
 #pragma mark - User actions
 /*----------------------------------------------------------------------------*/
 - (IBAction)tappedLoginButton:(id)sender {
+    if (_connectionIdentifier)
+        return ;
+    
     NSString * email = [[_emailCell textField] text];
     NSString * password = [[_passwordCell textField] text];
     if ([email length] && [password length]) {
@@ -92,6 +100,9 @@
 }
 
 - (IBAction)tappedRegisterButton:(id)sender {
+    if (_connectionIdentifier)
+        return ;
+    
     NSString * email = [[_emailCell textField] text];
     NSString * password = [[_passwordCell textField] text];
     if ([email length] && [password length]) {
@@ -122,6 +133,7 @@
 #pragma mark - CLAPIEngineDelegate
 /*----------------------------------------------------------------------------*/
 - (void)requestDidFailWithError:(NSError *)error connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
+    _connectionIdentifier = nil;
     [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
     
     NAAPIEngine * engine = [NAAPIEngine sharedEngine];
@@ -134,10 +146,12 @@
 }
 
 - (void)accountCreationSucceeded:(CLAccount *)newAccount connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
+    _connectionIdentifier = nil;
     [self displayMainViewControllerWithAccount:newAccount];
 }
 
 - (void)accountInformationRetrievalSucceeded:(CLAccount *)account connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
+    _connectionIdentifier = nil;
     [self displayMainViewControllerWithAccount:account];
 }
 

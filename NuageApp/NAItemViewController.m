@@ -30,6 +30,7 @@ typedef enum { NAUpdatingItemName, NAUpdatingItemPrivacy, NAUpdatingItemNone } N
 
 @property (strong, nonatomic) id<NAPreviewItemCellController> previewCellController;
 @property (nonatomic) NAUpdatingItemType currentUpdate;
+@property (strong, nonatomic) NSString * connectionIdentifier;
 
 @end
 
@@ -71,13 +72,18 @@ typedef enum { NAUpdatingItemName, NAUpdatingItemPrivacy, NAUpdatingItemNone } N
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+
     if ([_previewCellController respondsToSelector:@selector(cell:willAppearWithWebItem:)])
         [_previewCellController cell:_itemPreviewCell willAppearWithWebItem:_webItem];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    // TODO: stop connexions
+
+    if (_connectionIdentifier) {
+        [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
+        [[NAAPIEngine sharedEngine] cancelConnection:_connectionIdentifier];
+    }
     [[NAAPIEngine sharedEngine] removeDelegate:self];
 }
 
@@ -131,6 +137,7 @@ typedef enum { NAUpdatingItemName, NAUpdatingItemPrivacy, NAUpdatingItemNone } N
 #pragma mark - CLAPIEngineDelegate
 /*----------------------------------------------------------------------------*/
 - (void)requestDidFailWithError:(NSError *)error connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
+    _connectionIdentifier = nil;
     [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
 
     if (_currentUpdate == NAUpdatingItemName)
@@ -143,6 +150,7 @@ typedef enum { NAUpdatingItemName, NAUpdatingItemPrivacy, NAUpdatingItemNone } N
 }
 
 - (void)itemUpdateDidSucceed:(CLWebItem *)item connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
+    _connectionIdentifier = nil;
     [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
     [_delegate item:_webItem wasUpdatedToItem:item];
     _webItem = item;

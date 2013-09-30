@@ -20,6 +20,7 @@
 
 @property (weak, nonatomic) IBOutlet NATextFieldCell *currentPasswordCell;
 @property (weak, nonatomic) IBOutlet NATextFieldCell *updatedPasswordCell;
+@property (strong, nonatomic) NSString * connectionIdentifier;
 
 @end
 
@@ -61,6 +62,10 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
+    if (_connectionIdentifier) {
+        [[NAAPIEngine sharedEngine] cancelConnection:_connectionIdentifier];
+        [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
+    }
     [[NAAPIEngine sharedEngine] removeDelegate:self];
 }
 
@@ -74,8 +79,11 @@
     if ([currentPassword length] && [updatedPassword length]) {
         [[_currentPasswordCell textField] resignFirstResponder];
         [[_updatedPasswordCell textField] resignFirstResponder];
+        [[[self navigationItem] rightBarButtonItem] setEnabled:NO];
         [MBProgressHUD showHUDAddedTo:[self view] withText:@"Updating account..." showActivityIndicator:YES animated:YES];
-        [[NAAPIEngine sharedEngine] changeToPassword:updatedPassword withCurrentPassword:currentPassword userInfo:self];
+        _connectionIdentifier = [[NAAPIEngine sharedEngine] changeToPassword:updatedPassword
+                                                         withCurrentPassword:currentPassword
+                                                                    userInfo:self];
     } else {
         NAAlertView * av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVRequiredField];
         [av setMessage:@"Both current and new password fields are required"];
@@ -88,6 +96,7 @@
 #pragma mark - CLAPIEngineDelegate
 /*----------------------------------------------------------------------------*/
 - (void)accountUpdateDidSucceed:(CLAccount *)account connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
+    _connectionIdentifier = nil;
     [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
     [[NAAPIEngine sharedEngine] setCurrentAccount:account];
     [[NAAPIEngine sharedEngine] setClearsCookies:NO];
@@ -95,6 +104,8 @@
 }
 
 - (void)requestDidFailWithError:(NSError *)error connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
+    _connectionIdentifier = nil;
+    [[[self navigationItem] rightBarButtonItem] setEnabled:YES];
     [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
     [[NAAPIEngine sharedEngine] setClearsCookies:NO];
     

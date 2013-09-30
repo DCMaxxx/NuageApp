@@ -10,12 +10,6 @@
 
 #import "CLAPIEngineConstants.h"
 
-#define kStatusCodeRegisteringEmailInvalid      422
-#define kStatusCodeRegisteringEmailInUse        406
-#define kStatusCodeLoginUnactivatedAccount      409
-#define kStatusCodeUpdateCurrentPasswordInvalid 500
-#define kStatusCodeOther                        204
-
 
 /*----------------------------------------------------------------------------*/
 #pragma mark - Implementation
@@ -67,9 +61,10 @@
             message = @"File is too large. Please resize it before trying again";
             break;
         case CLAPIEngineErrorUnknown: {
-            if (![[error userInfo] isKindOfClass:[NSDictionary class]])
+            if (![[error userInfo] isKindOfClass:[NSDictionary class]]) {
                 kind = kAVGeneric;
                 break;
+            }
             switch ([[error userInfo][CLAPIEngineErrorStatusCodeKey] integerValue]) {
                 case kStatusCodeRegisteringEmailInvalid:
                     kind = kAVFailedRegistering;

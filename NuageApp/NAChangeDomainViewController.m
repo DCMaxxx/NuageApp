@@ -18,6 +18,7 @@
 
 @property (weak, nonatomic) IBOutlet NATextFieldCell *domainCell;
 @property (weak, nonatomic) IBOutlet NATextFieldCell *domainHomeCell;
+@property (strong, nonatomic) NSString * connectionIdentifier;
 
 @end
 
@@ -63,6 +64,10 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 
+    if (_connectionIdentifier) {
+        [[NAAPIEngine sharedEngine] cancelConnection:_connectionIdentifier];
+        [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
+    }
     [[NAAPIEngine sharedEngine] removeDelegate:self];
 }
 
@@ -76,7 +81,10 @@
     if ([domain length]) {
         [[_domainCell textField] resignFirstResponder];
         [[_domainHomeCell textField] resignFirstResponder];
-        [[NAAPIEngine sharedEngine] updateCustomDomain:domain customDomainHome:([domainHome length] ? domainHome : nil) userInfo:self];
+        [[[self navigationItem] rightBarButtonItem] setEnabled:NO];
+        _connectionIdentifier = [[NAAPIEngine sharedEngine] updateCustomDomain:domain
+                                                              customDomainHome:([domainHome length] ? domainHome : nil)
+                                                                      userInfo:self];
         [MBProgressHUD showHUDAddedTo:[self view] withText:@"Updating account..." showActivityIndicator:YES animated:YES];
     } else {
         NAAlertView * av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVRequiredField];
@@ -94,13 +102,16 @@
 #pragma mark - CLAPIEngineDelegate
 /*----------------------------------------------------------------------------*/
 - (void)accountUpdateDidSucceed:(CLAccount *)account connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
+    _connectionIdentifier = nil;
     [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
     [[NAAPIEngine sharedEngine] setCurrentAccount:account];
     [[self navigationController] popViewControllerAnimated:YES];
 }
 
 - (void)requestDidFailWithError:(NSError *)error connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
+    _connectionIdentifier = nil;
     [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
+    [[[self navigationItem] rightBarButtonItem] setEnabled:YES];
     NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:userInfo];
     [av show];
 }

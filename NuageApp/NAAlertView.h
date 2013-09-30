@@ -17,6 +17,12 @@ typedef enum {
     kAVNone
 } NAAlertViewKind;
 
+#define kStatusCodeRegisteringEmailInvalid      422
+#define kStatusCodeRegisteringEmailInUse        406
+#define kStatusCodeLoginUnactivatedAccount      409
+#define kStatusCodeUpdateCurrentPasswordInvalid 500
+#define kStatusCodeOther                        204
+
 
 @interface NAAlertView : UIAlertView
 

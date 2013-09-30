@@ -28,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet NASwitchCell *privateUploadCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *itemPickerCell;
 @property (strong, nonatomic) MBProgressHUD * progressHUD;
+@property (strong, nonatomic) NSString * connectionIdentifier;
 
 @end
 
@@ -75,6 +76,11 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
+    if (_connectionIdentifier) {
+        [[NAAPIEngine sharedEngine] cancelConnection:_connectionIdentifier];
+        [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
+        [_progressHUD hide:YES];
+    }
     [[NAAPIEngine sharedEngine] removeDelegate:self];
 }
 
@@ -117,10 +123,11 @@
         NSDictionary * options = [[NAAPIEngine sharedEngine] uploadDictionaryForPrivacy:[[_privateUploadCell switchView] isOn]];
         [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
         [_progressHUD show:YES];
+        [[[self navigationItem] rightBarButtonItem] setEnabled:NO];
         if ([_item isKindOfClass:[NSData class]])
-            [[NAAPIEngine sharedEngine] uploadFileWithName:name fileData:_item options:options userInfo:self];
+            _connectionIdentifier = [[NAAPIEngine sharedEngine] uploadFileWithName:name fileData:_item options:options userInfo:self];
         else if ([_item isKindOfClass:[NSURL class]])
-            [[NAAPIEngine sharedEngine] bookmarkLinkWithURL:(NSURL *)_item name:name options:options userInfo:self];
+            _connectionIdentifier = [[NAAPIEngine sharedEngine] bookmarkLinkWithURL:(NSURL *)_item name:name options:options userInfo:self];
     }
 }
 
@@ -151,6 +158,7 @@
 }
 
 - (void)fileUploadDidSucceedWithResultingItem:(CLWebItem *)item connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
+    _connectionIdentifier = nil;
     [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
     [_progressHUD hide:YES];
     [[NACopyHandler sharedInstance] copyURL:[item URL]];
@@ -159,6 +167,7 @@
 }
 
 - (void)linkBookmarkDidSucceedWithResultingItem:(CLWebItem *)item connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
+    _connectionIdentifier = nil;
     [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
     [_progressHUD hide:YES];
     [[NACopyHandler sharedInstance] copyURL:[item URL]];
@@ -167,7 +176,9 @@
 }
 
 - (void)requestDidFailWithError:(NSError *)error connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
+    _connectionIdentifier = nil;
     [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
+    [[[self navigationItem] rightBarButtonItem] setEnabled:YES];
     [_progressHUD hide:YES];
 
     NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:userInfo];

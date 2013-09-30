@@ -18,6 +18,7 @@
 
 @property (weak, nonatomic) IBOutlet NATextFieldCell *emailCell;
 @property (weak, nonatomic) IBOutlet NATextFieldCell *passwordCell;
+@property (strong, nonatomic) NSString * connectionIdentifier;
 
 @end
 
@@ -62,6 +63,10 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
+    if (_connectionIdentifier) {
+        [[NAAPIEngine sharedEngine] cancelConnection:_connectionIdentifier];
+        [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
+    }
     [[NAAPIEngine sharedEngine] removeDelegate:self];
 }
 
@@ -77,7 +82,8 @@
         [[_passwordCell textField] resignFirstResponder];
         [MBProgressHUD showHUDAddedTo:[self view] withText:@"Updating account..." showActivityIndicator:YES animated:YES];
         [[NAAPIEngine sharedEngine] setClearsCookies:YES];
-        [[NAAPIEngine sharedEngine] changeToEmail:email withPassword:password userInfo:self];
+        _connectionIdentifier = [[NAAPIEngine sharedEngine] changeToEmail:email withPassword:password userInfo:self];
+        [[[self navigationItem] rightBarButtonItem] setEnabled:NO];
     } else {
         NAAlertView * av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVRequiredField];
         [av setMessage:@"Both email and password fields are required"];
@@ -90,6 +96,7 @@
 #pragma mark - CLAPIEngineDelegate
 /*----------------------------------------------------------------------------*/
 - (void)accountUpdateDidSucceed:(CLAccount *)account connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
+    _connectionIdentifier = nil;
     [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
     [[NAAPIEngine sharedEngine] setCurrentAccount:account];
     [[NAAPIEngine sharedEngine] setClearsCookies:NO];
@@ -97,6 +104,8 @@
 }
 
 - (void)requestDidFailWithError:(NSError *)error connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
+    _connectionIdentifier = nil;
+    [[[self navigationItem] rightBarButtonItem] setEnabled:YES];
     [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
     [[NAAPIEngine sharedEngine] setClearsCookies:NO];
 

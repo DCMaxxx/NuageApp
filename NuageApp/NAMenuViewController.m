@@ -123,6 +123,8 @@
     [MBProgressHUD hideHUDForView:[[_revealController frontViewController] view] hideActivityIndicator:YES animated:YES];
     NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:userInfo];
     [av show];
+    if ([error code] == NSURLErrorUserCancelledAuthentication)
+        [self displayLoginView];
 }
 
 /*----------------------------------------------------------------------------*/
