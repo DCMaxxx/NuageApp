@@ -106,14 +106,21 @@ typedef enum { NAFetchingMoreItems, NARefreshingItems, NANotFetchingItems } NAFe
 
     [[cell textLabel] setText:[item name]];
     
-    NSString * dateString;
-    NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateStyle:NSDateFormatterShortStyle];
-    if (_displaysTrash)
-        dateString = [NSString stringWithFormat:@"Deleted on %@", [dateFormatter stringFromDate:[item deletedAt]]];
-    else
-        dateString = [NSString stringWithFormat:@"Created on %@", [dateFormatter stringFromDate:[item createdAt]]];
-    [[cell detailTextLabel] setText:dateString];
+    NSString * detailsString;
+    if (_displaysTrash) {
+        NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+        detailsString = [NSString stringWithFormat:@"Deleted on %@", [dateFormatter stringFromDate:[item deletedAt]]];
+    }
+    else {
+        if ([item viewCount] == 0)
+            detailsString = [NSString stringWithFormat:@"No views"];
+        else if ([item viewCount] == 1)
+            detailsString = @"1 view";
+        else
+            detailsString = [NSString stringWithFormat:@"%@ views", @([item viewCount])];
+    }
+    [[cell detailTextLabel] setText:detailsString];
     
     return cell;
 }

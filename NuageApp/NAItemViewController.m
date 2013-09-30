@@ -92,7 +92,22 @@ typedef enum { NAUpdatingItemName, NAUpdatingItemPrivacy, NAUpdatingItemNone } N
 #pragma mark - UITableViewDataSource
 /*----------------------------------------------------------------------------*/
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    return (section == kTableViewSectionIndexViewInformations) ? [NSString stringWithFormat:@"%d views", [_webItem viewCount]] : nil;
+    if (section == kTableViewSectionIndexViewInformations) {
+        NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+        NSString * footerString;
+        if ([_webItem viewCount] == 0)
+            footerString = [NSString stringWithFormat:@"No views since %@",
+                            [dateFormatter stringFromDate:[_webItem createdAt]]];
+        else if ([_webItem viewCount] == 1)
+            footerString = [NSString stringWithFormat:@"One view since %@",
+                            [dateFormatter stringFromDate:[_webItem createdAt]]];
+        else
+            footerString = [NSString stringWithFormat:@"%@ views since %@", @([_webItem viewCount]),
+                            [dateFormatter stringFromDate:[_webItem createdAt]]];
+        return footerString;
+    }
+    return nil;
 }
 
 

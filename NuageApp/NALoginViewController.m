@@ -51,12 +51,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [[_emailCell textField] setPlaceholder:@"Your CloudApp email address"];
+    [[_emailCell textField] setPlaceholder:@"Your email address"];
     [[_emailCell textField] setKeyboardType:UIKeyboardTypeEmailAddress];
     [[_emailCell textField] setAutocapitalizationType:UITextAutocapitalizationTypeNone];
     [[_emailCell textField] setAutocorrectionType:UITextAutocorrectionTypeNo];
     
-    [[_passwordCell textField] setPlaceholder:@"Your CloudApp password"];
+    [[_passwordCell textField] setPlaceholder:@"Your password"];
     [[_passwordCell textField] setSecureTextEntry:YES];    
 
     float sysVer = [[[UIDevice currentDevice] systemVersion] floatValue];
@@ -64,7 +64,7 @@
         UIImage *buttonImage = [[UIImage imageNamed:@"greyButton.png"]
                                 resizableImageWithCapInsets:UIEdgeInsetsMake(9, 9, 9, 9)];
         UIImage *buttonImageHighlight = [[UIImage imageNamed:@"greyButtonHighlight.png"]
-                                         resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+                                         resizableImageWithCapInsets:UIEdgeInsetsMake(9, 9, 9, 9)];
         for (UIButton * button in @[_loginButton, _registerButton]) {
             [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
             [button setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
