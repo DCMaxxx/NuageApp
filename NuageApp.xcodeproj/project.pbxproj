@@ -454,6 +454,13 @@
 				9C6D493417D36C4900C61F80 /* View item */,
 				9C52C51017CF3CBB0019C026 /* Account */,
 				9C2609F617DC4EC400DD1143 /* Settings */,
+				9C87C3C317D1F65800322005 /* Common views */,
+				9C52C50F17CF392C0019C026 /* API Wrapper */,
+				9C97C0BB17D5B053001488D2 /* Activities */,
+				9C1F47B617DAFE490000A4EF /* BonjourClient */,
+				9C97C0BA17D5A7FD001488D2 /* Handlers */,
+				9C46795017D3C3E9001B0FB8 /* Protocols */,
+				9C97C0B017D57D1D001488D2 /* Categories */,
 				9C9E994517D4A9EE00D20A9B /* Other sources */,
 			);
 			path = NuageApp;
@@ -468,17 +475,6 @@
 			);
 			name = Ressources;
 			path = NuageApp;
-			sourceTree = "<group>";
-		};
-		9C2CB8C917CCB60200561AA0 /* NuageApp */ = {
-			isa = PBXGroup;
-			children = (
-				9C2CB8AF17CCB5E500561AA0 /* main.m */,
-				9C2CB8B117CCB5E500561AA0 /* NuageApp-Prefix.pch */,
-				9C2CB8B217CCB5E500561AA0 /* NAAppDelegate.h */,
-				9C2CB8B317CCB5E500561AA0 /* NAAppDelegate.m */,
-			);
-			name = NuageApp;
 			sourceTree = "<group>";
 		};
 		9C2CB91E17CCB6DE00561AA0 /* Images */ = {
@@ -576,7 +572,6 @@
 			isa = PBXGroup;
 			children = (
 				9CF8631517DB1AFD000ADD8E /* NANeedsRevealController.h */,
-				9C97C0B517D583FA001488D2 /* NATextFieldCellDelegate.h */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -788,13 +783,13 @@
 			name = AlertView;
 			sourceTree = "<group>";
 		};
-		9C87C3C317D1F65800322005 /* Views */ = {
+		9C87C3C317D1F65800322005 /* Common views */ = {
 			isa = PBXGroup;
 			children = (
 				9C87C3BC17D1DECF00322005 /* AlertView */,
 				9C8810FD17CF612500C09C52 /* CustomCells */,
 			);
-			name = Views;
+			name = "Common views";
 			sourceTree = "<group>";
 		};
 		9C8810FD17CF612500C09C52 /* CustomCells */ = {
@@ -804,6 +799,7 @@
 				9C52C51517CF3CF20019C026 /* NASwitchCell.m */,
 				9C8810FE17CF614700C09C52 /* NATextFieldCell.h */,
 				9C8810FF17CF614700C09C52 /* NATextFieldCell.m */,
+				9C97C0B517D583FA001488D2 /* NATextFieldCellDelegate.h */,
 				9C87C3B917D1D8B900322005 /* NATransparentCell.h */,
 				9C87C3BA17D1D8B900322005 /* NATransparentCell.m */,
 			);
@@ -899,14 +895,10 @@
 		9C9E994517D4A9EE00D20A9B /* Other sources */ = {
 			isa = PBXGroup;
 			children = (
-				9C2CB8C917CCB60200561AA0 /* NuageApp */,
-				9C52C50F17CF392C0019C026 /* API Wrapper */,
-				9C97C0BB17D5B053001488D2 /* Activities */,
-				9C1F47B617DAFE490000A4EF /* BonjourClient */,
-				9C97C0BA17D5A7FD001488D2 /* Handlers */,
-				9C97C0B017D57D1D001488D2 /* Categories */,
-				9C46795017D3C3E9001B0FB8 /* Protocols */,
-				9C87C3C317D1F65800322005 /* Views */,
+				9C2CB8AF17CCB5E500561AA0 /* main.m */,
+				9C2CB8B117CCB5E500561AA0 /* NuageApp-Prefix.pch */,
+				9C2CB8B217CCB5E500561AA0 /* NAAppDelegate.h */,
+				9C2CB8B317CCB5E500561AA0 /* NAAppDelegate.m */,
 			);
 			name = "Other sources";
 			sourceTree = "<group>";

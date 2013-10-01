@@ -98,6 +98,13 @@
     return [keychainItem objectForKey:(__bridge NSString *)kSecAttrAccount];
 }
 
+- (NSString *)password {
+    if (_password)
+        return _password;
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:kKeychainItemIdentifier accessGroup:nil];
+    return [keychainItem objectForKey:(__bridge NSString *)kSecValueData];
+}
+
 - (NSString *)uniqueName {
     NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterShortStyle];

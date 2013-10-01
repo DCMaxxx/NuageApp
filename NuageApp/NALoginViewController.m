@@ -82,6 +82,7 @@
     [super viewWillAppear:animated];
     
     [[_emailCell textField] setText:[[NAAPIEngine sharedEngine] email]];
+    [[_passwordCell textField] setText:[[NAAPIEngine sharedEngine] password]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

@@ -137,7 +137,9 @@ typedef enum { NAUpdatingItemName, NAUpdatingItemPrivacy, NAUpdatingItemNone } N
     } else if (![[textField text] isEqualToString:[_webItem name]]) {
         [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
         _currentUpdate = NAUpdatingItemName;
-        [[NAAPIEngine sharedEngine] changeNameOfItem:_webItem toName:[textField text] userInfo:self];
+        _connectionIdentifier = [[NAAPIEngine sharedEngine] changeNameOfItem:_webItem
+                                                                      toName:[textField text]
+                                                                    userInfo:self];
     }
     [textField resignFirstResponder];
     return YES;
@@ -185,7 +187,9 @@ typedef enum { NAUpdatingItemName, NAUpdatingItemPrivacy, NAUpdatingItemNone } N
         [[_itemNameCell textField] resignFirstResponder];
         [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
         _currentUpdate = NAUpdatingItemPrivacy;
-        [[NAAPIEngine sharedEngine] changePrivacyOfItem:_webItem toPrivate:[switchView isOn] userInfo:self];
+        _connectionIdentifier = [[NAAPIEngine sharedEngine] changePrivacyOfItem:_webItem
+                                                                      toPrivate:[switchView isOn]
+                                                                       userInfo:self];
     }
 }
 

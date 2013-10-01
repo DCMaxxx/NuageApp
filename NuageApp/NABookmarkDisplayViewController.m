@@ -8,12 +8,15 @@
 
 #import "NABookmarkDisplayViewController.h"
 
+#import <AFNetworkActivityIndicatorManager.h>
+
 
 @interface NABookmarkDisplayViewController () <UIWebViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *previousButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *nextButton;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (nonatomic) BOOL isReloading;
 
 @property (strong, nonatomic) NSURL * currentURL;
 
@@ -57,6 +60,10 @@
 #pragma mark - UIWebViewDelegate
 /*----------------------------------------------------------------------------*/
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
+    if (_isReloading) {
+        [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
+        _isReloading = NO;
+    }
     [self updateToobalButtons];
 }
 
@@ -75,6 +82,8 @@
 }
 
 - (IBAction)tappedRefreshButton:(id)sender {
+    _isReloading = YES;
+    [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
     [_webView reload];
 }
 

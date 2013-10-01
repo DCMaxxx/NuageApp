@@ -26,10 +26,10 @@
 
 @interface NAMenuViewController () <CLAPIEngineDelegate, UIAlertViewDelegate>
 
-@property (strong, nonatomic) UIViewController * nextViewController;
 @property (nonatomic) BOOL isShowingPopup;
 @property (nonatomic) BOOL needToShodUploadPopup;
 @property (weak, nonatomic) id<NAItemViewControllerDelegate> delegate;
+@property (strong, nonatomic) NSString * loginConnectionIdentifier;
 
 @end
 
@@ -70,7 +70,17 @@
     [_revealController setMinimumWidth:200.0f maximumWidth:310.0f forViewController:self];
     for (UIViewController * vc in _viewControllers)
         [self checkNeedsRevealController:vc];
-    [self prepareDisplayViewController:_viewControllers[0]];
+    
+    NAAPIEngine * engine = [NAAPIEngine sharedEngine];
+    if (![engine loadUser])
+        [self displayLoginView];
+    else if (![engine currentAccount]) {
+        [MBProgressHUD showHUDAddedTo:[[_revealController frontViewController] view] withText:@"Login in..."
+                showActivityIndicator:YES animated:YES];
+        _loginConnectionIdentifier = [engine getAccountInformationWithUserInfo:self];
+    } else {
+        [self displayViewController:_viewControllers[0]];
+    }
 }
 
 
@@ -78,7 +88,7 @@
 #pragma mark - UITableViewDelegate
 /*----------------------------------------------------------------------------*/
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self prepareDisplayViewController:_viewControllers[indexPath.row]];
+    [self displayViewController:_viewControllers[indexPath.row]];
 }
 
 
@@ -96,16 +106,13 @@
 #pragma mark - CLAPIEngineDelegate
 /*----------------------------------------------------------------------------*/
 - (void)accountInformationRetrievalSucceeded:(CLAccount *)account connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
+    _loginConnectionIdentifier = nil;
     [MBProgressHUD hideHUDForView:[[_revealController frontViewController] view] hideActivityIndicator:YES animated:YES];
     [[NAAPIEngine sharedEngine] setCurrentAccount:account];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"NAUserLogin" object:nil];
     if (_needToShodUploadPopup) {
         _needToShodUploadPopup = NO;
         [self displayUploadConfirmAlertView];
-    }
-    if (_nextViewController) {
-        [self displayViewController:_nextViewController];
-        _nextViewController = nil;
     }
 }
 
@@ -123,27 +130,15 @@
     [MBProgressHUD hideHUDForView:[[_revealController frontViewController] view] hideActivityIndicator:YES animated:YES];
     NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:userInfo];
     [av show];
-    if ([error code] == NSURLErrorUserCancelledAuthentication)
+    if (_loginConnectionIdentifier) {
+        _loginConnectionIdentifier = nil;
         [self displayLoginView];
+    }
 }
 
 /*----------------------------------------------------------------------------*/
 #pragma mark - Changing view controller
 /*----------------------------------------------------------------------------*/
-- (void)prepareDisplayViewController:(UIViewController *)viewController {
-    NAAPIEngine * engine = [NAAPIEngine sharedEngine];
-    if (![engine loadUser])
-        [self displayLoginView];
-    else if (![engine currentAccount]) {
-        _nextViewController = viewController;
-        [MBProgressHUD showHUDAddedTo:[[_revealController frontViewController] view] withText:@"Login in..."
-                                      showActivityIndicator:YES animated:YES];
-        [engine getAccountInformationWithUserInfo:self];
-    } else {
-        [self displayViewController:viewController];
-    }
-}
-
 - (void)displayViewController:(UIViewController *)viewController {
     [_revealController setFrontViewController:viewController];
     [_revealController showViewController:_revealController.frontViewController];

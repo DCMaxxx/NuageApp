@@ -23,6 +23,7 @@
 - (BOOL)loadUser;
 - (void)logout;
 - (NSString *)email;
+- (NSString *)password;
 
 - (NSString *)uniqueName;
 - (NSDictionary *)uploadDictionary;
