@@ -6,9 +6,6 @@
 //  Copyright (c) 2013 Maxime de Chalendar. All rights reserved.
 //
 
-#import "NANeedsRevealController.h"
-
-
-@interface NALoginViewController : UITableViewController <NANeedsRevealController>
+@interface NALoginViewController : UITableViewController
 
 @end

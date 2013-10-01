@@ -46,8 +46,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    [self configureWithRevealController:_revealController];
 
     CLAccount * currentAccount = [[NAAPIEngine sharedEngine] currentAccount];
     if ([currentAccount email])
@@ -137,18 +135,6 @@
 
     NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:userInfo];
     [av show];
-}
-
-
-/*----------------------------------------------------------------------------*/
-#pragma mark - NANeedsRevealController
-/*----------------------------------------------------------------------------*/
-- (void)configureWithRevealController:(PKRevealController *)controller {
-    _revealController = controller;
-    [[[self navigationController] navigationBar] addGestureRecognizer:[controller revealPanGestureRecognizer]];
-    UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"barbuttonitem.png"] style:UIBarButtonItemStylePlain
-                              target:self action:@selector(displayMenu)];
-    [[self navigationItem] setLeftBarButtonItem:item];
 }
 
 

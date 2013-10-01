@@ -19,7 +19,6 @@
 
 @interface NALoginViewController () <CLAPIEngineDelegate>
 
-@property (strong, nonatomic) PKRevealController * revealController;
 @property (weak, nonatomic) IBOutlet NATextFieldCell *emailCell;
 @property (weak, nonatomic) IBOutlet NATextFieldCell *passwordCell;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
@@ -61,9 +60,9 @@
 
     float sysVer = [[[UIDevice currentDevice] systemVersion] floatValue];
     if (sysVer < 7.0) {
-        UIImage *buttonImage = [[UIImage imageNamed:@"greyButton.png"]
+        UIImage *buttonImage = [[UIImage imageNamed:@"grey-button.png"]
                                 resizableImageWithCapInsets:UIEdgeInsetsMake(9, 9, 9, 9)];
-        UIImage *buttonImageHighlight = [[UIImage imageNamed:@"greyButtonHighlight.png"]
+        UIImage *buttonImageHighlight = [[UIImage imageNamed:@"grey-button-highlight.png"]
                                          resizableImageWithCapInsets:UIEdgeInsetsMake(9, 9, 9, 9)];
         for (UIButton * button in @[_loginButton, _registerButton]) {
             [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
@@ -180,13 +179,6 @@
     [self displayMainViewControllerWithAccount:account];
 }
 
-
-/*----------------------------------------------------------------------------*/
-#pragma mark - NANeedsRevealController
-/*----------------------------------------------------------------------------*/
-- (void)configureWithRevealController:(PKRevealController *)controller {
-    _revealController = controller;
-}
 
 /*----------------------------------------------------------------------------*/
 #pragma mark - Changing view controller

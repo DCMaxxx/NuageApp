@@ -6,13 +6,10 @@
 //  Copyright (c) 2013 Maxime de Chalendar. All rights reserved.
 //
 
-#import <PKRevealController.h>
-
 #import "NAItemViewControllerDelegate.h"
-#import "NANeedsRevealController.h"
 #import "NAItemUpdate.h"
 
 
-@interface NAListItemsViewController : UITableViewController <NAItemViewControllerDelegate, NAItemUpdate, NANeedsRevealController>
+@interface NAListItemsViewController : UITableViewController <NAItemViewControllerDelegate, NAItemUpdate>
 
 @end

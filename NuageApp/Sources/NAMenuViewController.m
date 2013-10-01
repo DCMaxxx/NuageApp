@@ -13,7 +13,6 @@
 
 #import "NAItemViewControllerDelegate.h"
 #import "NASettingsViewController.h"
-#import "NANeedsRevealController.h"
 #import "MBProgressHUD+Network.h"
 #import "NALoginViewController.h"
 #import "NACopyHandler.h"
@@ -67,9 +66,8 @@
 /*----------------------------------------------------------------------------*/
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     [_revealController setMinimumWidth:200.0f maximumWidth:310.0f forViewController:self];
-    for (UIViewController * vc in _viewControllers)
-        [self checkNeedsRevealController:vc];
     
     NAAPIEngine * engine = [NAAPIEngine sharedEngine];
     if (![engine loadUser])
@@ -78,6 +76,7 @@
         [MBProgressHUD showHUDAddedTo:[[_revealController frontViewController] view] withText:@"Login in..."
                 showActivityIndicator:YES animated:YES];
         _loginConnectionIdentifier = [engine getAccountInformationWithUserInfo:self];
+        [self displayViewController:_viewControllers[0]];
     } else {
         [self displayViewController:_viewControllers[0]];
     }
@@ -140,14 +139,24 @@
 #pragma mark - Changing view controller
 /*----------------------------------------------------------------------------*/
 - (void)displayViewController:(UIViewController *)viewController {
+    if ([viewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController * navController = (UINavigationController *)viewController;
+        [[navController navigationBar] addGestureRecognizer:[_revealController revealPanGestureRecognizer]];
+        if (![[[navController viewControllers][0] navigationItem] leftBarButtonItem]) {
+            UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"barbuttonitem.png"]
+                                                                      style:UIBarButtonItemStylePlain
+                                                                     target:self
+                                                                     action:@selector(displayMenu)];
+            [[[navController viewControllers][0] navigationItem] setLeftBarButtonItem:item];
+        }
+    }
     [_revealController setFrontViewController:viewController];
     [_revealController showViewController:_revealController.frontViewController];
 }
 
 - (void)displayLoginView {
     UIViewController * loginVC = [[UIStoryboard storyboardWithName:@"LoginStoryboard" bundle:nil] instantiateInitialViewController];
-    [self checkNeedsRevealController:loginVC];
-    [[self revealController] presentViewController:loginVC animated:YES completion:nil];
+    [[_revealController frontViewController] presentViewController:loginVC animated:YES completion:nil];
 }
 
 - (void)displayUploadConfirmAlertView {
@@ -167,6 +176,12 @@
         _needToShodUploadPopup = NO;
         _isShowingPopup = YES;
     }
+}
+
+-(void)displayMenu {
+    [[self revealController] showViewController:[[self revealController] leftViewController]
+                                       animated:YES
+                                     completion:nil];
 }
 
 
@@ -205,14 +220,6 @@
                                      [av setMessage:@"Please give NuageApp access to your photos in the Settings application"];
                                      [av show];
                                  }];
-}
-
-- (void)checkNeedsRevealController:(UIViewController *)viewController {
-    UIViewController * root = viewController;
-    if ([viewController isKindOfClass:[UINavigationController class]])
-        root = [(UINavigationController *)root viewControllers][0];
-    if ([[root class] conformsToProtocol:@protocol(NANeedsRevealController)])
-        [(id<NANeedsRevealController>)root configureWithRevealController:_revealController];
 }
 
 @end

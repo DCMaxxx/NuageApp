@@ -35,7 +35,6 @@ typedef enum { NAFetchingMoreItems, NARefreshingItems, NANotFetchingItems } NAFe
 
 @interface NAListItemsViewController () <CLAPIEngineDelegate, UIActionSheetDelegate>
 
-@property (strong, nonatomic) PKRevealController * revealController;
 @property (nonatomic) BOOL displaysTrash;
 @property (strong, nonatomic) NSMutableArray * items;
 @property (strong, nonatomic) NSIndexPath * selectedIndexPath;
@@ -81,7 +80,6 @@ typedef enum { NAFetchingMoreItems, NARefreshingItems, NANotFetchingItems } NAFe
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self configureWithRevealController:_revealController];
     
     if (![_items count])
         [self loadMoreItems];
@@ -303,18 +301,6 @@ typedef enum { NAFetchingMoreItems, NARefreshingItems, NANotFetchingItems } NAFe
 
 
 /*----------------------------------------------------------------------------*/
-#pragma mark - NANeedsRevealController
-/*----------------------------------------------------------------------------*/
-- (void)configureWithRevealController:(PKRevealController *)controller {
-    _revealController = controller;
-    [[[self navigationController] navigationBar] addGestureRecognizer:[controller revealPanGestureRecognizer]];
-    UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"barbuttonitem.png"] style:UIBarButtonItemStylePlain
-                              target:self action:@selector(displayMenu)];
-    [[self navigationItem] setLeftBarButtonItem:item];
-}
-
-
-/*----------------------------------------------------------------------------*/
 #pragma mark - NAItemUpdate
 /*----------------------------------------------------------------------------*/
 - (void)item:(CLWebItem *)item wasUpdatedToItem:(CLWebItem *)updatedItem {
@@ -360,11 +346,6 @@ typedef enum { NAFetchingMoreItems, NARefreshingItems, NANotFetchingItems } NAFe
     [self presentViewController:nc animated:YES completion:nil];
 }
 
-- (void)displayMenu {
-    [[self revealController] showViewController:[[self revealController] leftViewController] animated:YES completion:nil];
-}
-
-
 
 /*----------------------------------------------------------------------------*/
 #pragma mark - Notification observation
@@ -378,7 +359,7 @@ typedef enum { NAFetchingMoreItems, NARefreshingItems, NANotFetchingItems } NAFe
 }
 
 - (void)userDidLogin:(NSNotification *)notification {
-    if (![_items count] && [_revealController focusedController] == [self navigationController])
+    if (![_items count])
         [self loadMoreItems];
 }
 
