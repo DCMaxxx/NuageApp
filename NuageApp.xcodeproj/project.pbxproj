@@ -1352,7 +1352,7 @@
 					"\"$(SRCROOT)/NuageApp/CloudAppAPI/Third Party/IFUnicodeURL/IFUnicodeURL/IDNSDK-1.1.0/lib/win32\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "BA2E2034-CD00-4BB6-892C-3761D4E7D59D";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
