@@ -13,6 +13,7 @@
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) UIImageView *imageView;
+@property (nonatomic) BOOL mustInitScrollViewScales;
 
 @end
 
@@ -22,7 +23,6 @@
 /*----------------------------------------------------------------------------*/
 @implementation NAImageDisplayViewController
 
-
 /*----------------------------------------------------------------------------*/
 #pragma mark - UIViewController
 /*----------------------------------------------------------------------------*/
@@ -31,6 +31,7 @@
     
     [[self navigationItem] setTitle:@"Image viewer"];
     
+    _mustInitScrollViewScales = YES;
     _imageView = [[UIImageView alloc] initWithImage:_image];
     CGRect imageViewFrame = CGRectMake(0, 0, [_image size].width,  [_image size].height);
     [_imageView setFrame:imageViewFrame];
@@ -38,19 +39,17 @@
     [_scrollView setContentSize:[_image size]];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
 
-    CGRect scrollViewFrame = [_scrollView frame];
-    CGFloat scaleWidth = CGRectGetWidth(scrollViewFrame) / [_scrollView contentSize].width;
-    CGFloat scaleHeight = CGRectGetHeight(scrollViewFrame) / [_scrollView contentSize].height;
-    CGFloat minScale = MIN(scaleWidth, scaleHeight);
-
-    [_scrollView setMinimumZoomScale:minScale];
-    [_scrollView setMaximumZoomScale:5.0f];
-    [_scrollView setZoomScale:minScale];
-
-    [self centerScrollViewContents];
+    if (_mustInitScrollViewScales) {
+        [self initScrollViewScales];
+        _mustInitScrollViewScales = NO;
+    }
 }
 
 
@@ -101,6 +100,19 @@
         contentsFrame.origin.y = (boundsSize.height - contentsFrame.size.height) / 2.0f;
     
     [_imageView setFrame:contentsFrame];
+}
+
+- (void)initScrollViewScales {
+    CGRect scrollViewFrame = [_scrollView frame];
+    CGFloat scaleWidth = CGRectGetWidth(scrollViewFrame) / [_scrollView contentSize].width;
+    CGFloat scaleHeight = CGRectGetHeight(scrollViewFrame) / [_scrollView contentSize].height;
+    CGFloat minScale = MIN(scaleWidth, scaleHeight);
+    
+    [_scrollView setMinimumZoomScale:minScale];
+    [_scrollView setZoomScale:minScale];
+    [_scrollView setMaximumZoomScale:5.0f];
+    
+    [self centerScrollViewContents];
 }
 
 @end
