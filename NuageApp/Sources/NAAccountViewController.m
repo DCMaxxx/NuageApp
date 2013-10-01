@@ -95,10 +95,8 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == kLogoutActionSheetButtonIndex) {
         [[NAAPIEngine sharedEngine] logout];
-        if ([[_revealController leftViewController] isKindOfClass:[NAMenuViewController class]]) {
-            NAMenuViewController * mainController = (NAMenuViewController *)[_revealController leftViewController];
-            [mainController displayLoginView];
-        }
+        UIViewController * loginVC = [[UIStoryboard storyboardWithName:@"LoginStoryboard" bundle:nil] instantiateInitialViewController];
+        [self presentViewController:loginVC animated:YES completion:nil];
     }
 }
 

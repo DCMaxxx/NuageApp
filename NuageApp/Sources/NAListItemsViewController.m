@@ -238,7 +238,14 @@ typedef enum { NAFetchingMoreItems, NARefreshingItems, NANotFetchingItems } NAFe
 
 - (void)itemListRetrievalSucceeded:(NSArray *)items connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
     [MBProgressHUD hideHUDForView:[self view] hideActivityIndicator:YES animated:YES];
-    [[self tableView] setTableFooterView:nil];
+    if ([[self tableView] tableFooterView]) {
+        CGPoint contentOffset = [[self tableView] contentOffset];
+        [UIView beginAnimations:nil context:0];
+        [[self tableView] setTableFooterView:nil];
+        if ([items count])
+            [[self tableView] setContentOffset:contentOffset];
+        [UIView commitAnimations];
+    }
     
     NSMutableArray * indexPaths = [NSMutableArray array];
     for (NSUInteger i = 0; i < [items count]; ++i) {
@@ -262,6 +269,8 @@ typedef enum { NAFetchingMoreItems, NARefreshingItems, NANotFetchingItems } NAFe
     }
     if (_fetchingItemType == NARefreshingItems)
         [[self refreshControl] endRefreshing];
+    else if (_fetchingItemType == NAFetchingMoreItems)
+        ++_currentPage;
     _fetchingItemType = NANotFetchingItems;
 }
 
@@ -374,7 +383,7 @@ typedef enum { NAFetchingMoreItems, NARefreshingItems, NANotFetchingItems } NAFe
         } else {
             [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
             UIActivityIndicatorView * view = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-            [view setFrame:CGRectMake(0, 0, 42, 42)];
+            [view setFrame:CGRectMake(0, 0, 44, 44)];
             [view startAnimating];
             [[self tableView] setTableFooterView:view];
             if ([_items count] >= kNumberOfItemsPerPage) {

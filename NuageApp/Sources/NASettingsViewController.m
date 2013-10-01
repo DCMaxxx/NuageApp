@@ -74,10 +74,6 @@
 /*----------------------------------------------------------------------------*/
 #pragma mark - Changing view controller
 /*----------------------------------------------------------------------------*/
-- (void)displayMenu {
-    [_revealController showViewController:[_revealController leftViewController] animated:YES completion:nil];
-}
-
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
     if ([identifier isEqualToString:@"NAMacPickerSegue"]
         && ![[_cpLinkToMacClipboardCell switchView] isOn]) {

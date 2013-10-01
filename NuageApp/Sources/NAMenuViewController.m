@@ -53,6 +53,10 @@
         [[NAAPIEngine sharedEngine] addDelegate:self];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(userDidLogin:)
+                                                     name:@"NAUserLogin"
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(displayUploadConfirmAlertView)
                                                      name:@"NAApplicationWillEnterForeground"
                                                    object:nil];
@@ -182,6 +186,14 @@
     [[self revealController] showViewController:[[self revealController] leftViewController]
                                        animated:YES
                                      completion:nil];
+}
+
+
+/*----------------------------------------------------------------------------*/
+#pragma mark - Notification observation
+/*----------------------------------------------------------------------------*/
+- (void)userDidLogin:(NSNotification *)notification {
+    [self displayViewController:_viewControllers[0]];
 }
 
 
