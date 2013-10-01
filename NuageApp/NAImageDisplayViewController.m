@@ -36,12 +36,20 @@
     [_imageView setFrame:imageViewFrame];
     [_scrollView addSubview:_imageView];
     [_scrollView setContentSize:[_image size]];
-    [_scrollView setMinimumZoomScale:0.1f];
-    [_scrollView setMaximumZoomScale:5.0f];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+
+    CGRect scrollViewFrame = [_scrollView frame];
+    CGFloat scaleWidth = CGRectGetWidth(scrollViewFrame) / [_scrollView contentSize].width;
+    CGFloat scaleHeight = CGRectGetHeight(scrollViewFrame) / [_scrollView contentSize].height;
+    CGFloat minScale = MIN(scaleWidth, scaleHeight);
+
+    [_scrollView setMinimumZoomScale:minScale];
+    [_scrollView setMaximumZoomScale:5.0f];
+    [_scrollView setZoomScale:minScale];
+
     [self centerScrollViewContents];
 }
 

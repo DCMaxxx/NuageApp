@@ -75,9 +75,7 @@
         [_orLabel setHidden:YES];
         [_forgotPasswordButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
         [_termsButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-    }
-
-    
+    }    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
