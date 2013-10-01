@@ -33,7 +33,8 @@ And here it is, CloudApp's best feature, brought to iOS.
 
 How can I get and use it ?
 --------
-For now on, you'll have to compile and run it by yourself. In a few weeks though, I'll post it on the AppStore (with a better design and icon, I promise).
+For now on, you'll have to compile and run it by yourself (don't forget to `pod install` before opening the project - more infos on [CocoaPods](http://cocoapods.org, "CocoaPods' documentation")).
+In a few weeks though, I'll post it on the AppStore.
 To enable sharing to your Mac, you'll have to compile and run NuageApp Server's sub-project, and enable it in the iOS application settings.
 After, you'll just have to upload a picture, and that's it !
 
@@ -53,14 +54,13 @@ License
 
 Stuff NuageApp relies on
 --------
- NuageApp relies on a bunch of open-source stuff, which really simplified my life. Thanks to :
- + [DTBonjour](https://github.com/Cocoanetics/DTBonjour "DTBonjour")
- + [MBProgressHUD](https://github.com/matej/MBProgressHUD "MBProgressHUD")
- + [AFNetworking](https://github.com/AFNetworking/AFNetworking "MBProgressHUD")
- + [PKRevealController](https://github.com/pkluz/PKRevealController "PKRevealController")
+NuageApp relies on a bunch of open-source stuff, which really simplified my life. Thanks to :
++ [DTBonjour](https://github.com/Cocoanetics/DTBonjour "DTBonjour")
++ [MBProgressHUD](https://github.com/matej/MBProgressHUD "MBProgressHUD")
++ [AFNetworking](https://github.com/AFNetworking/AFNetworking "MBProgressHUD")
++ [PKRevealController](https://github.com/pkluz/PKRevealController "PKRevealController")
  
- 
- Also, even if the icons will most probably change :
- + [Igh0zt's icons](http://igh0zt.deviantart.com/art/iOS-7-Style-Metro-UI-Icons-384587316 "Igh0zt's icons") (used in the iOS application)
- + [Iynque's icons](http://iynque.deviantart.com/art/iOS-7-Icons-Updated-378969049 "Iynque's icons") (used in the Mac OS application)
+Also, even if the icons will probably change :
++ [Igh0zt's icons](http://igh0zt.deviantart.com/art/iOS-7-Style-Metro-UI-Icons-384587316 "Igh0zt's icons") (used in the iOS application)
++ [Iynque's icons](http://iynque.deviantart.com/art/iOS-7-Icons-Updated-378969049 "Iynque's icons") (used in the Mac OS and iOS application)
  
