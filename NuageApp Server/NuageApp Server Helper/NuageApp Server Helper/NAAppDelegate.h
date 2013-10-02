@@ -8,8 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface NAAppDelegate : NSObject <NSApplicationDelegate>
 
-@property (assign) IBOutlet NSWindow *window;
+@interface NAAppDelegate : NSObject <NSApplicationDelegate>
 
 @end

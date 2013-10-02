@@ -6,17 +6,9 @@
 //  Copyright (c) 2013 Maxime de Chalendar. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
 #import <DTBonjourServer.h>
+#import <Cocoa/Cocoa.h>
 
-@interface NAAppDelegate : NSObject <NSApplicationDelegate, DTBonjourServerDelegate, NSUserNotificationCenterDelegate> {
-    IBOutlet NSMenu *statusMenu;    
-    __weak NSMenuItem *_launchAtStartup;
-    NSStatusItem * statusItem;
-    DTBonjourServer * server;
-}
+@interface NAAppDelegate : NSObject <NSApplicationDelegate, DTBonjourServerDelegate, NSUserNotificationCenterDelegate>
 
-@property (assign) IBOutlet NSWindow *window;
-
-@property (weak) IBOutlet NSMenuItem *launchAtStartup;
 @end

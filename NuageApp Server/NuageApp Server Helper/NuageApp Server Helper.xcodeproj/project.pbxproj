@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C96CA7B17FC702700B33F10 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C96CA7917FC702700B33F10 /* MainMenu.xib */; };
 		9CAFFE5117DEA8DF00347256 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CAFFE5017DEA8DF00347256 /* Cocoa.framework */; };
 		9CAFFE5B17DEA8DF00347256 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9CAFFE5917DEA8DF00347256 /* InfoPlist.strings */; };
 		9CAFFE5D17DEA8DF00347256 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CAFFE5C17DEA8DF00347256 /* main.m */; };
-		9CAFFE6117DEA8DF00347256 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 9CAFFE5F17DEA8DF00347256 /* Credits.rtf */; };
 		9CAFFE6417DEA8DF00347256 /* NAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CAFFE6317DEA8DF00347256 /* NAAppDelegate.m */; };
-		9CAFFE6717DEA8DF00347256 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9CAFFE6517DEA8DF00347256 /* MainMenu.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9C96CA7A17FC702700B33F10 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9CAFFE4D17DEA8DF00347256 /* NuageApp Server Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NuageApp Server Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CAFFE5017DEA8DF00347256 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		9CAFFE5317DEA8DF00347256 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -25,10 +25,8 @@
 		9CAFFE5A17DEA8DF00347256 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9CAFFE5C17DEA8DF00347256 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9CAFFE5E17DEA8DF00347256 /* NuageApp Server Helper-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NuageApp Server Helper-Prefix.pch"; sourceTree = "<group>"; };
-		9CAFFE6017DEA8DF00347256 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		9CAFFE6217DEA8DF00347256 /* NAAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NAAppDelegate.h; sourceTree = "<group>"; };
 		9CAFFE6317DEA8DF00347256 /* NAAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NAAppDelegate.m; sourceTree = "<group>"; };
-		9CAFFE6617DEA8DF00347256 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +41,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9C6C245317FC7241007D5C11 /* Other sources */ = {
+			isa = PBXGroup;
+			children = (
+				9CAFFE5C17DEA8DF00347256 /* main.m */,
+				9CAFFE5E17DEA8DF00347256 /* NuageApp Server Helper-Prefix.pch */,
+			);
+			name = "Other sources";
+			sourceTree = "<group>";
+		};
+		9C6C245417FC724E007D5C11 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9C6C245517FC7266007D5C11 /* UI */,
+				9C6C245617FC7270007D5C11 /* Settings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		9C6C245517FC7266007D5C11 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				9C96CA7917FC702700B33F10 /* MainMenu.xib */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		9C6C245617FC7270007D5C11 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				9CAFFE5817DEA8DF00347256 /* NuageApp Server Helper-Info.plist */,
+				9CAFFE5917DEA8DF00347256 /* InfoPlist.strings */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		9CAFFE4417DEA8DF00347256 = {
 			isa = PBXGroup;
 			children = (
@@ -64,19 +97,11 @@
 			isa = PBXGroup;
 			children = (
 				9CAFFE5017DEA8DF00347256 /* Cocoa.framework */,
-				9CAFFE5217DEA8DF00347256 /* Other Frameworks */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		9CAFFE5217DEA8DF00347256 /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
 				9CAFFE5317DEA8DF00347256 /* AppKit.framework */,
 				9CAFFE5417DEA8DF00347256 /* CoreData.framework */,
 				9CAFFE5517DEA8DF00347256 /* Foundation.framework */,
 			);
-			name = "Other Frameworks";
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		9CAFFE5617DEA8DF00347256 /* NuageApp Server Helper */ = {
@@ -84,22 +109,10 @@
 			children = (
 				9CAFFE6217DEA8DF00347256 /* NAAppDelegate.h */,
 				9CAFFE6317DEA8DF00347256 /* NAAppDelegate.m */,
-				9CAFFE6517DEA8DF00347256 /* MainMenu.xib */,
-				9CAFFE5717DEA8DF00347256 /* Supporting Files */,
+				9C6C245317FC7241007D5C11 /* Other sources */,
+				9C6C245417FC724E007D5C11 /* Resources */,
 			);
 			path = "NuageApp Server Helper";
-			sourceTree = "<group>";
-		};
-		9CAFFE5717DEA8DF00347256 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				9CAFFE5817DEA8DF00347256 /* NuageApp Server Helper-Info.plist */,
-				9CAFFE5917DEA8DF00347256 /* InfoPlist.strings */,
-				9CAFFE5C17DEA8DF00347256 /* main.m */,
-				9CAFFE5E17DEA8DF00347256 /* NuageApp Server Helper-Prefix.pch */,
-				9CAFFE5F17DEA8DF00347256 /* Credits.rtf */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -129,7 +142,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = NA;
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Maxime de Chalendar";
 			};
 			buildConfigurationList = 9CAFFE4817DEA8DF00347256 /* Build configuration list for PBXProject "NuageApp Server Helper" */;
@@ -155,8 +168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CAFFE5B17DEA8DF00347256 /* InfoPlist.strings in Resources */,
-				9CAFFE6117DEA8DF00347256 /* Credits.rtf in Resources */,
-				9CAFFE6717DEA8DF00347256 /* MainMenu.xib in Resources */,
+				9C96CA7B17FC702700B33F10 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,28 +187,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		9C96CA7917FC702700B33F10 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9C96CA7A17FC702700B33F10 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
 		9CAFFE5917DEA8DF00347256 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				9CAFFE5A17DEA8DF00347256 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		9CAFFE5F17DEA8DF00347256 /* Credits.rtf */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9CAFFE6017DEA8DF00347256 /* en */,
-			);
-			name = Credits.rtf;
-			sourceTree = "<group>";
-		};
-		9CAFFE6517DEA8DF00347256 /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9CAFFE6617DEA8DF00347256 /* en */,
-			);
-			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -206,7 +210,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -239,7 +242,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;

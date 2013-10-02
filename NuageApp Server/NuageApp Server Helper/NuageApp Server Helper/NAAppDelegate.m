@@ -8,32 +8,34 @@
 
 #import "NAAppDelegate.h"
 
+#define kNumberOfLastPathComponents 3
+
+/*----------------------------------------------------------------------------*/
+#pragma mark - Implementation
+/*----------------------------------------------------------------------------*/
 @implementation NAAppDelegate
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
-    // Check if main app is already running; if yes, do nothing and terminate helper app
+/*----------------------------------------------------------------------------*/
+#pragma mark - NSApplicationDelegate
+/*----------------------------------------------------------------------------*/
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     BOOL alreadyRunning = NO;
-    NSArray *running = [[NSWorkspace sharedWorkspace] runningApplications];
-    for (NSRunningApplication *app in running) {
-        if ([[app bundleIdentifier] isEqualToString:@"com.timschroeder.LaunchAtLoginApp"]) {
+    NSArray * running = [[NSWorkspace sharedWorkspace] runningApplications];
+    for (NSRunningApplication *app in running)
+        if ([[app bundleIdentifier] isEqualToString:@"com.maxime-dechalendar.NuageApp-Server"])
             alreadyRunning = YES;
-        }
-    }
     
     if (!alreadyRunning) {
-        NSString *path = [[NSBundle mainBundle] bundlePath];
-        NSArray *p = [path pathComponents];
-        NSMutableArray *pathComponents = [NSMutableArray arrayWithArray:p];
-        [pathComponents removeLastObject];
-        [pathComponents removeLastObject];
-        [pathComponents removeLastObject];
+        NSString * path = [[NSBundle mainBundle] bundlePath];
+        NSMutableArray * pathComponents = [[path pathComponents] mutableCopy];
+        for (int i = 0; i < kNumberOfLastPathComponents; ++i)
+            [pathComponents removeLastObject];
         [pathComponents addObject:@"MacOS"];
         [pathComponents addObject:@"NuageApp Server"];
-        NSString *newPath = [NSString pathWithComponents:pathComponents];
-        [[NSWorkspace sharedWorkspace] launchApplication:newPath];
+        NSString * fullPath = [NSString pathWithComponents:pathComponents];
+        [[NSWorkspace sharedWorkspace] launchApplication:fullPath];
     }
-    [NSApp terminate:nil];
+    [NSApp terminate:self];
 }
 
 @end
