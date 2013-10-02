@@ -37,8 +37,6 @@
 #pragma mark - NSApplicationDelegate
 /*----------------------------------------------------------------------------*/
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    [_updater addObserver:self forKeyPath:@"automaticallyChecksForUpdates" options:NSKeyValueObservingOptionNew context:nil];
-    
     NSBundle *bundle = [NSBundle mainBundle];
     NSImage * icon = [[NSImage alloc] initWithContentsOfFile: [bundle pathForResource: @"baricon" ofType: @"png"]];
     NSImage * selectedIcon = [[NSImage alloc] initWithContentsOfFile: [bundle pathForResource: @"barselectedIcon" ofType: @"png"]];
@@ -60,14 +58,6 @@
 
     [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
 }
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context {
-    NSLog(@"Called");
-}
-
 
 
 /*----------------------------------------------------------------------------*/
@@ -111,6 +101,11 @@
     [self setChecksForUpdate:![self isChecksForUpdateEnabled]];
 }
 
+- (IBAction)tappedAboutNuageAppButton:(id)sender {
+    NSWindow *window = [self window]; // Get the window to open
+    [window makeKeyAndOrderFront:nil];
+    [NSApp activateIgnoringOtherApps:YES];
+}
 
 /*----------------------------------------------------------------------------*/
 #pragma mark - Misc private functions

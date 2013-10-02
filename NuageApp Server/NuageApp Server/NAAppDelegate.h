@@ -11,4 +11,6 @@
 
 @interface NAAppDelegate : NSObject <NSApplicationDelegate, DTBonjourServerDelegate, NSUserNotificationCenterDelegate>
 
+@property (unsafe_unretained) IBOutlet NSWindow *window;
+
 @end
