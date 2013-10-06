@@ -285,14 +285,12 @@ typedef enum { NAFetchingMoreItems, NARefreshingItems, NANotFetchingItems } NAFe
 - (void)itemRestorationDidSucceed:(CLWebItem *)item connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
     [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
 
-    NSUInteger idx = [_items indexOfObject:item
-                             inSortedRange:(NSRange){0, _items.count}
-                                   options:NSBinarySearchingFirstEqual
-                           usingComparator:^NSComparisonResult(CLWebItem * item1, CLWebItem * item2) {
-                               return ([item1.URL isEqual:item2.URL]);
-                           }];
-    if (idx == NSNotFound)
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"URL == %@", item.URL];
+    NSArray * filteredItems = [_items filteredArrayUsingPredicate:predicate];
+    if ([filteredItems count] != 1)
         return ;
+    
+    NSUInteger idx = [_items indexOfObject:filteredItems[0]];
     [_items removeObjectAtIndex:idx];
 
     NSIndexPath * indexPath = [NSIndexPath indexPathForItem:idx inSection:0];
@@ -304,14 +302,12 @@ typedef enum { NAFetchingMoreItems, NARefreshingItems, NANotFetchingItems } NAFe
 - (void)itemDeletionDidSucceed:(CLWebItem *)item connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
     [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
 
-    NSUInteger idx = [_items indexOfObject:item
-                             inSortedRange:(NSRange){0, _items.count}
-                                   options:NSBinarySearchingFirstEqual
-                           usingComparator:^NSComparisonResult(CLWebItem * item1, CLWebItem * item2) {
-                               return ([item1.URL isEqual:item2.URL]);
-                           }];
-    if (idx == NSNotFound)
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"URL == %@", item.URL];
+    NSArray * filteredItems = [_items filteredArrayUsingPredicate:predicate];
+    if ([filteredItems count] != 1)
         return ;
+    
+    NSUInteger idx = [_items indexOfObject:filteredItems[0]];
     [_items removeObjectAtIndex:idx];
     
     if ([[[item remoteURL] lastPathComponent] length]) {
