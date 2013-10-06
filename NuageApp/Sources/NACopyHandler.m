@@ -11,6 +11,7 @@
 #import "NAMacPickerViewController.h"
 #import "NASettingsViewController.h"
 #import "NABonjourClient.h"
+#import "NAAlertView.h"
 
 
 @interface NACopyHandler () <DTBonjourDataConnectionDelegate>
@@ -126,10 +127,17 @@
 #pragma mark - Misc private methods
 /*----------------------------------------------------------------------------*/
 - (void)sendURLToMac:(NSURL *)URL {
-    NSError * error;
+    NSError * error = nil;
     [_currentConnection sendObject:[URL absoluteString] error:&error];
-    if (error)
-        NSLog(@"Error sending to Mac : %@", error);
+    if (error) {
+        UIAlertView * av = [[NAAlertView alloc] initWithNAAlertViewKind:kAVGeneric];
+        [av setTitle:@"Failed sending to Mac OS"];
+        if ([[error localizedDescription] length])
+            [av setMessage:[error localizedDescription]];
+        else
+            [av setMessage:@"Please try again later."];
+        [av show];
+    }
 }
 
 @end
