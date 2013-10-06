@@ -55,7 +55,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Copy upload link to Mac OS X" footerTitle="&quot;Copy to Mac&quot; needs a free tiny Mac application available at http://nuage-app.com" id="4ke-yp-N4x">
+                            <tableViewSection headerTitle="Copy upload link to Mac OS X" footerTitle="&quot;Copy to Mac&quot; needs a free tiny Mac application available at  http://nuage-app.com" id="4ke-yp-N4x">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="qmT-zk-9a4" style="IBUITableViewCellStyleDefault" id="ztP-lu-hUK" customClass="NASwitchCell">
                                         <rect key="frame" x="0.0" y="303" width="320" height="44"/>
