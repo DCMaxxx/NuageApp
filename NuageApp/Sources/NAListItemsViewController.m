@@ -153,7 +153,6 @@ typedef enum { NAFetchingMoreItems, NARefreshingItems, NANotFetchingItems } NAFe
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        _selectedIndexPath = indexPath;
         CLWebItem * item = _items[indexPath.row];
         [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
         [[NAAPIEngine sharedEngine] deleteItem:item userInfo:self];
@@ -181,6 +180,7 @@ typedef enum { NAFetchingMoreItems, NARefreshingItems, NANotFetchingItems } NAFe
     if (_displaysTrash) {
         if (buttonIndex == kAlertViewButtonIndexRestore) {
             CLWebItem * item = _items[_selectedIndexPath.row];
+            _selectedIndexPath = nil;
             [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
             [[NAAPIEngine sharedEngine] restoreItem:item userInfo:self];
         }
@@ -239,7 +239,6 @@ typedef enum { NAFetchingMoreItems, NARefreshingItems, NANotFetchingItems } NAFe
     if (_fetchingItemType == NARefreshingItems)
         [[self refreshControl] endRefreshing];
     _fetchingItemType = NANotFetchingItems;
-    _selectedIndexPath = nil;
 
     NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:userInfo];
     [av show];
@@ -286,19 +285,34 @@ typedef enum { NAFetchingMoreItems, NARefreshingItems, NANotFetchingItems } NAFe
 - (void)itemRestorationDidSucceed:(CLWebItem *)item connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
     [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
 
-    [_items removeObjectAtIndex:_selectedIndexPath.row];
+    NSUInteger idx = [_items indexOfObject:item
+                             inSortedRange:(NSRange){0, _items.count}
+                                   options:NSBinarySearchingFirstEqual
+                           usingComparator:^NSComparisonResult(CLWebItem * item1, CLWebItem * item2) {
+                               return ([item1.URL isEqual:item2.URL]);
+                           }];
+    if (idx == NSNotFound)
+        return ;
+    [_items removeObjectAtIndex:idx];
 
+    NSIndexPath * indexPath = [NSIndexPath indexPathForItem:idx inSection:0];
     [self.tableView beginUpdates];
-    [self.tableView deleteRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     [self.tableView endUpdates];
-    
-    _selectedIndexPath = nil;
 }
 
 - (void)itemDeletionDidSucceed:(CLWebItem *)item connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
     [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
 
-    [_items removeObjectAtIndex:_selectedIndexPath.row];
+    NSUInteger idx = [_items indexOfObject:item
+                             inSortedRange:(NSRange){0, _items.count}
+                                   options:NSBinarySearchingFirstEqual
+                           usingComparator:^NSComparisonResult(CLWebItem * item1, CLWebItem * item2) {
+                               return ([item1.URL isEqual:item2.URL]);
+                           }];
+    if (idx == NSNotFound)
+        return ;
+    [_items removeObjectAtIndex:idx];
     
     if ([[[item remoteURL] lastPathComponent] length]) {
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -310,11 +324,11 @@ typedef enum { NAFetchingMoreItems, NARefreshingItems, NANotFetchingItems } NAFe
                 NSLog(@"Error %@ while removing file : %@ in NAListItemsViewController", error, path);
         }
     }
+
+    NSIndexPath * indexPath = [NSIndexPath indexPathForItem:idx inSection:0];
     [self.tableView beginUpdates];
-    [self.tableView deleteRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     [self.tableView endUpdates];
-    
-    _selectedIndexPath = nil;
 }
 
 
@@ -372,7 +386,6 @@ typedef enum { NAFetchingMoreItems, NARefreshingItems, NANotFetchingItems } NAFe
     _currentPage = 1;
     _items = [NSMutableArray array];
     _fetchingItemType = NANotFetchingItems;
-    _selectedIndexPath = nil;
     [[self tableView] reloadData];
 }
 
