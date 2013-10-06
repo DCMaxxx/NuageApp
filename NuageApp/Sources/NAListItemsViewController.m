@@ -10,6 +10,9 @@
 
 #import <AFNetworkActivityIndicatorManager.h>
 #import <UIImageView+AFNetworking.h>
+#import <GAIDictionaryBuilder.h>
+#import <GAIFields.h>
+#import <GAI.h>
 
 #import "NADropItemPickerController.h"
 #import "UIActionSheet+ButtonState.h"
@@ -81,6 +84,12 @@ typedef enum { NAFetchingMoreItems, NARefreshingItems, NANotFetchingItems } NAFe
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    if (!_displaysTrash) {
+        id tracker = [[GAI sharedInstance] defaultTracker];
+        [tracker set:kGAIScreenName value:@"Home"];
+        [tracker send:[[GAIDictionaryBuilder createAppView] build]];
+    }
+
     if (![_items count])
         [self loadMoreItems];
 }
