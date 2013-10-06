@@ -22,6 +22,7 @@
 @property (strong, nonatomic) NSStatusItem * statusBarItem;
 @property (weak, nonatomic) IBOutlet NSMenuItem *launchAtStartupMenuItem;
 @property (weak, nonatomic) IBOutlet NSMenuItem *checksForUpdateMenuItem;
+@property (weak, nonatomic) IBOutlet NSTextField *versionTextField;
 
 @property (strong, nonatomic) DTBonjourServer * server;
 
@@ -41,6 +42,9 @@
     NSImage * icon = [[NSImage alloc] initWithContentsOfFile: [bundle pathForResource: @"baricon" ofType: @"png"]];
     NSImage * selectedIcon = [[NSImage alloc] initWithContentsOfFile: [bundle pathForResource: @"barselectedIcon" ofType: @"png"]];
 
+    NSString * versionString = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [_versionTextField setStringValue:[@"v" stringByAppendingString:versionString]];
+    
     _statusBarItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
     [_statusBarItem setMenu:_menu];
     [_statusBarItem setImage:icon];
