@@ -50,7 +50,7 @@
     [_statusBarItem setImage:icon];
     [_statusBarItem setAlternateImage:selectedIcon];
     [_statusBarItem setHighlightMode:YES];
-
+    
     if ([self isLaunchAtStartupEnabled])
         [_launchAtStartupMenuItem setState:NSOnState];
     if ([self isChecksForUpdateEnabled])
@@ -106,7 +106,7 @@
 }
 
 - (IBAction)tappedAboutNuageAppButton:(id)sender {
-    NSWindow *window = [self window]; // Get the window to open
+    NSWindow *window = [self window];
     [window makeKeyAndOrderFront:nil];
     [NSApp activateIgnoringOtherApps:YES];
 }
