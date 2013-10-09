@@ -15,12 +15,22 @@
 		9C438C0917DA0B6000160E22 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C438C0717DA0B6000160E22 /* MainMenu.xib */; };
 		9C438C1117DA0D7900160E22 /* baricon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C438C0F17DA0D7900160E22 /* baricon.png */; };
 		9C438C1217DA0D7900160E22 /* barselectedIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C438C1017DA0D7900160E22 /* barselectedIcon.png */; };
-		9C468B2617E17FB500D1282F /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9C468B2517E17FB500D1282F /* icon.icns */; };
 		9CAFFE7417DEA96000347256 /* NuageApp Server Helper.app in Copy Helper App */ = {isa = PBXBuildFile; fileRef = 9CAFFE7217DEA8E000347256 /* NuageApp Server Helper.app */; };
 		9CAFFE7617DEA9A200347256 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CAFFE7517DEA9A200347256 /* ServiceManagement.framework */; };
 		9CB77D8217FC5A1F008BCF7F /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9CD9FA7E17FC52C000504065 /* Sparkle.framework */; };
 		9CB77D8517FC5D4F008BCF7F /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 9CB77D8317FC5D35008BCF7F /* dsa_pub.pem */; };
 		9CD9FA7F17FC52C000504065 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CD9FA7E17FC52C000504065 /* Sparkle.framework */; };
+		9CFA366818050C4F00E4B2DE /* icon-256x256.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CFA365E18050C4F00E4B2DE /* icon-256x256.png */; };
+		9CFA366918050C4F00E4B2DE /* icon-256x256@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CFA365F18050C4F00E4B2DE /* icon-256x256@2x.png */; };
+		9CFA366A18050C4F00E4B2DE /* icon-512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CFA366018050C4F00E4B2DE /* icon-512x512.png */; };
+		9CFA366B18050C4F00E4B2DE /* icon-512x512@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CFA366118050C4F00E4B2DE /* icon-512x512@2x.png */; };
+		9CFA366C18050C4F00E4B2DE /* icon_128x128.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CFA366218050C4F00E4B2DE /* icon_128x128.png */; };
+		9CFA366D18050C4F00E4B2DE /* icon_128x128@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CFA366318050C4F00E4B2DE /* icon_128x128@2x.png */; };
+		9CFA366E18050C4F00E4B2DE /* icon_16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CFA366418050C4F00E4B2DE /* icon_16x16.png */; };
+		9CFA366F18050C4F00E4B2DE /* icon_16x16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CFA366518050C4F00E4B2DE /* icon_16x16@2x.png */; };
+		9CFA367018050C4F00E4B2DE /* icon_32x32.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CFA366618050C4F00E4B2DE /* icon_32x32.png */; };
+		9CFA367118050C4F00E4B2DE /* icon_32x32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CFA366718050C4F00E4B2DE /* icon_32x32@2x.png */; };
+		9CFA367318050CDA00E4B2DE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CFA367218050CDA00E4B2DE /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,12 +82,22 @@
 		9C438C0817DA0B6000160E22 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9C438C0F17DA0D7900160E22 /* baricon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = baricon.png; sourceTree = "<group>"; };
 		9C438C1017DA0D7900160E22 /* barselectedIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = barselectedIcon.png; sourceTree = "<group>"; };
-		9C468B2517E17FB500D1282F /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = SOURCE_ROOT; };
 		9CAFFE6D17DEA8DF00347256 /* NuageApp Server Helper.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "NuageApp Server Helper.xcodeproj"; path = "NuageApp Server Helper/NuageApp Server Helper.xcodeproj"; sourceTree = "<group>"; };
 		9CAFFE7517DEA9A200347256 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		9CB77D8317FC5D35008BCF7F /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = ../dsa_pub.pem; sourceTree = "<group>"; };
 		9CD9FA7E17FC52C000504065 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		9CF7AA176CF24B6899070064 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CFA365E18050C4F00E4B2DE /* icon-256x256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-256x256.png"; sourceTree = "<group>"; };
+		9CFA365F18050C4F00E4B2DE /* icon-256x256@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-256x256@2x.png"; sourceTree = "<group>"; };
+		9CFA366018050C4F00E4B2DE /* icon-512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-512x512.png"; sourceTree = "<group>"; };
+		9CFA366118050C4F00E4B2DE /* icon-512x512@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-512x512@2x.png"; sourceTree = "<group>"; };
+		9CFA366218050C4F00E4B2DE /* icon_128x128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_128x128.png; sourceTree = "<group>"; };
+		9CFA366318050C4F00E4B2DE /* icon_128x128@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_128x128@2x.png"; sourceTree = "<group>"; };
+		9CFA366418050C4F00E4B2DE /* icon_16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_16x16.png; sourceTree = "<group>"; };
+		9CFA366518050C4F00E4B2DE /* icon_16x16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_16x16@2x.png"; sourceTree = "<group>"; };
+		9CFA366618050C4F00E4B2DE /* icon_32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_32x32.png; sourceTree = "<group>"; };
+		9CFA366718050C4F00E4B2DE /* icon_32x32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_32x32@2x.png"; sourceTree = "<group>"; };
+		9CFA367218050CDA00E4B2DE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
 		F88DA7809B674021864A6E89 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -153,7 +173,7 @@
 		9C6C245917FC7299007D5C11 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				9C468B2517E17FB500D1282F /* icon.icns */,
+				9CFA365D18050C4F00E4B2DE /* icons */,
 				9C438C0F17DA0D7900160E22 /* baricon.png */,
 				9C438C1017DA0D7900160E22 /* barselectedIcon.png */,
 			);
@@ -193,6 +213,24 @@
 				9CAFFE7217DEA8E000347256 /* NuageApp Server Helper.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		9CFA365D18050C4F00E4B2DE /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				9CFA367218050CDA00E4B2DE /* Images.xcassets */,
+				9CFA365E18050C4F00E4B2DE /* icon-256x256.png */,
+				9CFA365F18050C4F00E4B2DE /* icon-256x256@2x.png */,
+				9CFA366018050C4F00E4B2DE /* icon-512x512.png */,
+				9CFA366118050C4F00E4B2DE /* icon-512x512@2x.png */,
+				9CFA366218050C4F00E4B2DE /* icon_128x128.png */,
+				9CFA366318050C4F00E4B2DE /* icon_128x128@2x.png */,
+				9CFA366418050C4F00E4B2DE /* icon_16x16.png */,
+				9CFA366518050C4F00E4B2DE /* icon_16x16@2x.png */,
+				9CFA366618050C4F00E4B2DE /* icon_32x32.png */,
+				9CFA366718050C4F00E4B2DE /* icon_32x32@2x.png */,
+			);
+			path = icons;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -267,12 +305,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CFA366D18050C4F00E4B2DE /* icon_128x128@2x.png in Resources */,
+				9CFA367318050CDA00E4B2DE /* Images.xcassets in Resources */,
+				9CFA366918050C4F00E4B2DE /* icon-256x256@2x.png in Resources */,
+				9CFA367118050C4F00E4B2DE /* icon_32x32@2x.png in Resources */,
+				9CFA366A18050C4F00E4B2DE /* icon-512x512.png in Resources */,
+				9CFA366F18050C4F00E4B2DE /* icon_16x16@2x.png in Resources */,
+				9CFA366E18050C4F00E4B2DE /* icon_16x16.png in Resources */,
+				9CFA367018050C4F00E4B2DE /* icon_32x32.png in Resources */,
 				9CB77D8517FC5D4F008BCF7F /* dsa_pub.pem in Resources */,
+				9CFA366B18050C4F00E4B2DE /* icon-512x512@2x.png in Resources */,
 				9C438BFD17DA0B6000160E22 /* InfoPlist.strings in Resources */,
 				9C438C0917DA0B6000160E22 /* MainMenu.xib in Resources */,
+				9CFA366818050C4F00E4B2DE /* icon-256x256.png in Resources */,
+				9CFA366C18050C4F00E4B2DE /* icon_128x128.png in Resources */,
 				9C438C1117DA0D7900160E22 /* baricon.png in Resources */,
 				9C438C1217DA0D7900160E22 /* barselectedIcon.png in Resources */,
-				9C468B2617E17FB500D1282F /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,6 +452,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F88DA7809B674021864A6E89 /* Pods.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -422,6 +471,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F88DA7809B674021864A6E89 /* Pods.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
