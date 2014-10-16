@@ -1,10 +1,13 @@
 PODS:
   - DTBonjour (1.0.0)
+  - Sparkle (1.8.0)
 
 DEPENDENCIES:
   - DTBonjour
+  - Sparkle
 
 SPEC CHECKSUMS:
-  DTBonjour: b88769fc76c5557b2ce2111d8305cd56822d63d8
+  DTBonjour: 8cff16ce127148e74d7055aece3ab53d83342df3
+  Sparkle: 5eb20bb37ca21e471dab8417dee880198d905327
 
-COCOAPODS: 0.23.0
+COCOAPODS: 0.34.2

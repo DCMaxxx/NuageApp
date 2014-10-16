@@ -17,9 +17,7 @@
 		9C438C1217DA0D7900160E22 /* barselectedIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C438C1017DA0D7900160E22 /* barselectedIcon.png */; };
 		9CAFFE7417DEA96000347256 /* NuageApp Server Helper.app in Copy Helper App */ = {isa = PBXBuildFile; fileRef = 9CAFFE7217DEA8E000347256 /* NuageApp Server Helper.app */; };
 		9CAFFE7617DEA9A200347256 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CAFFE7517DEA9A200347256 /* ServiceManagement.framework */; };
-		9CB77D8217FC5A1F008BCF7F /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9CD9FA7E17FC52C000504065 /* Sparkle.framework */; };
 		9CB77D8517FC5D4F008BCF7F /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 9CB77D8317FC5D35008BCF7F /* dsa_pub.pem */; };
-		9CD9FA7F17FC52C000504065 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CD9FA7E17FC52C000504065 /* Sparkle.framework */; };
 		9CFA366818050C4F00E4B2DE /* icon-256x256.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CFA365E18050C4F00E4B2DE /* icon-256x256.png */; };
 		9CFA366918050C4F00E4B2DE /* icon-256x256@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CFA365F18050C4F00E4B2DE /* icon-256x256@2x.png */; };
 		9CFA366A18050C4F00E4B2DE /* icon-512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CFA366018050C4F00E4B2DE /* icon-512x512.png */; };
@@ -61,13 +59,14 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9CB77D8217FC5A1F008BCF7F /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7C180CBAFD762F3B0106FF46 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		9BA30551BB1EFCF2BC1A7647 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		9C438BEF17DA0B5F00160E22 /* NuageApp Server.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NuageApp Server.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C438BF217DA0B5F00160E22 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		9C438BF517DA0B5F00160E22 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -98,7 +97,6 @@
 		9CFA366618050C4F00E4B2DE /* icon_32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_32x32.png; sourceTree = "<group>"; };
 		9CFA366718050C4F00E4B2DE /* icon_32x32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_32x32@2x.png"; sourceTree = "<group>"; };
 		9CFA367218050CDA00E4B2DE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
-		F88DA7809B674021864A6E89 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +107,6 @@
 				9CAFFE7617DEA9A200347256 /* ServiceManagement.framework in Frameworks */,
 				9C438BF317DA0B5F00160E22 /* Cocoa.framework in Frameworks */,
 				129D612C68204C0D951850B8 /* libPods.a in Frameworks */,
-				9CD9FA7F17FC52C000504065 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,7 +120,7 @@
 				9C438BF817DA0B6000160E22 /* NuageApp Server */,
 				9C438BF117DA0B5F00160E22 /* Frameworks */,
 				9C438BF017DA0B5F00160E22 /* Products */,
-				F88DA7809B674021864A6E89 /* Pods.xcconfig */,
+				E56181277124292062027A68 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -233,6 +230,15 @@
 			path = icons;
 			sourceTree = "<group>";
 		};
+		E56181277124292062027A68 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9BA30551BB1EFCF2BC1A7647 /* Pods.debug.xcconfig */,
+				7C180CBAFD762F3B0106FF46 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -339,7 +345,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8CC8F65E77024673B40F54BD /* Check Pods Manifest.lock */ = {
@@ -450,7 +456,7 @@
 		};
 		9C438C0D17DA0B6000160E22 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F88DA7809B674021864A6E89 /* Pods.xcconfig */;
+			baseConfigurationReference = 9BA30551BB1EFCF2BC1A7647 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -469,7 +475,7 @@
 		};
 		9C438C0E17DA0B6000160E22 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F88DA7809B674021864A6E89 /* Pods.xcconfig */;
+			baseConfigurationReference = 7C180CBAFD762F3B0106FF46 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
