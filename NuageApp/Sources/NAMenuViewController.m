@@ -71,13 +71,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [_revealController setMinimumWidth:200.0f maximumWidth:310.0f forViewController:self];
+    [self.myRevealController setMinimumWidth:200.0f maximumWidth:310.0f forViewController:self];
     
     NAAPIEngine * engine = [NAAPIEngine sharedEngine];
     if (![engine loadUser])
         [self displayLoginView];
     else if (![engine currentAccount]) {
-        [MBProgressHUD showHUDAddedTo:[[_revealController frontViewController] view] withText:@"Login in..."
+        [MBProgressHUD showHUDAddedTo:[[self.myRevealController frontViewController] view] withText:@"Login in..."
                 showActivityIndicator:YES animated:YES];
         _loginConnectionIdentifier = [engine getAccountInformationWithUserInfo:self];
         [self displayViewController:_viewControllers[0]];
@@ -110,7 +110,7 @@
 /*----------------------------------------------------------------------------*/
 - (void)accountInformationRetrievalSucceeded:(CLAccount *)account connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
     _loginConnectionIdentifier = nil;
-    [MBProgressHUD hideHUDForView:[[_revealController frontViewController] view] hideActivityIndicator:YES animated:YES];
+    [MBProgressHUD hideHUDForView:[[self.myRevealController frontViewController] view] hideActivityIndicator:YES animated:YES];
     [[NAAPIEngine sharedEngine] setCurrentAccount:account];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"NAUserLogin" object:nil];
     if (_needToShodUploadPopup) {
@@ -130,7 +130,7 @@
 }
 
 - (void)requestDidFailWithError:(NSError *)error connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
-    [MBProgressHUD hideHUDForView:[[_revealController frontViewController] view] hideActivityIndicator:YES animated:YES];
+    [MBProgressHUD hideHUDForView:[[self.myRevealController frontViewController] view] hideActivityIndicator:YES animated:YES];
     NAAlertView * av = [[NAAlertView alloc] initWithError:error userInfo:userInfo];
     [av show];
     if (_loginConnectionIdentifier) {
@@ -145,7 +145,8 @@
 - (void)displayViewController:(UIViewController *)viewController {
     if ([viewController isKindOfClass:[UINavigationController class]]) {
         UINavigationController * navController = (UINavigationController *)viewController;
-        [[navController navigationBar] addGestureRecognizer:[_revealController revealPanGestureRecognizer]];
+        if ([self.myRevealController revealPanGestureRecognizer])
+            [[navController navigationBar] addGestureRecognizer:[self.myRevealController revealPanGestureRecognizer]];
         if (![[[navController viewControllers][0] navigationItem] leftBarButtonItem]) {
             UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"barbuttonitem.png"]
                                                                       style:UIBarButtonItemStylePlain
@@ -154,13 +155,17 @@
             [[[navController viewControllers][0] navigationItem] setLeftBarButtonItem:item];
         }
     }
-    [_revealController setFrontViewController:viewController];
-    [_revealController showViewController:_revealController.frontViewController];
+    [self.myRevealController setFrontViewController:viewController];
+    [self.myRevealController showViewController:self.myRevealController.frontViewController];
 }
 
 - (void)displayLoginView {
     UIViewController * loginVC = [[UIStoryboard storyboardWithName:@"LoginStoryboard" bundle:nil] instantiateInitialViewController];
-    [[_revealController frontViewController] presentViewController:loginVC animated:YES completion:nil];
+    [self performSelector:@selector(displayViewController:) withObject:loginVC afterDelay:2];
+}
+
+- (void)displayLoginViewController:(UIViewController *)loginVC {
+    [[self.myRevealController frontViewController] presentViewController:loginVC animated:YES completion:nil];
 }
 
 - (void)displayUploadConfirmAlertView {
@@ -183,7 +188,7 @@
 }
 
 -(void)displayMenu {
-    [[self revealController] showViewController:[[self revealController] leftViewController]
+    [[self myRevealController] showViewController:[[self myRevealController] leftViewController]
                                        animated:YES
                                      completion:nil];
 }

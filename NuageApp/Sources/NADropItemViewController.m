@@ -8,11 +8,8 @@
 
 #import "NADropItemViewController.h"
 
-#import <GAIDictionaryBuilder.h>
 #import <MBProgressHUD.h>
 #import <AFNetworking.h>
-#import <GAIFields.h>
-#import <GAI.h>
 
 #import "NADropItemPickerControllerDelegate.h"
 #import "NASettingsViewController.h"
@@ -72,11 +69,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
-    id tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker set:kGAIScreenName value:@"Drop item"];
-    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
-    
     [[NAAPIEngine sharedEngine] addDelegate:self];
 }
 

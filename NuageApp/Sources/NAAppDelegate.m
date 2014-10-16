@@ -10,7 +10,6 @@
 
 #import <PKRevealController.h>
 #import <AFNetworking.h>
-#import <GAI.h>
 
 #import "NASettingsViewController.h"
 #import "NAMenuViewController.h"
@@ -23,15 +22,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [[GAI sharedInstance] setTrackUncaughtExceptions:YES];
-    [[GAI sharedInstance] trackerWithTrackingId:kGAITrackingId];
-    
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     [NACopyHandler sharedInstance];
     
     NAMenuViewController * rearVC = (NAMenuViewController *)[[self window] rootViewController];
     UIViewController * frontVC = [rearVC viewControllers][0];
     PKRevealController * revealController = [PKRevealController revealControllerWithFrontViewController:frontVC leftViewController:rearVC options:@{PKRevealControllerRecognizesPanningOnFrontViewKey:@(NO)}];
+    rearVC.myRevealController = revealController;
     [[self window] setRootViewController:revealController];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"NAApplicationWillEnterForeground" object:nil];
     return YES;

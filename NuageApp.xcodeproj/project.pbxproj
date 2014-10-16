@@ -141,7 +141,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		076D6ADC84554F73A94B8547 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		20854D474B60D258093F03A7 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		54378BF0574DED5FC7DF7622 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		96EA2F3D19F94F72A2E36D36 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C1681C717D76F5D00CFEAE7 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		9C1B8A1117FA7F60006582CB /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Sources/main.m; sourceTree = "<group>"; };
@@ -531,7 +532,7 @@
 				9C2CB8A217CCB5E500561AA0 /* Frameworks */,
 				9C2CB8A117CCB5E500561AA0 /* Products */,
 				9CD3E7DD17CCB85500476785 /* CloudAppAPI */,
-				076D6ADC84554F73A94B8547 /* Pods.xcconfig */,
+				DBFCC58BA9268DCFF371AC36 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -963,6 +964,15 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		DBFCC58BA9268DCFF371AC36 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				54378BF0574DED5FC7DF7622 /* Pods.debug.xcconfig */,
+				20854D474B60D258093F03A7 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -996,7 +1006,7 @@
 				ORGANIZATIONNAME = "Maxime de Chalendar";
 				TargetAttributes = {
 					9C2CB89F17CCB5E500561AA0 = {
-						DevelopmentTeam = YZBJ9D96FR;
+						DevelopmentTeam = 8DGT2SD8VC;
 					};
 				};
 			};
@@ -1123,7 +1133,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1264,6 +1274,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1295,6 +1306,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1310,7 +1322,7 @@
 		};
 		9C2CB8C717CCB5E500561AA0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 076D6ADC84554F73A94B8547 /* Pods.xcconfig */;
+			baseConfigurationReference = 54378BF0574DED5FC7DF7622 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1320,7 +1332,7 @@
 					"\"$(SRCROOT)/NuageApp/CloudAppAPI\"/**",
 				);
 				INFOPLIST_FILE = "NuageApp/Resources/NuageApp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/NuageApp/CloudAppAPI/Third Party/IFUnicodeURL/IDNSDK-1.1.0/lib/win32\"",
@@ -1334,7 +1346,7 @@
 		};
 		9C2CB8C817CCB5E500561AA0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 076D6ADC84554F73A94B8547 /* Pods.xcconfig */;
+			baseConfigurationReference = 20854D474B60D258093F03A7 /* Pods.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1345,7 +1357,7 @@
 					"\"$(SRCROOT)/NuageApp/CloudAppAPI\"/**",
 				);
 				INFOPLIST_FILE = "NuageApp/Resources/NuageApp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/NuageApp/CloudAppAPI/Third Party/IFUnicodeURL/IDNSDK-1.1.0/lib/win32\"",

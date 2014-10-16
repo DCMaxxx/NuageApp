@@ -10,7 +10,7 @@
 
 @interface NAMenuViewController : UITableViewController
 
-@property (strong, nonatomic) PKRevealController * revealController;
+@property (strong, nonatomic) PKRevealController * myRevealController;
 @property (strong, nonatomic) NSArray * viewControllers;
 
 - (void)displayUploadConfirmAlertView;
