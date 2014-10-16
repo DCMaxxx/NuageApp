@@ -171,7 +171,7 @@
 
 - (void)accountCreationSucceeded:(CLAccount *)newAccount connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {
     _connectionIdentifier = nil;
-    [self displayMainViewControllerWithAccount:newAccount];
+    [self tappedLoginButton:nil];
 }
 
 - (void)accountInformationRetrievalSucceeded:(CLAccount *)account connectionIdentifier:(NSString *)connectionIdentifier userInfo:(id)userInfo {

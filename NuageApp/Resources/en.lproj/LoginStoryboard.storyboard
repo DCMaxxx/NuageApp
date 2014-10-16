@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A388a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="S1H-YK-xOv">
     <dependencies>
-        <deployment defaultVersion="1536" identifier="iOS"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -58,23 +59,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="or" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IRH-n6-9pL">
-                                                    <rect key="frame" x="131" y="11" width="46" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fDf-EP-5Xf">
-                                                    <rect key="frame" x="185" y="7" width="135" height="30"/>
-                                                    <state key="normal" title="Register">
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="tappedRegisterButton:" destination="hUK-h6-qJV" eventType="touchUpInside" id="nxw-xY-zGU"/>
-                                                    </connections>
-                                                </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="InY-6V-zr7">
-                                                    <rect key="frame" x="0.0" y="7" width="123" height="30"/>
+                                                    <rect key="frame" x="0.0" y="7" width="322" height="30"/>
                                                     <state key="normal" title="Login">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -84,15 +70,9 @@
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="centerX" secondItem="IRH-n6-9pL" secondAttribute="centerX" constant="6" id="8Rr-Tw-Zfi"/>
-                                                <constraint firstAttribute="centerY" secondItem="fDf-EP-5Xf" secondAttribute="centerY" constant="-0.5" id="Gce-w0-QYJ"/>
-                                                <constraint firstAttribute="centerY" secondItem="IRH-n6-9pL" secondAttribute="centerY" id="RA2-X7-Znx"/>
-                                                <constraint firstItem="IRH-n6-9pL" firstAttribute="leading" secondItem="BR1-vc-bJk" secondAttribute="leading" constant="131" id="Tpf-eQ-l2V"/>
                                                 <constraint firstItem="InY-6V-zr7" firstAttribute="leading" secondItem="BR1-vc-bJk" secondAttribute="leading" id="U2w-vl-AMz"/>
-                                                <constraint firstItem="fDf-EP-5Xf" firstAttribute="leading" secondItem="IRH-n6-9pL" secondAttribute="trailing" constant="8" id="aIL-Zf-h6E"/>
-                                                <constraint firstItem="IRH-n6-9pL" firstAttribute="leading" secondItem="InY-6V-zr7" secondAttribute="trailing" constant="8" id="e2l-aa-vdY"/>
-                                                <constraint firstAttribute="trailing" secondItem="fDf-EP-5Xf" secondAttribute="trailing" id="ga6-Hw-hGA"/>
-                                                <constraint firstAttribute="centerY" secondItem="InY-6V-zr7" secondAttribute="centerY" constant="-0.5" id="h13-pO-tjJ"/>
+                                                <constraint firstAttribute="centerY" secondItem="InY-6V-zr7" secondAttribute="centerY" id="h13-pO-tjJ"/>
+                                                <constraint firstItem="InY-6V-zr7" firstAttribute="trailing" secondItem="BR1-vc-bJk" secondAttribute="trailingMargin" constant="10" id="pHm-xC-2xT"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -169,15 +149,13 @@
                         <outlet property="emailCell" destination="p2I-Qc-9TC" id="xuC-yP-YNy"/>
                         <outlet property="forgotPasswordButton" destination="ZZC-Mk-J37" id="ebg-zC-aK0"/>
                         <outlet property="loginButton" destination="InY-6V-zr7" id="ZBE-Gk-aLM"/>
-                        <outlet property="orLabel" destination="IRH-n6-9pL" id="TQB-OO-Xku"/>
                         <outlet property="passwordCell" destination="LDI-9E-Yqi" id="D27-zs-yPY"/>
-                        <outlet property="registerButton" destination="fDf-EP-5Xf" id="AeP-RG-Fjd"/>
                         <outlet property="termsButton" destination="Fbg-vq-C9M" id="TTJ-Fh-EqQ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0nU-AT-MEg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-542" y="-70"/>
+            <point key="canvasLocation" x="-542" y="-71"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
