@@ -1,6 +1,11 @@
 NuageApp
 ========
 
+Warning
+--------
+The project isn't maintained anymore.
+Since CloudApp moved to 10 free drops a month - lol - I'm using another service now.
+
 What is it?
 --------
 Let's start with [CloudApp](http://cl.ly "CloudApp's home page").
